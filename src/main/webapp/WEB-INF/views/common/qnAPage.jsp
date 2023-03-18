@@ -1,6 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="">
@@ -11,43 +11,26 @@
     <!-- Title -->
     <title>Cookology - Home</title>
 
+    <!-- Jquery-2.2.4 js -->
+    <script src="/cookology/resources/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="/cookology/resources/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap-4 js -->
+    <script src="/cookology/resources/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins JS -->
+    <script src="/cookology/resources/js/others/plugins.js"></script>
+    <!-- Active JS -->
+    <script src="/cookology/resources/js/active.js"></script>
     <!-- Favicon -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="/cookology/resources/img/core-img/favicon.ico">
 
     <!-- Core Stylesheet -->
-    <link href="style.css" rel="stylesheet">
+    <link href="/cookology/resources/css/style.css" rel="stylesheet">
 
     <!-- Responsive CSS -->
-    <link href="css/responsive/responsive.css" rel="stylesheet">
+    <link href="/resource/css/responsive/responsive.css" rel="stylesheet">
 
 </head>
-
-<body>
-
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <!-- Title -->
-    <title>Cookology - Home</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="img/core-img/favicon.ico">
-
-    <!-- Core Stylesheet -->
-    <link href="style.css" rel="stylesheet">
-
-    <!-- Responsive CSS -->
-    <link href="css/responsive/responsive.css" rel="stylesheet">
-
-</head>
-
 <body>
 <!-- Preloader Start -->
 <div id="preloader">
@@ -730,14 +713,5 @@
 
 <!-- ****** Footer Menu Area End ****** -->
 
-<!-- Jquery-2.2.4 js -->
-<script src="js/jquery/jquery-2.2.4.min.js"></script>
-<!-- Popper js -->
-<script src="js/bootstrap/popper.min.js"></script>
-<!-- Bootstrap-4 js -->
-<script src="js/bootstrap/bootstrap.min.js"></script>
-<!-- All Plugins JS -->
-<script src="js/others/plugins.js"></script>
-<!-- Active JS -->
-<script src="js/active.js"></script>
+
 </body>
