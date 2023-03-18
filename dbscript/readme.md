@@ -9,3 +9,6 @@ dbscript
 3. client 테이블에 client_profile_url 추가
 
 
+23-03-18
+
+1. 오타 수정 perepared_recipe_comment_reaction -> prepared_recipe_comment_reaction
