@@ -34,6 +34,7 @@ BEGIN
   INTO: NEW.answer_seq_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN ANSWER.user_email IS '유저이메일';
 
@@ -82,6 +83,7 @@ BEGIN
   INTO: NEW.cart_seq_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN CART.cart_seq_id IS '장바구니고유번호(SEQ)';
 
@@ -159,6 +161,7 @@ BEGIN
   INTO: NEW.client_comment_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN CLIENT_COMMENT_REPLY.business_number IS '사업자등록번호';
 
@@ -194,6 +197,7 @@ BEGIN
   INTO: NEW.notifition_seq_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN NOTIFITION.notifition_seq_id IS '게시글고유번호(SEQ)';
 
@@ -230,6 +234,7 @@ BEGIN
   INTO: NEW.order_product_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN ORDER_PRODUCT.order_product_id IS '상세상품번호';
 
@@ -265,6 +270,7 @@ BEGIN
   INTO: NEW.order_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN ORDERS.order_id IS '주문고유번호';
 
@@ -358,6 +364,7 @@ BEGIN
   INTO: NEW.prepared_recipe_comment_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN PREPARED_RECIPE_COMMENT.prepared_recipe_comment_id IS '댓글고유번호';
 
@@ -396,6 +403,7 @@ BEGIN
   INTO: NEW.comment_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN PREPARED_RECIPE_COMMENT_REACTION.comment_id IS '댓글고유번호';
 
@@ -443,6 +451,7 @@ BEGIN
   INTO: NEW.product_seq_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN PRODUCT.product_seq_id IS '상품고유번호';
 
@@ -498,6 +507,7 @@ BEGIN
   INTO: NEW.product_comment_seq_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN PRODUCT_COMMENT.user_email IS '유저이메일(varchar2(1000))';
 
@@ -525,6 +535,7 @@ BEGIN
   INTO: NEW.question_seq_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN QUESTION.question_seq_id IS '질문고유번호(SEQ)';
 
@@ -565,6 +576,7 @@ BEGIN
   INTO: NEW.recipe_seq_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN RECIPE.recipe_seq_id IS '레시피 고유번호';
 
@@ -663,6 +675,7 @@ BEGIN
   INTO: NEW.recipe_comment_id
   FROM DUAL;
 END;
+/
 
 COMMENT ON COLUMN RECPIE_COMMENT.recipe_comment_id IS '댓글고유번호';
 
