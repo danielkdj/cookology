@@ -8,7 +8,7 @@ import org.oneaonec.cookology.FAQ.model.vo.FAQ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("boardDao")
+@Repository("FAQDao")
 public class FAQDao {
 
     @Autowired
