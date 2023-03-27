@@ -6,6 +6,6 @@ target
 .springBeans
 .json
 .notafile
-.xml
+#.xml
 .vuerd
-.sql
+#.sql

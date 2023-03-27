@@ -542,7 +542,7 @@ li {
     margin-bottom: 0;
 }
 
-.welcome-single-slide project_title {
+.welcome-single-slide .project_title {
     position: absolute;
     content: "";
     bottom: -300px;
@@ -556,11 +556,11 @@ li {
     transition-duration: 750ms;
 }
 
-.welcome-single-slide:hover project_title {
+.welcome-single-slide:hover .project_title {
     bottom: 0;
 }
 
-.welcome-single-slide post-date-commnents a {
+.welcome-single-slide .post-date-commnents a {
     font-size: 14px;
     font-weight: 400;
     color: #fff;
@@ -614,7 +614,8 @@ li {
     top: 0;
     right: 0;
     cursor: url(/cookology/resources/img/core-img/next.png), auto !important;
-} 
+}
+
 
 /* --------------------
 :: 5.0 Top Feature Area CSS 
