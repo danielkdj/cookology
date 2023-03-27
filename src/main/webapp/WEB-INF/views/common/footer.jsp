@@ -1,70 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+	pageEncoding="UTF-8" errorPage="error.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="kr">
 <head>
-<meta charset="UTF-8" />
-<meta name="description" content="" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-<!-- Core Stylesheet -->
+<meta charset="UTF-8">
+<title>Cookology - Home</title>
+	<!-- Favicon -->
+<link rel="icon" href="/cookology/resources/img/core-img/favicon.ico" />
+	<!-- Core Stylesheet -->
 <link href="/cookology/resources/css/style.css" rel="stylesheet" />
-
 <link href="/cookology/resources/css/responsive/reponsive.css"
 	rel="stylesheet" />
-<script type="text/javascript">
-	function moveLoginPage() {
-		location.href = "LoginPage.do";
-	}
-</script>
 </head>
 
 <body>
-	<!-- ****** Footer Social Icon Area Start ****** -->
-	<div class="social_icon_area clearfix">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="footer-social-area d-flex">
-						<div class="single-icon">
-							<a href="#"><i class="fa fa-facebook"
-								aria-hidden="true"></i><span>facebook</span></a>
-						</div>
-						<div class="single-icon">
-							<a href="#"><i class="fa fa-twitter"
-								aria-hidden="true"></i><span>Twitter</span></a>
-						</div>
-						<div class="single-icon">
-							<a href="#"><i class="fa fa-google-plus"
-								aria-hidden="true"></i><span>GOOGLE+</span></a>
-						</div>
-						<div class="single-icon">
-							<a href="#"><i
-								class="fa fa-linkedin-square" aria-hidden="true"></i><span>linkedin</span></a>
-						</div>
-						<div class="single-icon">
-							<a href="#"><i class="fa fa-instagram"
-								aria-hidden="true"></i><span>Instagram</span></a>
-						</div>
-						<div class="single-icon">
-							<a href="#"><i class="fa fa-vimeo"
-								aria-hidden="true"></i><span>VIMEO</span></a>
-						</div>
-						<div class="single-icon">
-							<a href="#"><i class="fa fa-youtube-play"
-								aria-hidden="true"></i><span>YOUTUBE</span></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- ****** Footer Social Icon Area End ****** -->
 
 	<!-- ****** Footer Menu Area Start ****** -->
 	<footer class="footer_area">
@@ -74,7 +24,8 @@
 					<div class="footer-content">
 						<!-- Logo Area Start -->
 						<div class="footer-logo-area text-center">
-							<a href="index.html" class="yummy-logo">Cookology</a>
+						<a href="${ pageContext.servletContext.contextPath}/main.do" class="yummy-logo">
+							Cookology</a>
 						</div>
 						<!-- Menu Area Start -->
 						<nav class="navbar navbar-expand-lg">
@@ -89,7 +40,7 @@
 								id="yummyfood-footer-nav">
 								<ul class="navbar-nav">
 									<li class="nav-item active"><a class="nav-link"
-										href="index.html">Home <span
+									href="${ pageContext.servletContext.contextPath}/main.do">Home <span
 											class="sr-only">(current)</span></a></li>
 									<li class="nav-item"><a class="nav-link" href="best.html">베스트</a>
 									</li>
