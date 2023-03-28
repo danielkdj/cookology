@@ -1,4 +1,4 @@
-package FAQ.model.vo;
+package org.oaoc.cookology.FAQ.model.vo;
 
 public class FAQ {
     private int faq_seq_id;
@@ -40,7 +40,7 @@ public class FAQ {
 
     @Override
     public String toString() {
-        return "FAQ{" +
+        return "org.oaoc.cookology.FAQ{" +
                 "faq_seq_id=" + faq_seq_id +
                 ", frequentlyAsked='" + frequentlyAsked + '\'' +
                 ", auestions='" + auestions + '\'' +

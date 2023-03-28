@@ -1,7 +1,7 @@
-package FAQ.model.service;
+package org.oaoc.cookology.FAQ.model.service;
 
-import FAQ.model.dao.FAQDao;
-import FAQ.model.vo.FAQ;
+import org.oaoc.cookology.FAQ.model.dao.FAQDao;
+import org.oaoc.cookology.FAQ.model.vo.FAQ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

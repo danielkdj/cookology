@@ -1,4 +1,4 @@
-package QNA.model.vo;
+package org.oaoc.cookology.QNA.model.vo;
 
 
 import java.sql.Timestamp;
@@ -94,7 +94,7 @@ public class QNA {
 
     @Override
     public String toString() {
-        return "QNA{" +
+        return "org.oaoc.cookology.QNA{" +
                 "qna_seq_id=" + qna_seq_id +
                 ", user_email='" + user_email + '\'' +
                 ", q_title='" + q_title + '\'' +
