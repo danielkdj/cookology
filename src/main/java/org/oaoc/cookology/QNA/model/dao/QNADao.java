@@ -1,6 +1,6 @@
-package QNA.model.dao;
+package org.oaoc.cookology.QNA.model.dao;
 
-import QNA.model.vo.QNA;
+import org.oaoc.cookology.QNA.model.vo.QNA;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.oaoc.cookology.common.Paging;
 import org.springframework.stereotype.Repository;

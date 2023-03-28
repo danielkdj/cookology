@@ -1,6 +1,6 @@
-package QNA.model.service;
+package org.oaoc.cookology.QNA.model.service;
 
-import QNA.model.vo.QNA;
+import org.oaoc.cookology.QNA.model.vo.QNA;
 import org.oaoc.cookology.common.Paging;
 
 import java.util.ArrayList;

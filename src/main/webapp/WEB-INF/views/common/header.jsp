@@ -77,8 +77,8 @@
 									<a
 										href="${ pageContext.servletContext.contextPath}/enrollPage.do">회원가입</a>
 								</div>
-								<div class="#">
-									<a href="#">고객지원</a>
+								<div class="userService">
+									<a href="FAQPage.do">고객지원</a>
 								</div>
 							</div>
 						</c:if>
