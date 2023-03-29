@@ -30,7 +30,7 @@ public class FAQDao {
     }
 
     public ArrayList<FAQ> selectList() {
-        List<FAQ> list = session.selectList("FAQMapper.insertFAQ");
+        List<FAQ> list = session.selectList("FAQMapper.selectList");
         return (ArrayList<FAQ>)list;
     }
 }

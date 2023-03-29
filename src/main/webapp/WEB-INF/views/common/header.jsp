@@ -18,7 +18,7 @@
 }
 
 #loginBox a {
-	color: #black;
+	color: black;
 }
 
 #loginBox a:visited {
