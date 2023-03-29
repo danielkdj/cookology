@@ -18,7 +18,7 @@
 }
 
 #loginBox a {
-	color: #black;
+	color: black;
 }
 
 #loginBox a:visited {
@@ -156,8 +156,8 @@
 								<li class="nav-item"><a class="nav-link"
 									href="/cookology/WEB-INF/views/common/best.html">레시피</a></li>
 								<li class="nav-item"><a class="nav-link"
-									<li class="nav-item"><a class="nav-link"
 									href="/cookology/WEB-INF/views/common/recipes.html">밀키트</a></li>
+								<li class="nav-item"><a class="nav-link"
 									href="/cookology/WEB-INF/views/common/recipes.html">이벤트</a></li>
 								<li class="nav-item"><a class="nav-link"
 									href="/cookology/WEB-INF/views/common/event.html">장바구니</a></li>
