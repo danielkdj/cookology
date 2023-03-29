@@ -54,7 +54,6 @@ table#tbl { border: 2px solid navy;  }
 						+ errorThrown);
 			}
 		});
-		
 		return false;  //클릭 이벤트 해제함
 	}
 </script>
