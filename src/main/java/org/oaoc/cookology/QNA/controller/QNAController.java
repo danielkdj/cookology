@@ -31,8 +31,8 @@ public class QNAController {
 
     }
 
-    @RequestMapping("QNAPage.do")
-    public String moveadminQNAPage(Model model) {
+    @RequestMapping("QNAPageAdmin.do")
+    public String moveAdminQNAPage(Model model) {
 
 
 

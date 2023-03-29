@@ -14,6 +14,7 @@
 		<typeAlias type="org.oaoc.cookology.common.SearchDate" alias="SearchDate" />
 		<typeAlias type="org.oaoc.cookology.order.model.vo.Order" alias="Order" />
 		<typeAlias type="org.oaoc.cookology.FAQ.model.vo.FAQ" alias="FAQ" />
+		<typeAlias type="org.oaoc.cookology.QNA.model.vo.QNA" alias="QNA" />
 	</typeAliases>
 	
 	<!-- mapper : 실행할 쿼리문만 별도로 작성하는 파일을 말함 -->
@@ -21,5 +22,6 @@
 		<mapper resource="mappers/users-mapper.xml" />
 		<mapper resource="mappers/order-mapper.xml" />
 		<mapper resource="mappers/FAQ-mapper.xml" />
+		<mapper resource="mappers/QNA-mapper.xml" />
 	</mappers>
 </configuration>
