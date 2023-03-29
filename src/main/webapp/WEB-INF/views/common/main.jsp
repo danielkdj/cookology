@@ -1,50 +1,37 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" errorPage="error.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="kr">
 <head>
-<meta charset="UTF-8" />
-<meta name="description" content="" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-<!-- Title -->
+<meta charset="UTF-8">
 <title>Cookology - Home</title>
-
-<!-- Favicon -->
-<link rel="icon" href="/cookology/resources/img/core-img/favicon.ico" />
-
-<!-- Core Stylesheet -->
+	<!-- Favicon -->
+<link rel="icon" href="/cookology/resources/img/core-img/Cookology_logo.png" />
+	<!-- Core Stylesheet -->
 <link href="/cookology/resources/css/style.css" rel="stylesheet" />
-
 <link href="/cookology/resources/css/responsive/reponsive.css"
 	rel="stylesheet" />
 </head>
 
+
+</head>
 <body>
 
-	<!-- Background Pattern Swither -->
-	<div id="pattern-switcher">Bg Pattern</div>
-	<div id="patter-close">
-		<i class="fa fa-times" aria-hidden="true"></i>
-	</div>
+	<!-- Header Start -->
+	<c:import url="/WEB-INF/views/common/header.jsp"></c:import>
+	<!-- Header End -->
 	
-	<c:import url="/WEB-INF/views/common/header.jsp"/>
-
 	<!-- ****** Welcome Post Area Start ****** -->
 	<section class="welcome-post-sliders owl-carousel">
-
 		<!-- Single Slide -->
 		<div class="welcome-single-slide">
 			<!-- Post Thumb -->
-			<img src="/cookology/resources/img/bg-img/slide-1.jpg" alt="" />
+			<img src="/cookology/resources/img/bg-img/slide-1.jpg" alt="맛있는 음식 사진" />
 			<!-- Overlay Text -->
 			<div class="project_title">
 				<div class="post-date-commnents d-flex">
-					<a href="#">May 19, 2017</a> <a href="#">5 Comment</a>
+					<a href="#">March 16, 2023</a> <a href="#">5 Comment</a>
 				</div>
 				<a href="#">
 					<h5>“I’ve Come and I’m Gone”: A Tribute to Istanbul’s Street</h5>
@@ -55,11 +42,11 @@
 		<!-- Single Slide -->
 		<div class="welcome-single-slide">
 			<!-- Post Thumb -->
-			<img src="/cookology/resources/img/bg-img/slide-2.jpg" alt="" />
+			<img src="/cookology/resources/img/bg-img/slide-2.jpg" alt="맛있는 음식 사진" />
 			<!-- Overlay Text -->
 			<div class="project_title">
 				<div class="post-date-commnents d-flex">
-					<a href="#">May 19, 2017</a> <a href="#">5 Comment</a>
+					<a href="#">March 13, 2023</a> <a href="#">5 Comment</a>
 				</div>
 				<a href="#">
 					<h5>“I’ve Come and I’m Gone”: A Tribute to Istanbul’s Street</h5>
@@ -70,11 +57,11 @@
 		<!-- Single Slide -->
 		<div class="welcome-single-slide">
 			<!-- Post Thumb -->
-			<img src="/cookology/resources/img/bg-img/slide-3.jpg" alt="" />
+			<img src="/cookology/resources/img/bg-img/slide-3.jpg" alt="맛있는 음식 사진" />
 			<!-- Overlay Text -->
 			<div class="project_title">
 				<div class="post-date-commnents d-flex">
-					<a href="#">May 19, 2017</a> <a href="#">5 Comment</a>
+					<a href="#">March 11, 2023</a> <a href="#">5 Comment</a>
 				</div>
 				<a href="#">
 					<h5>“I’ve Come and I’m Gone”: A Tribute to Istanbul’s Street</h5>
@@ -85,11 +72,11 @@
 		<!-- Single Slide -->
 		<div class="welcome-single-slide">
 			<!-- Post Thumb -->
-			<img src="/cookology/resources/img/bg-img/slide-4.jpg" alt="" />
+			<img src="/cookology/resources/img/bg-img/slide-4.jpg" alt="맛있는 음식 사진" />
 			<!-- Overlay Text -->
 			<div class="project_title">
 				<div class="post-date-commnents d-flex">
-					<a href="#">May 19, 2017</a> <a href="#">5 Comment</a>
+					<a href="#">March 3, 2023</a> <a href="#">5 Comment</a>
 				</div>
 				<a href="#">
 					<h5>“I’ve Come and I’m Gone”: A Tribute to Istanbul’s Street</h5>
@@ -100,21 +87,20 @@
 		<!-- Single Slide -->
 		<div class="welcome-single-slide">
 			<!-- Post Thumb -->
-			<img src="/cookology/resources/img/bg-img/slide-4.jpg" alt="" />
+			<img src="/cookology/resources/img/bg-img/slide-2.jpg" alt="맛있는 음식 사진" />
 			<!-- Overlay Text -->
 			<div class="project_title">
 				<div class="post-date-commnents d-flex">
-					<a href="#">May 19, 2017</a> <a href="#">5 Comment</a>
+					<a href="#">March 8, 2023</a> <a href="#">5 Comment</a>
 				</div>
 				<a href="#">
 					<h5>“I’ve Come and I’m Gone”: A Tribute to Istanbul’s Street</h5>
 				</a>
 			</div>
 		</div>
-
 	</section>
 	<!-- ****** Welcome Area End ****** -->
-
+	
 	<!-- ****** Categories Area Start ****** -->
 	<section class="categories_area clearfix" id="about">
 		<div class="container">
@@ -124,7 +110,7 @@
 						<img src="/cookology/resources/img/catagory-img/1.jpg" alt="" />
 						<div class="catagory-title">
 							<a href="#">
-								<h5>오늘의 레시피</h5>
+								<h5>내 주변 맛집 찾기</h5>
 							</a>
 						</div>
 					</div>
@@ -134,7 +120,7 @@
 						<img src="/cookology/resources/img/catagory-img/2.jpg" alt="" />
 						<div class="catagory-title">
 							<a href="#">
-								<h5>추천 메뉴</h5>
+								<h5>추천 레시피</h5>
 							</a>
 						</div>
 					</div>
@@ -144,7 +130,7 @@
 						<img src="/cookology/resources/img/catagory-img/3.jpg" alt="" />
 						<div class="catagory-title">
 							<a href="#">
-								<h5>주문하기</h5>
+								<h5>밀키트 주문하기</h5>
 							</a>
 						</div>
 					</div>
@@ -876,7 +862,12 @@
 		</div>
 	</div>
 	<!-- ****** Our Creative Portfolio Area End ****** -->
-
-	<c:import url="/WEB-INF/views/common/footer.jsp"/>
+	
+	
+	
+	
+	<!-- Footer Start -->
+		<c:import url="/WEB-INF/views/common/footer.jsp"></c:import>
+	<!-- Footer End -->
 </body>
 </html>
