@@ -41,13 +41,19 @@ public class UsersController {
 	@RequestMapping(value="loginPage.do", method={ RequestMethod.GET, RequestMethod.POST })
 	public String moveLoginPage() {
 		return "users/loginPage";
-	}  
-	
+	}
+
 	//회원가입 페이지 내보내기용
+	@RequestMapping(value="usersSignUpPage.do", method={RequestMethod.GET, RequestMethod.POST})
+	public String moveUsersSignUpPage(){
+		return "users/usersSignUpPage";
+	}
+
+/*	//회원가입 페이지 내보내기용
 	@RequestMapping("enrollPage.do")
 	public String moveEnrollPage() {
 		return "users/enrollPage";
-	}
+	}*/
 	
 	//회원정보 수정페이지 내보내기용
 	@RequestMapping("moveup.do")
