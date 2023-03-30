@@ -40,7 +40,7 @@ public class QNAController {
 
 
         model.addAttribute("list", list);
-        return "userService/QNAPage";
+        return "userService/QNAAdminPage";
 
     }
 }
