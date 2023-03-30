@@ -170,23 +170,20 @@ public class UsersController {
 		out.flush();
 		out.close();
 	}
-	
-	//회원가입 요청 처리용 메소드
-	@RequestMapping(value="enroll.do", method= { RequestMethod.GET , RequestMethod.POST })
-	public String usersInsertMethod(
-			Users users, Model model) {
-			
-		//패스워드 암호화 처리
+
+	//회원가입 요청처리용
+	@RequestMapping(value="userinsert.do", method={RequestMethod.GET, RequestMethod.POST})
+	public String usersInsert(Users users, Model model){
+
+		//비밀번호 암호화처리
 		users.setUser_pwd(
-				bcryptPasswordEncoder.encode(
-						users.getUser_pwd()));
-	
-		if(usersService.insertUsers(users) > 0) {
-			//회원 가입 성공
+				bcryptPasswordEncoder.encode
+						(users.getUser_pwd()));
+
+		if(usersService.insertUsers(users) > 0){
 			return "common/main";
-		}else {
-			//회원 가입 실패
-			model.addAttribute("message", "회원 가입 실패!");
+		}else{
+			model.addAttribute("message", "회원가입에 실패했습니다.");
 			return "common/error";
 		}
 	}
