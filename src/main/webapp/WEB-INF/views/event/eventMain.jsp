@@ -19,24 +19,24 @@
     <link href="${ pageContext.servletContext.contextPath }/resources/css/style.css" rel="stylesheet"/>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/responsive/reponsive.css" rel="stylesheet"/>
     <style>
-<%--        table--%>
+        /* 테이블 스타일 */
         .rankTable {
-            /*float: left;*/
             margin: 10px;
             padding: 10px;
             display: inline-block;
-
+        }
+        .rankTable:nth-child(2) {
+            margin-left: 20px;
         }
         body {
             font-family: 'Lato', Arial, sans-serif;
             color: #989c9b;
+            text-align: center;
         }
 
         .rankTable > header {
             margin: 0 auto;
             padding: 1em;
-            /*text-align: center;*/
-
         }
 
         .rankTable > header h1 {
@@ -49,7 +49,6 @@
             line-height: 1.5em;
             margin: 0 auto;
             padding: 2em 0 3em;
-            /*width: 90%;*/
             max-width: 2000px;
             overflow: hidden;
         }
@@ -61,10 +60,7 @@
             display: inline;
             margin-left:auto;
             margin-right:auto;
-            /*float: right;*/
         }
-
-        /*billboard*/
         th {
             background-color: #326295;
             font-weight: bold;
@@ -93,27 +89,101 @@
         td.rank {
             text-transform: capitalize;
         }
+        /*table end*/
 
+        /*bill board*/
+        @font-face {
+            font-family: 'bill';
+            src: url("${pageContext.servletContext.contextPath}/resources/fonts/PFStardust.ttf") format('truetype');
+            <%--src: url("${pageContext.servletContext.contextPath}/resources/fonts/LEDBOARD.TTF") format('truetype');--%>
+            font-weight: normal;
+            font-style: normal;
+        }
         .animated-title {
             font-size:60px;
-            font-family:'Raleway',Sans-serif;
+            /*font-family:'Raleway',Sans-serif;*/
+            font-family: 'bill';
+            /*display: table-cell;*/
+            color: #FFFFFF;
             font-weight:300;
             position: relative;
             width: 100%;
             max-width:100%;
             height: auto;
-            padding:100px 0; overflow-x: hidden; overflow-y: hidden; }
-        .animated-title .track {position: absolute; white-space: nowrap;will-change: transform;animation: marquee 60s linear infinite; }
+            padding:100px 0;
+            overflow-x: hidden;
+            overflow-y: hidden;
+
+        }
+        .billboard-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .animated-title .bill-track {
+            position: absolute;
+            white-space: nowrap;
+            will-change: transform;
+            animation: marquee 30s linear infinite;
+        }
         @keyframes marquee {
             from { transform: translateX(0); }
             to { transform: translateX(-50%); }
         }
         @media (hover: hover) and (min-width: 700px){
-            .animated-title .content {-webkit-transform: translateY(calc(100% - 8rem)); transform: translateY(calc(100% - 8rem));}
+            .animated-title .bill-content {
+                -webkit-transform: translateY(calc(100% - 8rem));
+                transform: translateY(calc(100% - 8rem));
+            }
         }
 
-    </style>
+        .billboard {
+            background-color: #326295;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            /*margin: 0 auto;*/
+            margin: 10px;
+            max-width: 80%;
+            height: 80px;
+            padding: 10px;
 
+        }
+
+        .bill-content {
+            margin-top: 30px;
+        }
+        /*bill board end*/
+
+        /*input form */
+        form input[type="number"],
+        form input[type="text"] {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            margin: 5px 0;
+            padding: 6px 12px;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        form input[type="submit"] {
+            background-color: #326295;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            padding: 6px 12px;
+            text-transform: uppercase;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #2ea879;
+        }
+        /*input form end*/
+
+    </style>
 </head>
 
 <body>
@@ -125,15 +195,16 @@
 
 <%--billboard--%>
 
-<div class="animated-title">
-    <div class="track">
-        <div class="content">[USER01] : TEST-MSG [USER01] : TEST-MSG [USER01] : TEST-MSG [USER01] : TEST-MSG</div>
+<div class="billboard-container">
+    <div class="animated-title billboard">
+        <div class="bill-track">
+            <div class="bill-content">[USER01] : 한글테스트 [USER01] : TEST-MSG [USER01] : TEST-MSG [USER01] : TEST-MSG</div>
+        </div>
     </div>
 </div>
 
-
 <%--rainking table--%>
-<div style="display: flex;">
+<div style="display: flex; justify-content: center;">
     <div class="rankTable">
         <header>
             <h1>USER-POINT-TOP5</h1>
@@ -178,7 +249,7 @@
         </div>
     </div>
 <%--    RECIE RANK--%>
-    <div class="rankTable" >
+    <div class="rankTable">
         <header>
             <h1>RECIPE-VIEW-TOP5</h1>
         </header>
@@ -221,27 +292,67 @@
             </table>
         </div>
     </div>
+    <%--    RECIE RANK2--%>
+    <div class="rankTable" >
+        <header>
+            <h1>RECIPE-GOOD-TOP5</h1>
+        </header>
+        <div class="wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>TITLE</th>
+                    <th>GOOD</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr onclick="location.href='${pageContext.servletContext.contextPath}/main.do'">
+                    <td class="rank">1</td>
+                    <td class="title">title01</td>
+                    <td class="views">1460</td>
+                </tr>
+                <tr onclick="location.href='${pageContext.servletContext.contextPath}/main.do'">
+                    <td class="rank">2</td>
+                    <td class="title">title02</td>
+                    <td class="views">1340</td>
+                </tr>
+                <tr onclick="location.href='${pageContext.servletContext.contextPath}/main.do'">
+                    <td class="rank">3</td>
+                    <td class="title">title03</td>
+                    <td class="views">1245</td>
+                </tr>
+                <tr onclick="location.href='${pageContext.servletContext.contextPath}/main.do'">
+                    <td class="rank">4</td>
+                    <td class="title">title04</td>
+                    <td class="views">1210</td>
+                </tr>
+                <tr onclick="location.href='${pageContext.servletContext.contextPath}/main.do'">
+                    <td class="rank">5</td>
+                    <td class="title">title05</td>
+                    <td class="views">1186</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <br>
-<br>
-<br>
-
 <%--bill board input--%>
 <div>
     <form method="post">
         <input type="number" size="2" min="100" value="100"/>
-        <input type="text"
-
-        >
+        <input type="text">
         <input type="submit" value="send">
     </form>
 </div>
 
 <div>
-    test msg
+    <p class="test-msg">test msg</p>
 </div>
+
 <!-- Footer Start -->
-<%--<c:import url="/WEB-INF/views/common/footer.jsp"/>--%>
+<c:import url="/WEB-INF/views/common/footer.jsp"/>
 <!-- Footer End -->
 </body>
 </html>
