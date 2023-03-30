@@ -13,11 +13,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Cookology - Home</title>
+
     <!-- Favicon -->
     <link rel="icon" href="${ pageContext.servletContext.contextPath }/resources/img/core-img/Cookology_logo.png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous"/> <%--referrerpolicy="no-referrer--%>
     <!-- Core Stylesheet -->
     <link href="${ pageContext.servletContext.contextPath }/resources/css/style.css" rel="stylesheet"/>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/responsive/reponsive.css" rel="stylesheet"/>
+    <!-- Step 1) Load D3.js -->
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <!-- Step 2) Load billboard.js with style -->
+    <script src="${ pageContext.servletContext.contextPath }/resources/js/billboard/billboard.js"></script>
+    <!-- Load with base style -->
+    <link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/billboard/billboard.css">
+    <!-- Or load different theme style -->
+    <link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/billboard/insight.min.css">
+
+
+
     <style>
         /* 테이블 스타일 */
         .rankTable {
@@ -62,7 +75,8 @@
             margin-right:auto;
         }
         th {
-            background-color: #326295;
+            /*background-color: #326295;*/
+            background-color: #fc6c3f;
             font-weight: bold;
             color: #fff;
             white-space: nowrap;
@@ -74,7 +88,8 @@
         }
 
         tbody th {
-            background-color: #2ea879;
+            background-color: #fc6c3f;
+            /*background-color: #2ea879;*/
         }
 
         tbody tr:nth-child(2n-1) {
@@ -83,7 +98,8 @@
         }
 
         tbody tr:hover {
-            background-color: rgba(50, 98, 149, .3);
+            /*background-color: rgba(50, 98, 149, .3);*/
+            background-color: rgba(252, 108, 63, .3);
         }
 
         td.rank {
@@ -138,7 +154,8 @@
         }
 
         .billboard {
-            background-color: #326295;
+            /*background-color: #326295;*/
+            background-color: #fc6c3f;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             /*margin: 0 auto;*/
@@ -167,7 +184,8 @@
         }
 
         form input[type="submit"] {
-            background-color: #326295;
+            /*background-color: #326295;*/
+            background-color: #fc6c3f;
             border: none;
             border-radius: 4px;
             color: #fff;
@@ -179,10 +197,33 @@
         }
 
         form input[type="submit"]:hover {
-            background-color: #2ea879;
+            /*background-color: #2ea879;*/
+            background-color: #ff8357;
         }
         /*input form end*/
 
+    /*    button css*/
+        .event-button {
+            background-color: rgba(255, 131, 87, 1);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .event-button:hover {
+        background-color : rgba(255, 131, 255, 1);
+        }
+        .event-button i {
+            margin-right: 5px;
+        }
+
+        #timeseriesChart {
+            max-width: 70%;
+        }
     </style>
 </head>
 
@@ -350,6 +391,53 @@
 <div>
     <p class="test-msg">test msg</p>
 </div>
+
+<br>
+<div style="display:flex;justify-content: center;">
+    <div id="timeseriesChart" style=""></div>
+</div>
+<script>
+    // for ESM environment, need to import modules as:
+    // import bb, {line} from "billboard.js";
+    const chart = bb.generate({
+        data: {
+            x: "x",
+            columns: [
+                ["x", "2013-01-01", "2013-01-02", "2013-01-03", "2013-01-04", "2013-01-05", "2013-01-06"],
+                ["data1", 30, 200, 100, 400, 150, 250],
+                ["data2", 130, 340, 200, 500, 250, 350]
+            ],
+            type: "line", // for ESM specify as: line()
+        },
+        axis: {
+            x: {
+                type: "timeseries",
+                tick: {
+                    format: "%Y-%m-%d"
+                }
+            }
+        },
+        bindto: "#timeseriesChart"
+    });
+
+    setTimeout(function() {
+        chart.load({
+            columns: [
+                ["data3", 400, 500, 450, 700, 600, 500]
+            ]
+        });
+    }, 1000);
+</script>
+<br>
+<button class="event-button">
+    <i class="fas fa-calendar-alt"></i> 출석부
+</button>
+<button class="event-button">
+    <i class="fas fa-puzzle-piece"></i> 미니 게임
+</button>
+<button class="event-button">
+    <i class="fas fa-question-circle"></i> ???
+</button>
 
 <!-- Footer Start -->
 <c:import url="/WEB-INF/views/common/footer.jsp"/>
