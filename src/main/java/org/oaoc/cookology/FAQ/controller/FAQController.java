@@ -25,7 +25,7 @@ public class FAQController {
             return "userService/FAQPage";
 
         }else {
-            model.addAttribute("message", "공시사항전달안됨");
+            model.addAttribute("message", "FAQ전달안됨");
             return "common/error";
         }
 
