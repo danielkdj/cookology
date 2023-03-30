@@ -1,7 +1,7 @@
-package QNA.model.service;
+package org.oaoc.cookology.QNA.model.service;
 
-import QNA.model.dao.QNADao;
-import QNA.model.vo.QNA;
+import org.oaoc.cookology.QNA.model.dao.QNADao;
+import org.oaoc.cookology.QNA.model.vo.QNA;
 import org.oaoc.cookology.common.Paging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class QNAServiceImpl implements QNAService{
     }
 
     @Override
-    public ArrayList<QNA> selectNewQuestionList(String issolved) {
-        return qnaDao.selectNewQuestionList(issolved);
+    public ArrayList<QNA> selectNewQuestionList() {
+        return qnaDao.selectNewQuestionList();
     }
 }

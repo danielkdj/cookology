@@ -1,6 +1,6 @@
-package QNA.model.dao;
+package org.oaoc.cookology.QNA.model.dao;
 
-import QNA.model.vo.QNA;
+import org.oaoc.cookology.QNA.model.vo.QNA;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.oaoc.cookology.common.Paging;
 import org.springframework.stereotype.Repository;
@@ -40,8 +40,8 @@ public class QNADao {
         return new ArrayList<>(list);
     }
 
-    public ArrayList<QNA> selectNewQuestionList(String issolved) {
-        List<QNA> list = session.selectList("QNAMapper.selectNewQuestionList", issolved);
+    public ArrayList<QNA> selectNewQuestionList() {
+        List<QNA> list = session.selectList("QNAMapper.selectNewQuestionList");
         return new ArrayList<>(list);
     }
 }

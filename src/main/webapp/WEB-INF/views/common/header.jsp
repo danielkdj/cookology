@@ -5,6 +5,7 @@
 <html lang="kr">
 <head>
     <meta charset="UTF-8">
+
 	<%
 	String apiKey = "21ca248509cfaf37971c07ac47bfadf2";
 	String baseUrl = "https://api.openweathermap.org/data/2.5/weather";
@@ -32,50 +33,9 @@
 	   }
 	}
  %>
-    <title>Cookology - Home</title>
-    <style>
-        #loginBox {
-            position: absolute;
-            left: 1100px;
-            top: 10px;
-            z-index: 20;
-            font-size: 13px;
-            text-decoration: none;
-        }
 
-        #loginBox a {
-            color: #000000;
-        }
+   
 
-        #loginBox a:visited {
-            color: black;
-        }
-
-        .logout-btn {
-            padding: 1px;
-        }
-    </style>
-    <!-- Favicon -->
-    <link rel="icon"
-          href="${ pageContext.servletContext.contextPath }/resources/img/core-img/Cookology_logo.png"/>
-    <!-- Core Stylesheet -->
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/style.css" rel="stylesheet"/>
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/responsive/reponsive.css"
-          rel="stylesheet"/>
-    <script type="text/javascript"
-            src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
-    <script type="text/javascript">
-        function movePage() {
-            location.href = "loginPage.do";
-        }
-    </script>
-</head>
-<body>
-
-<!-- ****** Top Header Area Start ****** -->
-<div class="top_header_area">
-    <div class="container">
-        <div class="row">
             <!--  Top Social bar => top_weather_bar start -->
          	<div class="col-5 col-sm-6">
             	<div class="top_weather_bar">
@@ -87,7 +47,7 @@
                		</div>
             	</div>
          	</div>
-    
+
             <!--  Login Register Area -->
             <div class="col-7 col-sm-6">
                 <div

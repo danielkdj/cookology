@@ -13,9 +13,6 @@
 <link href="/cookology/resources/css/responsive/reponsive.css"
 	rel="stylesheet" />
 </head>
-
-
-</head>
 <body>
 
 	<!-- Header Start -->

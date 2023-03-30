@@ -1,6 +1,6 @@
-package FAQ.model.dao;
+package org.oaoc.cookology.FAQ.model.dao;
 
-import FAQ.model.vo.FAQ;
+import org.oaoc.cookology.FAQ.model.vo.FAQ;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -30,7 +30,7 @@ public class FAQDao {
     }
 
     public ArrayList<FAQ> selectList() {
-        List<FAQ> list = session.selectList("FAQMapper.insertFAQ");
+        List<FAQ> list = session.selectList("FAQMapper.selectList");
         return (ArrayList<FAQ>)list;
     }
 }

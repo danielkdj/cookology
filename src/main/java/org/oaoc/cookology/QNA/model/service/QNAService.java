@@ -1,6 +1,6 @@
-package QNA.model.service;
+package org.oaoc.cookology.QNA.model.service;
 
-import QNA.model.vo.QNA;
+import org.oaoc.cookology.QNA.model.vo.QNA;
 import org.oaoc.cookology.common.Paging;
 
 import java.util.ArrayList;
@@ -12,7 +12,8 @@ public interface QNAService {
     int deleteQNA(int qna_seq_id);
     ArrayList<QNA> selectMyQNAList(String user_email);
     ArrayList<QNA> selectQNAList();
-    ArrayList<QNA> selectNewQuestionList(String issolved);
+    ArrayList<QNA> selectNewQuestionList();
+
 
 
 }

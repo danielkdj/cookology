@@ -1,17 +1,17 @@
-package FAQ.model.vo;
+package org.oaoc.cookology.FAQ.model.vo;
 
 public class FAQ {
     private int faq_seq_id;
     private String frequentlyAsked;
-    private String auestions;
+    private String questions;
 
     public FAQ() {
     }
 
-    public FAQ(int faq_seq_id, String frequentlyAsked, String auestions) {
+    public FAQ(int faq_seq_id, String frequentlyAsked, String questions) {
         this.faq_seq_id = faq_seq_id;
         this.frequentlyAsked = frequentlyAsked;
-        this.auestions = auestions;
+        this.questions = questions;
     }
 
     public int getFaq_seq_id() {
@@ -30,20 +30,20 @@ public class FAQ {
         this.frequentlyAsked = frequentlyAsked;
     }
 
-    public String getAuestions() {
-        return auestions;
+    public String getQuestions() {
+        return questions;
     }
 
-    public void setAuestions(String auestions) {
-        this.auestions = auestions;
+    public void setQuestions(String questions) {
+        this.questions = questions;
     }
 
     @Override
     public String toString() {
-        return "FAQ{" +
+        return "org.oaoc.cookology.FAQ{" +
                 "faq_seq_id=" + faq_seq_id +
                 ", frequentlyAsked='" + frequentlyAsked + '\'' +
-                ", auestions='" + auestions + '\'' +
+                ", questions='" + questions + '\'' +
                 '}';
     }
 }

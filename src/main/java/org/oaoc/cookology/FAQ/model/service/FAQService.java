@@ -1,6 +1,6 @@
-package FAQ.model.service;
+package org.oaoc.cookology.FAQ.model.service;
 
-import FAQ.model.vo.FAQ;
+import org.oaoc.cookology.FAQ.model.vo.FAQ;
 
 import java.util.ArrayList;
 
