@@ -6,58 +6,47 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Cookology - Home</title>
-    <style>
-        #loginBox {
-            position: absolute;
-            left: 1100px;
-            top: 10px;
-            z-index: 20;
-            font-size: 13px;
-            text-decoration: none;
-        }
+	<%
+	String apiKey = "21ca248509cfaf37971c07ac47bfadf2";
+	String baseUrl = "https://api.openweathermap.org/data/2.5/weather";
+	OkHttpClient client = new OkHttpClient();
 
-        #loginBox a {
-            color: #000000;
-        }
+	String cityName = "Unknown";
+	String weatherMain = "Unknown";
+	String weatherIcon = "";
+	double temperature = 0.0;
 
-        #loginBox a:visited {
-            color: black;
-        }
+	double lat = 37.555134;
+	double lon = 126.936893;
 
-        .logout-btn {
-            padding: 1px;
-        }
-    </style>
-    <!-- Favicon -->
-    <link rel="icon"
-          href="${ pageContext.servletContext.contextPath }/resources/img/core-img/Cookology_logo.png"/>
-    <!-- Core Stylesheet -->
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/style.css" rel="stylesheet"/>
-    <link href="${ pageContext.servletContext.contextPath }/resources/css/responsive/reponsive.css"
-          rel="stylesheet"/>
-    <script type="text/javascript"
-            src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
-    <script type="text/javascript">
-        function movePage() {
-            location.href = "loginPage.do";
-        }
-    </script>
-</head>
-<body>
+	Request rq = new Request.Builder()
+		  .url(baseUrl + "?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&units=metric")
+		  .build();
+	try (Response rp = client.newCall(rq).execute()) {
+	   if (rp.isSuccessful()) {
+		  String responseBody = rp.body().string();
+		  JSONObject weatherJson = new JSONObject(responseBody);
+		  cityName = weatherJson.getString("name");
+		  weatherMain = weatherJson.getJSONArray("weather").getJSONObject(0).getString("main");
+		  weatherIcon = weatherJson.getJSONArray("weather").getJSONObject(0).getString("icon");
+		  temperature = weatherJson.getJSONObject("main").getDouble("temp");
+	   }
+	}
+ %>
 
-<!-- ****** Top Header Area Start ****** -->
-<div class="top_header_area">
-    <div class="container">
-        <div class="row">
-            <div class="col-5 col-sm-6">
-                <!--  Top Social bar start -->
-                <div class="top_social_bar">
-                    <a href="#"></a> <a href="#"></a> <a href="#"></a> <a href="#"></a>
-                    <a href="#"></a>
-                </div>
-            </div>
+   
 
+            <!--  Top Social bar => top_weather_bar start -->
+         	<div class="col-5 col-sm-6">
+            	<div class="top_weather_bar">
+               		<div class="weather-info">
+                  		<span> City: <%= cityName %> </span>
+                  		<img class="weather-icon" src="https://openweathermap.org/img/wn/<%= weatherIcon %>@2x.png" alt="Weather Icon">
+                  		<span> 현재 날씨 : <%= weatherMain %> </span>
+                  		<span> 현재 온도 : <%= temperature %>℃ </span>
+               		</div>
+            	</div>
+         	</div>
 
             <!--  Login Register Area -->
             <div class="col-7 col-sm-6">

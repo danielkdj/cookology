@@ -1,14 +1,5 @@
 package org.oaoc.cookology.users.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Date;
-import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.oaoc.cookology.client.model.service.ClientService;
 import org.oaoc.cookology.client.model.vo.Client;
 import org.oaoc.cookology.common.SearchDate;
@@ -24,6 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Date;
+import java.util.ArrayList;
 
 @Controller
 public class UsersController {
@@ -203,7 +202,6 @@ public class UsersController {
 			mv.addObject("message", user_email + " : 회원 정보 조회 실패!");
 			mv.setViewName("common/error");
 		}
-		
 		return mv;
 	}
 	
@@ -212,7 +210,6 @@ public class UsersController {
 	public String usersDeleteMethod(
 			@RequestParam("user_email") String user_email, 
 			Model model) {
-	
 		
 		if(usersService.deleteUsers(user_email) > 0) {
 			//회원 탈퇴 성공시, 자동 로그아웃 처리해야 함
