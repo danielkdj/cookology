@@ -12,7 +12,8 @@ public interface QNAService {
     int deleteQNA(int qna_seq_id);
     ArrayList<QNA> selectMyQNAList(String user_email);
     ArrayList<QNA> selectQNAList();
-    ArrayList<QNA> selectNewQuestionList(String issolved);
+    ArrayList<QNA> selectNewQuestionList();
+
 
 
 }

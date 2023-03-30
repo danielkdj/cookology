@@ -44,7 +44,7 @@ public class QNAServiceImpl implements QNAService{
     }
 
     @Override
-    public ArrayList<QNA> selectNewQuestionList(String issolved) {
-        return qnaDao.selectNewQuestionList(issolved);
+    public ArrayList<QNA> selectNewQuestionList() {
+        return qnaDao.selectNewQuestionList();
     }
 }
