@@ -28,12 +28,12 @@
 		and login_ok = 'Y'
 	</select>
 	
-	<!-- 아이디로 회원 정보 조회용 -->
-	<select id="selectUsers" parameterType="string" 
-		resultMap="resultUserfs">
-		select * from users
-		where user_email = #{ user_email }
-	</select>
+<!--	&lt;!&ndash; 아이디로 회원 정보 조회용 &ndash;&gt;-->
+<!--	<select id="selectUsers" parameterType="string" -->
+<!--		resultMap="resultUserfs">-->
+<!--		select * from users-->
+<!--		where user_email = #{ user_email }-->
+<!--	</select>-->
 	
 	<!-- 회원가입시 아이디 중복 체크 처리용 -->
 	<select id="selectDupCheckId" parameterType="string" resultType="_int">
