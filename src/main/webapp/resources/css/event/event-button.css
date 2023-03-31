@@ -1,0 +1,17 @@
+.event-button {
+    background-color: rgba(255, 131, 87, 1);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.event-button:hover {
+    background-color : rgba(255, 131, 255, 1);
+}
+.event-button i {
+    margin-right: 5px;
+}
