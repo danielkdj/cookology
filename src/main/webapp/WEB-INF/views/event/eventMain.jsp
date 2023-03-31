@@ -140,11 +140,11 @@
             position: absolute;
             white-space: nowrap;
             will-change: transform;
-            animation: marquee 30s linear infinite;
+            animation: marquee 10s linear infinite;
         }
         @keyframes marquee {
             from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
+            to { transform: translateX(-150%); }
         }
         @media (hover: hover) and (min-width: 700px){
             .animated-title .bill-content {
@@ -239,7 +239,7 @@
 <div class="billboard-container">
     <div class="animated-title billboard">
         <div class="bill-track">
-            <div class="bill-content">[USER01] : 한글테스트 [USER01] : TEST-MSG [USER01] : TEST-MSG [USER01] : TEST-MSG</div>
+            <div class="bill-content">[USER01] : TEST-MSG 데스와</div>
         </div>
     </div>
 </div>
@@ -429,13 +429,13 @@
     }, 1000);
 </script>
 <br>
-<button class="event-button">
+<button class="event-button" onclick="location.href='${pageContext.servletContext.contextPath}/attendance.do'">
     <i class="fas fa-calendar-alt"></i> 출석부
 </button>
-<button class="event-button">
+<button class="event-button" onclick="location.href='${pageContext.servletContext.contextPath}/attendance.do'">
     <i class="fas fa-puzzle-piece"></i> 미니 게임
 </button>
-<button class="event-button">
+<button class="event-button" onclick="location.href='${pageContext.servletContext.contextPath}/attendance.do'">
     <i class="fas fa-question-circle"></i> ???
 </button>
 
