@@ -718,153 +718,53 @@
 	</section>
 	<!-- ****** Blog Area End ****** -->
 
-	<!-- ****** Instagram Area Start ****** -->
-	<div
-		class="instargram_area owl-carousel section_padding_100_0 clearfix"
-		id="portfolio">
-		<!-- Instagram Item -->
-		<div class="instagram_gallery_item">
-			<!-- Instagram Thumb -->
-			<img src="/cookology/resources/img/instagram-img/1.jpg" alt="" />
-			<!-- Hover -->
-			<div class="hover_overlay">
-				<div class="yummy-table">
-					<div class="yummy-table-cell">
-						<div class="follow-me text-center">
-							<a href="#"><i class="fa fa-instagram"
-								aria-hidden="true"></i>보러가기</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 
-		<!-- Instagram Item -->
-		<div class="instagram_gallery_item">
-			<!-- Instagram Thumb -->
-			<img src="/cookology/resources/img/instagram-img/2.jpg" alt="" />
-			<!-- Hover -->
-			<div class="hover_overlay">
-				<div class="yummy-table">
-					<div class="yummy-table-cell">
-						<div class="follow-me text-center">
-							<a href="#"><i class="fa fa-instagram"
-								aria-hidden="true"></i>보러가기</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Instagram Item -->
-		<div class="instagram_gallery_item">
-			<!-- Instagram Thumb -->
-			<img src="/cookology/resources/img/instagram-img/3.jpg" alt="" />
-			<!-- Hover -->
-			<div class="hover_overlay">
-				<div class="yummy-table">
-					<div class="yummy-table-cell">
-						<div class="follow-me text-center">
-							<a href="#"><i class="fa fa-instagram"
-								aria-hidden="true"></i>보러가기</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Instagram Item -->
-		<div class="instagram_gallery_item">
-			<!-- Instagram Thumb -->
-			<img src="/cookology/resources/img/instagram-img/4.jpg" alt="" />
-			<!-- Hover -->
-			<div class="hover_overlay">
-				<div class="yummy-table">
-					<div class="yummy-table-cell">
-						<div class="follow-me text-center">
-							<a href="#"><i class="fa fa-instagram"
-								aria-hidden="true"></i>보러가기</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Instagram Item -->
-		<div class="instagram_gallery_item">
-			<!-- Instagram Thumb -->
-			<img src="/cookology/resources/img/instagram-img/5.jpg" alt="" />
-			<!-- Hover -->
-			<div class="hover_overlay">
-				<div class="yummy-table">
-					<div class="yummy-table-cell">
-						<div class="follow-me text-center">
-							<a href="#"><i class="fa fa-instagram"
-								aria-hidden="true"></i>보러가기</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Instagram Item -->
-		<div class="instagram_gallery_item">
-			<!-- Instagram Thumb -->
-			<img src="/cookology/resources/img/instagram-img/6.jpg" alt="" />
-			<!-- Hover -->
-			<div class="hover_overlay">
-				<div class="yummy-table">
-					<div class="yummy-table-cell">
-						<div class="follow-me text-center">
-							<a href="#"><i class="fa fa-instagram"
-								aria-hidden="true"></i>보러가기</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Instagram Item -->
-		<div class="instagram_gallery_item">
-			<!-- Instagram Thumb -->
-			<img src="/cookology/resources/img/instagram-img/1.jpg" alt="" />
-			<!-- Hover -->
-			<div class="hover_overlay">
-				<div class="yummy-table">
-					<div class="yummy-table-cell">
-						<div class="follow-me text-center">
-							<a href="#"><i class="fa fa-instagram"
-								aria-hidden="true"></i>보러가기</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Instagram Item -->
-		<div class="instagram_gallery_item">
-			<!-- Instagram Thumb -->
-			<img src="/cookology/resources/img/instagram-img/2.jpg" alt="" />
-			<!-- Hover -->
-			<div class="hover_overlay">
-				<div class="yummy-table">
-					<div class="yummy-table-cell">
-						<div class="follow-me text-center">
-							<a href="#"><i class="fa fa-instagram"
-								aria-hidden="true"></i>보러가기</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- ****** Our Creative Portfolio Area End ****** -->
-	
-	
-	
 	
 	<!-- Footer Start -->
 		<c:import url="/WEB-INF/views/common/footer.jsp"></c:import>
 	<!-- Footer End -->
+
+	<!-- ****** Footer Menu Area Start ****** -->
+	<footer class="footer_area">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="footer-content">
+						<!-- Logo Area Start -->
+						<div class="footer-logo-area text-center">
+							<a href="${ pageContext.servletContext.contextPath}/main.do" class="yummy-logo">
+								Cookology</a>
+						</div>
+						<!-- Menu Area Start -->
+						<nav class="navbar navbar-expand-lg">
+							<button class="navbar-toggler" type="button"
+									data-toggle="collapse" data-target="#yummyfood-footer-nav"
+									aria-controls="yummyfood-footer-nav" aria-expanded="false"
+									aria-label="Toggle navigation">
+								<i class="fa fa-bars" aria-hidden="true"></i> Menu
+							</button>
+							<!-- Menu Area Start -->
+							<div class="collapse navbar-collapse justify-content-center"
+								 id="yummyfood-footer-nav">
+								<ul class="navbar-nav">
+									<li class="nav-item active"><a class="nav-link"
+																   href="${ pageContext.servletContext.contextPath}/main.do">Home <span
+											class="sr-only">(current)</span></a></li>
+									<li class="nav-item"><a class="nav-link" href="best.html">베스트</a>
+									</li>
+									<li class="nav-item"><a class="nav-link"
+															href="recipes.html">레시피</a></li>
+									<li class="nav-item"><a class="nav-link" href="event.html">이벤트</a>
+									</li>
+									<li class="nav-item"><a class="nav-link"
+															href="contact.html">배송조회</a></li>
+								</ul>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 </body>
 </html>

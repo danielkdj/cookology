@@ -187,33 +187,14 @@
                     <div class="collapse navbar-collapse justify-content-center"
                          id="yummyfood-nav">
                         <ul class="navbar-nav" id="yummy-nav">
-                            <li class="nav-item active"><a class="nav-link" href="">Home
-                                <span class="sr-only">(current)</span>
-                            </a></li>
-<%--                            <li class="nav-item dropdown"><a--%>
-<%--                                    class="nav-link dropdown-toggle" href="" id="yummyDropdown"--%>
-<%--                                    role="button" data-toggle="dropdown" aria-haspopup="true"--%>
-<%--                                    aria-expanded="false">카테고리</a>--%>
-<%--                                <div class="dropdown-menu" aria-labelledby="yummyDropdown">--%>
-<%--                                    <a class="dropdown-item"--%>
-<%--                                       href="/cookology/WEB-INF/views/common/main.jsp">Home</a> <a--%>
-<%--                                        class="dropdown-item"--%>
-<%--                                        href="/cookology/WEB-INF/views/common/recipes.html">레시피</a> <a--%>
-<%--                                        class="dropdown-item"--%>
-<%--                                        href="/cookology/WEB-INF/views/common/best.html">추천메뉴</a> <a--%>
-<%--                                        class="dropdown-item"--%>
-<%--                                        href="/cookology/WEB-INF/views/common/event.html">이벤트</a> <a--%>
-<%--                                        class="dropdown-item"--%>
-<%--                                        href="/cookology/WEB-INF/views/common/tracking.html">배송조회</a>--%>
-<%--                                </div></li>--%>
-                            <li class="nav-item"><a class="nav-link"
-                                                    href="/cookology/WEB-INF/views/common/best.html">베스트</a></li>
                             <li class="nav-item"><a class="nav-link"
                                                     href="/cookology/WEB-INF/views/common/recipes.html">레시피</a></li>
                             <li class="nav-item"><a class="nav-link"
                                                     href="${ pageContext.servletContext.contextPath}/eventPage.do">이벤트</a></li>
                             <li class="nav-item"><a class="nav-link"
                                                     href="/cookology/WEB-INF/views/common/tracking.html">배송조회</a></li>
+                            <li class="nav-item"><a class="nav-link"
+                                                    href="${ pageContext.servletContext.contextPath}/cartList.do">장바구니</a></li>
                         </ul>
                     </div>
                 </nav>
