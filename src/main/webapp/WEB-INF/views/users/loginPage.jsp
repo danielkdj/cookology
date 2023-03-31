@@ -206,12 +206,10 @@
 			</section>
 			<!-- 가맹점주 탭 END -->
 
-			<!-- Social Login Script End : KaKao -->
-
 			<br>
 
-			<!-- Footer Start -->
 
+			<!-- Footer Start -->
 			<footer class="footer_area">
 				<div class="container">
 					<div class="row">

@@ -29,7 +29,7 @@ public class OrderController {
 		
 		if(user_email != null) {
 			mv.addObject("user_email", user_email);
-			mv.setViewName("order/orderPage");
+			mv.setViewName("order");
 		}else {
 			mv.addObject("message", user_email + "님의 상품 주문 정보가 없습니다!");
 			mv.setViewName("common/error");

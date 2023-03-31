@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>first</title>
 <script type="text/javascript" 
-	src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+	src="${ pageContext.servletContext.contextPath }/resources/js/jquery/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 	function validate(){
 		//암호확인의 포커스가 사라질 때 		

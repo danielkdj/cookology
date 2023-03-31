@@ -11,7 +11,7 @@ table th { background-color: #99ffff; }
 table#tbl { border: 2px solid navy;  }
 </style>
 <script type="text/javascript" 
-	src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+	src="${ pageContext.servletContext.contextPath }/resources/js/jquery/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 	function validate(){
 		//전송 보내기전 (submit 버튼 클릭시) 입력값들이 유효한지 검사

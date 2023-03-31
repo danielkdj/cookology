@@ -37,7 +37,7 @@
 <link href="/cookology/resources/css/responsive/reponsive.css"
 	rel="stylesheet" />
 <script type="text/javascript"
-	src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+	src="${ pageContext.servletContext.contextPath }/resources/js/jquery/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 	function movePage() {
 		location.href = "loginPage.do";
