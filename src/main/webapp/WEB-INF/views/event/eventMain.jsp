@@ -16,7 +16,9 @@
 
     <!-- Favicon -->
     <link rel="icon" href="${ pageContext.servletContext.contextPath }/resources/img/core-img/Cookology_logo.png"/>
+    <%--button--%>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous"/> <%--referrerpolicy="no-referrer--%>
+    <link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/event/event-button.css"/>
     <!-- Core Stylesheet -->
     <link href="${ pageContext.servletContext.contextPath }/resources/css/style.css" rel="stylesheet"/>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/responsive/reponsive.css" rel="stylesheet"/>
@@ -203,23 +205,23 @@
         /*input form end*/
 
     /*    button css*/
-        .event-button {
-            background-color: rgba(255, 131, 87, 1);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+    /*    .event-button {*/
+    /*        background-color: rgba(255, 131, 87, 1);*/
+    /*        color: white;*/
+    /*        border: none;*/
+    /*        padding: 10px 20px;*/
+    /*        border-radius: 5px;*/
+    /*        font-size: 16px;*/
+    /*        cursor: pointer;*/
+    /*        transition: background-color 0.3s;*/
+    /*    }*/
 
-        .event-button:hover {
-        background-color : rgba(255, 131, 255, 1);
-        }
-        .event-button i {
-            margin-right: 5px;
-        }
+    /*    .event-button:hover {*/
+    /*    background-color : rgba(255, 131, 255, 1);*/
+    /*    }*/
+    /*    .event-button i {*/
+    /*        margin-right: 5px;*/
+    /*    }*/
 
         #timeseriesChart {
             max-width: 70%;
