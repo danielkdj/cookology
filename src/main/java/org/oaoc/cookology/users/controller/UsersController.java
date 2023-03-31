@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UsersController {
@@ -169,17 +170,41 @@ public class UsersController {
 		out.flush();
 		out.close();
 	}
-	
+
+	//회원가입 요청처리용
+	@RequestMapping(value="usersSignUp.do", method={RequestMethod.GET, RequestMethod.POST})
+	public String usersInsert(Users users, Model model,
+							  @RequestParam(value = "check", required = false) List<String> checkedOptions){
+
+		//비밀번호 암호화처리
+		users.setUser_pwd(bcryptPasswordEncoder.encode(users.getUser_pwd()));
+
+		//알러지 정보 전송하기
+		if (checkedOptions == null || checkedOptions.isEmpty()) {
+			users.setUser_allergy(null);
+		} else {
+			users.setUser_allergy( String.join(", ", checkedOptions));
+		}
+
+		if(usersService.insertUsers(users) > 0){
+			return "common/main";
+		}else{
+			model.addAttribute("message", "회원가입에 실패했습니다.");
+			return "common/error";
+		}
+	}
+
+	/*
 	//회원가입 요청 처리용 메소드
 	@RequestMapping(value="enroll.do", method= { RequestMethod.GET , RequestMethod.POST })
 	public String usersInsertMethod(
 			Users users, Model model) {
-			
+
 		//패스워드 암호화 처리
 		users.setUser_pwd(
 				bcryptPasswordEncoder.encode(
 						users.getUser_pwd()));
-	
+
 		if(usersService.insertUsers(users) > 0) {
 			//회원 가입 성공
 			return "common/main";
@@ -188,7 +213,7 @@ public class UsersController {
 			model.addAttribute("message", "회원 가입 실패!");
 			return "common/error";
 		}
-	}
+	}*/
 	
 	//마이페이지 클릭시 내 정보 보기 요청 처리용 메소드
 	//리턴 타입은 String, ModelAndView 를 사용할 수 있음
