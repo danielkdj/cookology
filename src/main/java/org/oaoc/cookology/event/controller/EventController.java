@@ -11,6 +11,12 @@ public class EventController {
 
         return "event/eventMain";
     }
+    @RequestMapping("attendance.do")
+    public String moveAttendancePage() {
+
+        return "event/attendance";
+    }
+
 }
 
 
