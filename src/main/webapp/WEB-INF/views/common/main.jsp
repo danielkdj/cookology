@@ -107,7 +107,7 @@
 						<img src="/cookology/resources/img/catagory-img/1.jpg" alt="" />
 						<div class="catagory-title">
 							<a href="#">
-								<h5>오늘의 레시피</h5>
+								<h5>내 주변 맛집 찾기</h5>
 							</a>
 						</div>
 					</div>
@@ -117,7 +117,7 @@
 						<img src="/cookology/resources/img/catagory-img/2.jpg" alt="" />
 						<div class="catagory-title">
 							<a href="#">
-								<h5>추천 메뉴</h5>
+								<h5>레시피 구경하기</h5>
 							</a>
 						</div>
 					</div>
@@ -127,7 +127,7 @@
 						<img src="/cookology/resources/img/catagory-img/3.jpg" alt="" />
 						<div class="catagory-title">
 							<a href="#">
-								<h5>주문하기</h5>
+								<h5>밀키트 구매하기</h5>
 							</a>
 						</div>
 					</div>

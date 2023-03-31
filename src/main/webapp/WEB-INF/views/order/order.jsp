@@ -17,7 +17,7 @@
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script type="text/javascript">
 		var IMP = window.IMP;
-		IMP.init("imp28328013");
+		IMP.init("imp28328013"); // 아임포트 API 키로 초기화
 
 		function requestPay() {
 			// 가맹점에서 생성 및 관리하는 물건 고유 번호 생성
@@ -29,16 +29,16 @@
 			var makeMerchantUid = hours + minutes + seconds + milliseconds;
 
 			IMP.request_pay({
-				pg : "html5_inicis",							 // 결제 수단(이니시스 결제창)
-				pay_method : "card", 							 // 결제 방식(신용카드)
-				merchant_uid : makeMerchantUid, 	 			 // 가맹점에서 관리하는 고유 주문 번호
-				name : "당근 10kg", 			    			 // 상품 이름
-				amount : 15000, 								 // 결제 금액
-				buyer_email : "${ users.user_email }", 			 // 구매자 이메일
-				buyer_name : "${ users.user_name }", 		     // 구매자 이름
-				buyer_tel : "${ users.user_phone }", 		     // 구매자 연락처
-				buyer_addr : "${ users.user_address }", 		 // 구매자 주소
-				buyer_postcode : "${ users.user_postcode }" 	 // 구매자 우편번호
+				pg : "html5_inicis",							 		  	 // 결제 수단(이니시스 결제창)
+				pay_method : "card", 							 			 // 결제 방식(신용카드)
+				merchant_uid : makeMerchantUid, 	 					 	 // 가맹점에서 관리하는 고유 주문 번호
+				name : "${product.product_name}", 			    		  	 // 상품 이름
+				amount : ${product.product_amount}, 						 // 결제 총 금액
+				buyer_email : "${ users.user_email }", 			 			 // 구매자 이메일
+				buyer_name : "${ users.user_name }", 		    			 // 구매자 이름
+				buyer_tel : "${ users.user_phone }", 		     		 	 // 구매자 연락처
+				buyer_addr : "${ users.user_address }", 					 // 구매자 주소
+				buyer_postcode : "${ users.user_postcode }" 	 			 // 구매자 우편번호
 			}, function(rsp) {
 				if (rsp.success) { // 결제 성공 시
 					var msg = "결제가 완료되었습니다.";

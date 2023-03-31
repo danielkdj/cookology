@@ -6,10 +6,10 @@ public class Order implements java.io.Serializable {
 		private static final long serialVersionUID = -2722983012502663838L;
 
 		private int order_id;								// PK - 주문고유번호(SEQ)
-		private int cart_id;							// 장바구니고유번호
+		private int cart_id;								// 장바구니고유번호
 		private String user_email;							// 유저이메일(아이디)
-		private int price;						// 가격
-		private int number;						// 상품 갯수
+		private int price;									// 가격
+		private int number;									// 상품 갯수
 		private int amount;									// 총금액
 		private String order_success;						// 주문성공여부
 		private java.sql.Timestamp create_at;				// 생성일시

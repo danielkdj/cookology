@@ -190,9 +190,11 @@
                             <li class="nav-item"><a class="nav-link"
                                                     href="/cookology/WEB-INF/views/common/recipes.html">레시피</a></li>
                             <li class="nav-item"><a class="nav-link"
+                                                    href="${ pageContext.servletContext.contextPath}/eventPage.do">밀키트</a></li>
+                            <li class="nav-item"><a class="nav-link"
                                                     href="${ pageContext.servletContext.contextPath}/eventPage.do">이벤트</a></li>
                             <li class="nav-item"><a class="nav-link"
-                                                    href="/cookology/WEB-INF/views/common/tracking.html">배송조회</a></li>
+                                                    href="${ pageContext.servletContext.contextPath}/trackingPage.do">배송조회</a></li>
                             <li class="nav-item"><a class="nav-link"
                                                     href="${ pageContext.servletContext.contextPath}/cartList.do">장바구니</a></li>
                         </ul>
