@@ -16,7 +16,7 @@
 			let client_Pwd1 = pwdInput.value;
 			let message = document.getElementById("pwdValidationError");
 
-			let pwdRegex = /^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])(?=.*\d.*\d)(?=.*[\W_]).{10,}$/;
+			let pwdRegex = /^(?=.*[a-zA-Z].*[a-zA-Z].*[a-zA-Z].*[a-zA-Z])(?=.*\d.*\d)(?=.*[\W_]).{7,}$/
 
 			if(pwdRegex.test(client_Pwd1)){
 				message.innerHTML = " 사용가능한 비밀번호입니다.";
@@ -55,8 +55,7 @@
 				message.innerHTML = "이름을 확인했습니다.";
 				message.style.color = "green";
 			}else{
-				message.innerHTML = "이름이 적합하지 않습니다" + "/n한글, 영어를 조합해 3~9글자까지만 작성가능합니다.";
-				//한줄 띄어서 작성하고 싶어요.... 왜 안되는거죠?
+				message.innerHTML = "한글, 영어를 조합해 3~9글자까지만 작성가능합니다.";
 				message.style.color = "red";
 			}
 		}
@@ -68,7 +67,7 @@
 			let client_phone1 = phoneInput.value;
 			let message = document.getElementById("phone1ValidationError");
 
-			let phoneRegex = /^(?=.*[ㄴ/d]).{11}$/;
+			let phoneRegex = /^\d{11}$/;
 
 			if(phoneRegex.test(client_phone1)){
 				message.innerHTML = "전화번호를 확인했습니다.";
@@ -86,7 +85,7 @@
 			let client_phone2 = phoneInput.value;
 			let message = document.getElementById("phone2ValidationError");
 
-			let phoneRegex = /^(?=.*[/d]).{11}$/;
+			let phoneRegex = /^\d{11}$/;
 
 			if(phoneRegex.test(client_phone2)){
 				message.innerHTML = "사업장 전화번호를 확인했습니다.";
