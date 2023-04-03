@@ -32,9 +32,12 @@
     </select>
 
     <select id="selectMyQNAList" resultMap="selectMyQNAListMap">
-        select * form QNA
-        where user_email = #{ user_email }
-
-    </select>
+        SELECT *
+        FROM (SELECT *
+              FROM QNA
+              WHERE USER_EMAIL = #{ USER_EMAIL }
+              ORDER BY Q_CREATE_AT DESC
+             )
+     </select>
 
 </mapper>

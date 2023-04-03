@@ -1,5 +1,7 @@
 package org.oaoc.cookology.QNA.controller;
 
+
+
 import org.oaoc.cookology.QNA.model.service.QNAService;
 import org.oaoc.cookology.QNA.model.vo.QNA;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +23,16 @@ public class QNAController {
             @RequestParam("user_email") String user_email,
             Model model) {
 
-
-
         ArrayList<QNA> list = QNAService.selectMyQNAList(user_email);
 
+            if(list != null && list.size() > 0){
+                model.addAttribute("list", list);
+                return "userService/QNAPage";
 
-        model.addAttribute("list", list);
-        return "userService/QNAPage";
+            }else {
+                model.addAttribute("message", "QNA전달안됨");
+                return "common/error";
+            }
 
     }
 
@@ -40,7 +45,19 @@ public class QNAController {
 
 
         model.addAttribute("list", list);
-        return "userService/QNAPage";
+        return "userService/QNAAdminPage";
+
+    }
+    @RequestMapping("QuestionPage.do")
+    public String moveQuestionPage(Model model) {
+
+
+
+        ArrayList<QNA> list = QNAService.selectNewQuestionList();
+
+
+        model.addAttribute("list", list);
+        return "userService/QuestionPage";
 
     }
 }
