@@ -15,94 +15,87 @@
     <title>Cookology FAQ  | PrepBootstrap</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="/cookology/resources/css/FAQService/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/cookology/resources/css/FAQService/font-awesome/css/font-awesome.min.css" />
 
-
-    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous"/>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .inquiry-container {
-            width: 400px;
-            background-color: #f8f8f8;
-            border: 1px solid #ccc;
-            padding: 20px;
-            margin: 0 auto;
-        }
-        h2 {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            margin-top: 20px;
-            border: 1px solid #ccc;
-        }
-        .button-wrapper {
-            text-align: center;
-        }
-        button {
-            background-color: #4CAF50;
-            border: none;
+        .event-button {
+            background-color: rgba(255, 131, 87, 1);
             color: white;
+            border: none;
             padding: 10px 20px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
+            border-radius: 5px;
             font-size: 16px;
-            margin: 10px 2px;
-            transition-duration: 0.4s;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        button:hover {
-            background-color: #45a049;
+
+        .event-button:hover {
+            background-color : rgba(255, 131, 255, 1);
         }
+        .event-button i {
+            margin-right: 5px;
+        }
+
     </style>
 </head>
+
 <body>
 <!-- Header Start -->
 <c:import url="/WEB-INF/views/common/header.jsp" />
 <!-- Header End -->
-<div class="inquiry-container">
-    <h2>1:1 문의</h2>
-    <form id="inquiry-form">
-        <label for="name">이름:</label>
-        <input type="text" id="name" name="name" required>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
 
-        <label for="subject">제목:</label>
-        <input type="text" id="subject" name="subject" required>
-
-        <label for="message">내용:</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-
-        <button class="button-wrapper" type="submit">보내기</button>
-    </form>
+<div class="inquiry-section section_padding_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading text-center">
+                    <h2>질문하기</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <form action="#" method="post">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="name">질문자 *</label>
+                                <input type="text" class="form-control" id="name" value="${ loginUser.user_email }" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="subject">질문 *</label>
+                                <input type="text" class="form-control" id="subject" required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="message">답변 *</label>
+                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="event-button" onclick="javascript:location.href='FAQUpdateset.do';">
+                                <i class="fas fa-question-circle"></i>수정하기
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-<script>
-    document.getElementById('inquiry-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        alert('Your inquiry has been submitted!');
-        // You can replace the alert() function with an API call to submit the form data
-    });
-</script>
-</body>
-</html>
 
 
 <!-- Footer Start -->
 <c:import url="/WEB-INF/views/common/footer.jsp"></c:import>
 <!-- Footer End -->
-
 </body>
+
 </html>

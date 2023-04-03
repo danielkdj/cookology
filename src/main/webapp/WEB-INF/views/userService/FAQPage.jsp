@@ -5,7 +5,7 @@
   Time: 오후 2:23
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -70,7 +70,7 @@
 
 <body>
 <!-- Header Start -->
-<c:import url="/WEB-INF/views/common/header.jsp"></c:import>
+<c:import url="/WEB-INF/views/common/header.jsp" />
 <!-- Header End -->
 
 <style>
@@ -107,7 +107,10 @@
 
   <div class="page-header">
     <a href="FAQPage.do"><h1>자주하는 질문(FAQ)</h1></a>&nbsp; &nbsp;
-    <a href="QNAPage.do"><h1>질문하기(QNA)</h1></a>&nbsp; &nbsp;
+    <c:url var="qna" value="QNAPage.do">
+      <c:param name="user_email" value="${ loginUser.user_email }" />
+    </c:url>
+    <a href="${ qna }"><h1>질문하기(QNA)</h1></a>&nbsp; &nbsp;
     <a href="noticePage.do"><h1>공지사항</h1></a>
   </div>
 

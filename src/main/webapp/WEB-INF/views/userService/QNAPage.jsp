@@ -14,12 +14,32 @@
     <title>Cookology FAQ | PrepBootstrap</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <link rel="stylesheet" type="text/css" href="/cookology/resources/css/FAQService/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css"
-          href="/cookology/resources/css/FAQService/font-awesome/css/font-awesome.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/cookology/resources/css/FAQService/font-awesome/css/font-awesome.min.css" />
 
-    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous"/>
+    <style>
+        .event-button {
+            background-color: rgba(255, 131, 87, 1);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .event-button:hover {
+            background-color : rgba(255, 131, 255, 1);
+        }
+        .event-button i {
+            margin-right: 5px;
+        }
+
+    </style>
 </head>
 
 
@@ -33,8 +53,12 @@
 <div class="container">
 
     <div class="page-header">
+
         <a href="FAQPage.do"><h1>자주하는 질문(FAQ)</h1></a>&nbsp; &nbsp;
-        <a href="QNAPage.do"><h1>질문하기(QNA)</h1></a>&nbsp; &nbsp;
+        <c:url var="qna" value="QNAPage.do">
+            <c:param name="user_email" value="${ loginUser.user_email }" />
+        </c:url>
+        <a href="${ qna }"><h1>질문하기(QNA)</h1></a>&nbsp; &nbsp;
         <a href="noticePage.do"><h1>공지사항</h1></a>
     </div>
 
@@ -49,9 +73,12 @@
                     class="sr-only">Close</span></button>
             자주하는 질문 모아놨어요. 이곳에서 해결하지 못하면<strong>*질문하기를 이용해주세요*</strong>나머진 알아서해 ㅡㅡ
         </div>
-
-        <a href="QuestionPage.do"><img
-                src="/cookology/resources/img/userService/KakaoTalk_20230328_214015497.png" width="5%"/></a>
+        <c:url var="QuestionPage" value="QuestionPage.do">
+            <c:param name="user_email" value="${ loginUser.user_email }" />
+        </c:url>
+        <button class="event-button" onclick="javascript:location.href='${ QuestionPage }';">
+            <i class="fas fa-question-circle"></i> 질문하기
+        </button>
         <br/>
            <div class="panel-group" id="accordion">
             <div class="faqHeader">Q&A</div>
