@@ -456,7 +456,7 @@ CREATE TABLE USERS
   is_admin           CHAR(1)        DEFAULT 'N' NOT NULL,
   user_password      VARCHAR2(1000) NOT NULL,
   user_name          VARCHAR(20)   ,
-  user_nickname      VARCHAR2      ,
+  user_nickname      VARCHAR2(60)      ,
   user_phone         VARCHAR(20)   ,
   create_at          TIMESTAMP      NOT NULL,
   modified_at        TIMESTAMP      NOT NULL,
