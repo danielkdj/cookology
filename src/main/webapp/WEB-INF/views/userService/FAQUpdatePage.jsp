@@ -29,7 +29,7 @@
 <c:import url="/WEB-INF/views/common/header.jsp" />
 <!-- Header End -->
 
-
+<form action="FAQadminUpdate.do">
 <div class="inquiry-section section_padding_100">
     <div class="container">
         <div class="row">
@@ -45,24 +45,30 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="name">번호 *</label>
-                                <input type="text" class="form-control" id="name" value="${ faq.faq_seq_id }" readonly>
+                                <label >번호 *</label>
+                                <input type="text" class="form-control" name="faq_seq_id" value="${ faq.faq_seq_id }" readonly>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="subject">질문 *</label>
-                                <input type="text" class="form-control" id="subject" required>
+                                <label>질문 *</label>
+                                <input type="text" class="form-control" name="frequentlyAsked" value="${ faq.questions }" required>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="message">답변 *</label>
-                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                                <label>답변 *</label>
+                                <textarea class="form-control" name="questions" rows="5"  required>${ faq.frequentlyAsked }</textarea>
                             </div>
                         </div>
                         <div class="col-12">
-                            <button class="event-button" onclick="javascript:location.href='FAQUpdateset.do';">
+                 <%--           <c:url var="submitupdate" value="FAQadminUpdate.do">
+                                <c:param name="FAQ" value="${ faq }" />
+                            </c:url>
+                            <button class="event-button" onclick="javascript:location.href='${ submitupdate }';">
+                                <i class="fas fa-question-circle"></i>수정하기
+                            </button>--%>
+                            <button class="event-button" type="submit" value="수정되었습니다.">
                                 <i class="fas fa-question-circle"></i>수정하기
                             </button>
                         </div>
@@ -72,7 +78,7 @@
         </div>
     </div>
 </div>
-
+</form>
 
 <!-- Footer Start -->
 <c:import url="/WEB-INF/views/common/footer.jsp"></c:import>

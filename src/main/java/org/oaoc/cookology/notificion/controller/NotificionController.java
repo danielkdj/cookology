@@ -155,7 +155,7 @@ public class NotificionController {
 		}
 	}
 	
-	//공지글 상세보기 요청 처리용
+	/*//공지글 상세보기 요청 처리용
 	@RequestMapping("ndetail.do")
 	public String notificionDetailMethod(
 			@RequestParam("notificionno") int notificionno, 
@@ -182,8 +182,8 @@ public class NotificionController {
 			model.addAttribute("message", 
 					notificionno + "번 공지글 상세보기 조회 실패!");
 			return "common/error";
-		}
-	}
+		}*/
+/*	}*//**/
 	
 	//첨부파일 다운로드 요청 처리용
 	@RequestMapping("nfdown.do")

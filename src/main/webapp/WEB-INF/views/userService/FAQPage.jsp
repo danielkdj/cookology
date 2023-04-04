@@ -14,12 +14,12 @@
   <title>Cookology FAQ  | PrepBootstrap</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<%--  <link rel="stylesheet" type="text/css" href="/cookology/resources/css/FAQService/bootstrap.min.css" />--%>
-<%--  <link rel="stylesheet" type="text/css" href="/cookology/resources/css/FAQService/font-awesome/css/font-awesome.min.css" />--%>
+  <%--  <link rel="stylesheet" type="text/css" href="/cookology/resources/css/FAQService/bootstrap.min.css" />--%>
+  <%--  <link rel="stylesheet" type="text/css" href="/cookology/resources/css/FAQService/font-awesome/css/font-awesome.min.css" />--%>
 
 
-<%--  <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>--%>
-<%--  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>--%>
+  <%--  <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>--%>
+  <%--  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>--%>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -133,32 +133,74 @@
     <div class="panel-group" id="accordion">
       <div class="faqHeader">FAQ</div>
       <!-- "list" 변수 설정 -->
-      <c:set var="list" value="${list}" />
+
 
       <!-- Loop through the FAQ list and set an index variable -->
+      <c:if test="${ loginUser.is_admin ne 'Y'}">
+        <c:set var="list" value="${list}" />
+        <c:forEach items="${list}" var="L" varStatus="index">
 
-      <c:forEach items="${list}" var="L" varStatus="index">
-        <div class="panel panel-default"  data-wow-delay=".(${ index }*2)s">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <!-- Change the href attribute to use an index to make it unique for each FAQ entry. -->
-              <!-- href 속성을 인덱스를 사용하도록 변경하여 각 FAQ 항목에 대해 고유하게 만듭니다. -->
-              <a  id="toggle-link" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse${index.count}">${ L.questions }</a>
-            </h4>
-          </div>
-          <!-- Change the id attribute to use an index to make it unique for each FAQ entry. -->
-          <!-- id 속성을 인덱스를 사용하도록 변경하여 각 FAQ 항목에 대해 고유하게 만듭니다. -->
-          <div id="collapse${index.count}" class="panel-collapse collapse">
-            <div class="panel-body">
-                ${ L.frequentlyAsked }
+          <div class="panel panel-default"  data-wow-delay=".(${ index }*2)s">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <!-- Change the href attribute to use an index to make it unique for each FAQ entry. -->
+                <!-- href 속성을 인덱스를 사용하도록 변경하여 각 FAQ 항목에 대해 고유하게 만듭니다. -->
+                <a  id="toggle-link" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse${index.count}">${ L.questions }</a>
+              </h4>
             </div>
-          </div>
-        </div>
-        <c:if test="${ sessionScope.is_admin }">
-          <a href="${pageContext.servletContext.contextPath}/FAQUpdatePage.do?faq_seq_id=${ index }"><img src="/cookology/resources/img/userService/KakaoTalk_20230328_214015497.png" width="7%"/></a>
-        </c:if>
-      </c:forEach>
+            <!-- Change the id attribute to use an index to make it unique for each FAQ entry. -->
+            <!-- id 속성을 인덱스를 사용하도록 변경하여 각 FAQ 항목에 대해 고유하게 만듭니다. -->
+            <div id="collapse${index.count}" class="panel-collapse collapse">
+              <div class="panel-body">
+                  ${ L.frequentlyAsked }
+              </div>
+            </div>
 
+          </div>
+          <%-- <c:url var="adminok" value="admincheck.do">
+             <c:param name="adminok" value="${ index }" />
+           </c:url>--%>
+
+        </c:forEach>
+
+      </c:if>
+
+
+      <c:if test="${ loginUser.is_admin  eq 'Y'}">
+        <c:set var="list" value="${list}" />
+        <c:forEach items="${list}" var="L" varStatus="index">
+
+          <div class="panel panel-default"  data-wow-delay=".(${ index }*2)s">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <!-- Change the href attribute to use an index to make it unique for each FAQ entry. -->
+                <!-- href 속성을 인덱스를 사용하도록 변경하여 각 FAQ 항목에 대해 고유하게 만듭니다. -->
+                <a  <%--id="toggle-link"--%> class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse${index.count}">${ L.questions }</a>
+              </h4>
+            </div>
+            <!-- Change the id attribute to use an index to make it unique for each FAQ entry. -->
+            <!-- id 속성을 인덱스를 사용하도록 변경하여 각 FAQ 항목에 대해 고유하게 만듭니다. -->
+            <div id="collapse${index.count}" class="panel-collapse collapse">
+              <div class="panel-body">
+
+                  ${ L.frequentlyAsked }
+                    <c:url var="update" value="moveFAQUpdate.do">
+                      <c:param name="faq_seq_id" value="${ L.faq_seq_id }" />
+                    </c:url>
+                    <button style="float: right" class="event-button" onclick="javascript:location.href='${ update }';">
+                <i class="fas fa-question-circle"></i>FAQ수정하기
+              </button>
+              </div>
+            </div>
+
+          </div>
+          <%-- <c:url var="adminok" value="admincheck.do">
+             <c:param name="adminok" value="${ index }" />
+           </c:url>--%>
+
+        </c:forEach>
+
+      </c:if>
     </div>
   </div>
 

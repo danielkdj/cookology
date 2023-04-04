@@ -2,21 +2,24 @@ package org.oaoc.cookology.FAQ.controller;
 
 import org.oaoc.cookology.FAQ.model.service.FAQService;
 import org.oaoc.cookology.FAQ.model.vo.FAQ;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 
 @Controller
 public class FAQController {
-
+    Logger logger = org.slf4j.LoggerFactory.getLogger(FAQController.class);
     @Autowired
     FAQService FAQService;
 
-    @RequestMapping("FAQPage.do")
+    @RequestMapping(value = "FAQPage.do", method = {RequestMethod.POST, RequestMethod.GET})
     public String moveFAQPage(Model model) {
         ArrayList<FAQ> list = FAQService.selectFAQList();
 
@@ -31,49 +34,40 @@ public class FAQController {
 
 
     }
-//admin  FAQ 수정 페이지
-    @RequestMapping("FAQUpdatePage.do")
-    public String moveQuestionUpdatePage(
-            @RequestParam("faq_seq_id") int faq_seq_id, Model model) {
-        FAQ faq = FAQService.selectFAQ(faq_seq_id);
 
 
-        model.addAttribute("faq", faq);
-        return "userService/FAQUpdatePage";
 
-    }
 
-//   실험용 test버튼
-    @RequestMapping("FAQUpdateset.do")
+    @RequestMapping("moveFAQUpdate.do")
     public String FAQUpdateMethod(
-            @RequestParam("FAQ") FAQ faq){
-
-       int updateSet =  FAQService.updateFAQ(faq);
-
-        if(updateSet > 0) {
-
+            @RequestParam("faq_seq_id") int faq_seq_id, Model model){
+        FAQ faq = FAQService.selectFAQ(faq_seq_id);
+        if(faq != null){
+        model.addAttribute("faq", faq);
             return "userService/FAQUpdatePage";
         }else {
             return "common/error";
         }
     }
 
-
-    @RequestMapping("FAQUpdate.do")
-    public String updatesample(){
-        return "userService/FAQUpdatePage";
-    }
-
-    @RequestMapping("upDateFAQ.do")
+    @RequestMapping(value = "FAQadminUpdate.do", method = {RequestMethod.POST, RequestMethod.GET})
     public String upDateFAQMethod(
-            @RequestParam("FAQ") FAQ faq, Model model) {
+            @ModelAttribute FAQ faq, Model model) {
         int updateSet =  FAQService.updateFAQ(faq);
 
         if (updateSet > 0) {
-            return "userService/FAQPage.do";
+            logger.info("FAQ 수정 성공");
+             return "redirect:FAQPage.do";
+
         } else {
             model.addAttribute("message", faq.getFaq_seq_id() + "번 글의 수정이 실패");
             return "common/error";
         }
     }
+    /*@RequestMapping("admincheck.do")
+    public String admincheckMethod(@RequestParam("faq_seq_id") String ){
+
+
+    }*/
+
 }

@@ -73,5 +73,7 @@ public class QNAController {
         return "userService/QuestionPage";
 
     }
+
+
 }
 
