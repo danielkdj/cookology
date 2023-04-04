@@ -188,7 +188,7 @@
                          id="yummyfood-nav">
                         <ul class="navbar-nav" id="yummy-nav">
                             <li class="nav-item"><a class="nav-link"
-                                                    href="/cookology/WEB-INF/views/common/recipes.html">레시피</a></li>
+                                                    href="${ pageContext.servletContext.contextPath}/moveRecipePage.do">레시피</a></li>
                             <li class="nav-item"><a class="nav-link"
                                                     href="${ pageContext.servletContext.contextPath}/eventPage.do">밀키트</a></li>
                             <li class="nav-item"><a class="nav-link"
