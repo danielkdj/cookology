@@ -5,8 +5,8 @@ import java.sql.Timestamp;
 
 public class QNA {
 
-    int qna_seq_id;
-           String user_email;
+    private int qna_seq_id;
+    private String user_email;
     private String q_title;
     private String q_content;
     private String q_create_at;
@@ -25,6 +25,15 @@ public class QNA {
         this.q_create_at = q_create_at;
         this.a_content = a_content;
         this.a_create_at = a_create_at;
+        this.issolved = issolved;
+    }
+
+    public QNA(int qna_seq_id, String user_email, String q_title, String q_content, String q_create_at, String issolved) {
+        this.qna_seq_id = qna_seq_id;
+        this.user_email = user_email;
+        this.q_title = q_title;
+        this.q_content = q_content;
+        this.q_create_at = q_create_at;
         this.issolved = issolved;
     }
 

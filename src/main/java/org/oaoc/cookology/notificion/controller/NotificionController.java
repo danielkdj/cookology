@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
 import org.oaoc.cookology.common.FileNameChange;
 import org.oaoc.cookology.common.SearchDate;
 import org.oaoc.cookology.notificion.model.service.NotificionService;
@@ -30,7 +31,9 @@ public class NotificionController {
 	
 	@Autowired
 	private NotificionService notificionService;
-	
+
+
+
 	@RequestMapping(value="ntop5.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String notificionNewTop5Method() 
@@ -73,7 +76,14 @@ public class NotificionController {
 		//servlet-context.xml 에 json string 내보내는 
 		//JsonView 라는 뷰리졸버 추가 등록해야 함
 	}
-	
+
+	@RequestMapping("noticePage.do")
+	public String moveNoticePagePage(Model model) {
+
+		return "userService/noticePage";
+
+	}
+
 	//공지사항 전체 목록보기 요청 처리용
 	@RequestMapping("nlist.do")
 	public String notificionListMethod(Model model) {
@@ -145,7 +155,7 @@ public class NotificionController {
 		}
 	}
 	
-	//공지글 상세보기 요청 처리용
+	/*//공지글 상세보기 요청 처리용
 	@RequestMapping("ndetail.do")
 	public String notificionDetailMethod(
 			@RequestParam("notificionno") int notificionno, 
@@ -172,8 +182,8 @@ public class NotificionController {
 			model.addAttribute("message", 
 					notificionno + "번 공지글 상세보기 조회 실패!");
 			return "common/error";
-		}
-	}
+		}*/
+/*	}*//**/
 	
 	//첨부파일 다운로드 요청 처리용
 	@RequestMapping("nfdown.do")

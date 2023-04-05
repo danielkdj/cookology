@@ -20,91 +20,103 @@
 		<result property="user_allergy" column="user_allergy" />
 	</resultMap>
 
-	<!-- 로그인 처리용 -->
-	<select id="selectLogin" parameterType="Users" 
-		resultType="Users">
-		select * from users
-		where user_email = #{ user_email } and user_pwd = #{ user_pwd }
-		and login_ok = 'Y'
-	</select>
+<!--	&lt;!&ndash; 로그인 처리용 &ndash;&gt;-->
+<!--	<select id="selectLogin" parameterType="Users" -->
+<!--		resultType="Users">-->
+<!--		select * from users-->
+<!--		where user_email = #{ user_email } and user_pwd = #{ user_pwd }-->
+<!--		and login_ok = 'Y'-->
+<!--	</select>-->
 	
-	<!-- 아이디로 회원 정보 조회용 -->
-	<select id="selectUsers" parameterType="string" 
-		resultMap="resultUserfs">
-		select * from users
-		where user_email = #{ user_email }
-	</select>
+<!--	&lt;!&ndash; 아이디로 회원 정보 조회용 &ndash;&gt;-->
+<!--	<select id="selectUsers" parameterType="string" -->
+<!--		resultMap="resultUserfs">-->
+<!--		select * from users-->
+<!--		where user_email = #{ user_email }-->
+<!--	</select>-->
 	
-	<!-- 회원가입시 아이디 중복 체크 처리용 -->
-	<select id="selectDupCheckId" parameterType="string" resultType="_int">
-		select count(user_email) from users
-		where user_email = #{ uid }
-	</select>
-	
-	<!-- 회원 전체 조회용 -->
-	<select id="selectList" resultMap="resultUsers">
-		select * from users
-	</select>
-	
-	<!-- 회원 가입 처리용 -->
-	<insert id="insertUsers" parameterType="Users" >
-		insert into users (user_email, user_pwd, user_name, 
-			    user_phone, create_at, 
-				modifyed_at, login_ok, admin_ok, user_allergy)
-		values (#{ user_email }, #{ user_pwd }, #{ user_name }, 
-			    #{ user_phone }, default, default, default, default,
-			    default)
+<!--	&lt;!&ndash; 회원가입시 아이디 중복 체크 처리용 &ndash;&gt;-->
+<!--	<select id="selectDupCheckId" parameterType="string" resultType="_int">-->
+<!--		select count(user_email) from users-->
+<!--		where user_email = #{ uid }-->
+<!--	</select>-->
+<!--	-->
+<!--	&lt;!&ndash; 회원 전체 조회용 &ndash;&gt;-->
+<!--	<select id="selectList" resultMap="resultUsers">-->
+<!--		select * from users-->
+<!--	</select>-->
+<!--	-->
+<!--	&lt;!&ndash; 회원 가입 처리용 &ndash;&gt;-->
+	<insert id="insertUsers" parameterType="Users">
+		insert into users (user_email, user_password, user_name,
+			    user_phone, create_at
+				 , is_admin, user_allergy)
+		values (#{ user_email }, #{ user_pwd }, #{ user_name },
+			    #{ user_phone }, sysdate, default,
+			    null)
 	</insert>
-	
-	<!-- 회원 탈퇴 처리용 -->
-	<delete id="deleteUsers" parameterType="string">
-		delete from users
-		where user_email = #{ uid }
-	</delete>
-	
-	<!-- 회원 정보 수정 처리용 -->
-	<update id="updateUsers" parameterType="Users">
-		update users
-		set user_pwd = #{ user_pwd }, 
-			user_phone = #{ user_phone },
-			modifyed_at = sysdate
-		where user_email = #{ user_email }
-	</update>
-	
-	<update id="updateLoginok" parameterType="Users">
-		update users
-		set login_ok = #{ login_ok }
-		where user_email = #{ user_email }
-	</update>
-	
-	<update id="updateAdminAuth" parameterType="Users">
-		update users
-		set admin_ok = #{ admin_ok }
-		where user_email = #{ user_email }
-	</update>
+<!--	user_email         VARCHAR(255)   NOT NULL,-->
+<!--	is_admin           CHAR(1)        DEFAULT 'N' NOT NULL,-->
+<!--	user_password      VARCHAR2(1000) NOT NULL,-->
+<!--	user_name          VARCHAR(20)   ,-->
+<!--	user_nickname      VARCHAR2(60)      ,-->
+<!--	user_phone         VARCHAR(20)   ,-->
+<!--	create_at          TIMESTAMP      NOT NULL,-->
+<!--	modified_at        TIMESTAMP      NOT NULL,-->
+<!--	account_activation CHAR(1)        DEFAULT 'Y' NOT NULL,-->
+<!--	user_allergy       VARCHAR2(1000),-->
+<!--	user_profile_url-->
 
-	
-	<!-- 검색용 select -->
-	<select id="selectSearchUser_email" parameterType="string" resultMap="resultUsers">
-		select * from users
-		where user_email like '%' || #{ keyword } || '%'
-	</select>
-	
-	
-	<select id="selectSearchEnrollDate" parameterType="SearchDate" resultMap="resultUsers">
-		select * from users
-		where create_at between #{ begin } and #{ end }
-	</select>
-	
-	<select id="selectSearchLoginOK" parameterType="string" resultMap="resultUsers">
-		select * from users
-		where login_ok = #{ keyword }
-	</select>
-	
-	<select id="selectSearchAdminOK" parameterType="string" resultMap="resultUsers">
-		select * from users
-		where admin_ok = #{ keyword }
-	</select>
+<!--	-->
+<!--	&lt;!&ndash; 회원 탈퇴 처리용 &ndash;&gt;-->
+<!--	<delete id="deleteUsers" parameterType="string">-->
+<!--		delete from users-->
+<!--		where user_email = #{ uid }-->
+<!--	</delete>-->
+<!--	-->
+<!--	&lt;!&ndash; 회원 정보 수정 처리용 &ndash;&gt;-->
+<!--	<update id="updateUsers" parameterType="Users">-->
+<!--		update users-->
+<!--		set user_pwd = #{ user_pwd }, -->
+<!--			user_phone = #{ user_phone },-->
+<!--			modifyed_at = sysdate-->
+<!--		where user_email = #{ user_email }-->
+<!--	</update>-->
+<!--	-->
+<!--	<update id="updateLoginok" parameterType="Users">-->
+<!--		update users-->
+<!--		set login_ok = #{ login_ok }-->
+<!--		where user_email = #{ user_email }-->
+<!--	</update>-->
+<!--	-->
+<!--	<update id="updateAdminAuth" parameterType="Users">-->
+<!--		update users-->
+<!--		set admin_ok = #{ admin_ok }-->
+<!--		where user_email = #{ user_email }-->
+<!--	</update>-->
+
+<!--	-->
+<!--	&lt;!&ndash; 검색용 select &ndash;&gt;-->
+<!--	<select id="selectSearchUser_email" parameterType="string" resultMap="resultUsers">-->
+<!--		select * from users-->
+<!--		where user_email like '%' || #{ keyword } || '%'-->
+<!--	</select>-->
+<!--	-->
+<!--	-->
+<!--	<select id="selectSearchEnrollDate" parameterType="SearchDate" resultMap="resultUsers">-->
+<!--		select * from users-->
+<!--		where create_at between #{ begin } and #{ end }-->
+<!--	</select>-->
+<!--	-->
+<!--	<select id="selectSearchLoginOK" parameterType="string" resultMap="resultUsers">-->
+<!--		select * from users-->
+<!--		where login_ok = #{ keyword }-->
+<!--	</select>-->
+<!--	-->
+<!--	<select id="selectSearchAdminOK" parameterType="string" resultMap="resultUsers">-->
+<!--		select * from users-->
+<!--		where admin_ok = #{ keyword }-->
+<!--	</select>-->
 
 </mapper>
 
