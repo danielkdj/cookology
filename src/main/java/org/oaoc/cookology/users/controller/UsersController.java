@@ -32,8 +32,8 @@ public class UsersController {
 	private UsersService usersService;
 	@Autowired
 	private ClientService clientService;
-	@Autowired
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
+//	@Autowired
+//	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 // Method 
 	//로그인 페이지 내보내기용 메소드
@@ -69,36 +69,36 @@ public class UsersController {
 	// 일반회원 로그인 처리용 메소드 : command 객체 사용
 	//input 태그의 name 과 vo 객체의 필드명이 같으면 됨
 	@RequestMapping(value="ulogin.do", method=RequestMethod.POST)
-	public String usersLoginMethod(Users users, 
+	public String usersLoginMethod(
+			@RequestParam("user_email") String user_email,
 			HttpSession session, SessionStatus status, 
 			Model model) {
 	
 		//암호화 처리된 패스워드 일치 조회는 select 해 온 값으로 비교함
 		//전달온 회원 아이디로 먼저 정보조회함
-		Users loginusers = usersService.selectUsers(
-										users.getUser_email());
+		Users loginusers = usersService.selectUsers(user_email);
 		
 		//암호화된 패스워드와 전송온 글자타입 패스워드를 비교함
 		//matches(글자타입패스워드, 암호화된패스워드)
-		if(loginusers != null && 
-				this.bcryptPasswordEncoder.matches(
-						users.getUser_pwd(), 
-						loginusers.getUser_pwd())) {
+//		if(loginusers != null &&
+//				this.bcryptPasswordEncoder.matches(
+//						users.getUser_pwd(),
+//						loginusers.getUser_pwd())) {
 			session.setAttribute("loginusers", loginusers);
 			status.setComplete();  //로그인 요청 성공, 200 전송함
-			return "common/main";	
-		}else {
-			model.addAttribute("message", 
-					"로그인 실패 : 아이디나 암호 확인하세요.<br>"
-					+ "또는 로그인 제한된 회원인지 관리자에게 문의하세요.");
-			return "common/error";	
+			return "common/main";
+//		}else {
+//			model.addAttribute("message",
+//					"로그인 실패 : 아이디나 암호 확인하세요.<br>"
+//					+ "또는 로그인 제한된 회원인지 관리자에게 문의하세요.");
+//			return "common/main";
 		}
 			
-	}
+//	}
 	
 	// 가맹점주 로그인 처리용 메소드 : command 객체 사용
 	//input 태그의 name 과 vo 객체의 필드명이 같으면 됨
-	@RequestMapping(value="clogin.do", method=RequestMethod.POST)
+	/*@RequestMapping(value="clogin.do", method=RequestMethod.POST)
 	public String clientLoginMethod(Client client, 
 			HttpSession session, SessionStatus status, 
 			Model model) {
@@ -124,7 +124,7 @@ public class UsersController {
 			return "common/error";	
 		}
 			
-	}
+	}*/
 	
 	@RequestMapping("logout.do")
 	public String logoutMethod(HttpServletRequest request, 
@@ -170,9 +170,9 @@ public class UsersController {
 			Users users, Model model) {
 			
 		//패스워드 암호화 처리
-		users.setUser_pwd(
-				bcryptPasswordEncoder.encode(
-						users.getUser_pwd()));
+//		users.setUser_pwd(
+//				bcryptPasswordEncoder.encode(
+//						users.getUser_pwd()));
 	
 		if(usersService.insertUsers(users) > 0) {
 			//회원 가입 성공
@@ -222,7 +222,7 @@ public class UsersController {
 	}
 	
 	//회원정보 수정 처리용 : 수정 성공시 myinfoPage.jsp 로 이동함
-	@RequestMapping(value="mupdate.do", method= { RequestMethod.GET , RequestMethod.POST })
+	/*@RequestMapping(value="mupdate.do", method= { RequestMethod.GET , RequestMethod.POST })
 	public String usersUpdateMethod(Users users,
 			Model model, 
 			@RequestParam("origin_userpwd") String originUserpwd) {
@@ -254,7 +254,7 @@ public class UsersController {
 				users.getUser_email() + " : 회원 정보 수정 실패!");
 			return "common/error";
 		}
-	}
+	}*/
 	
 	//회원관리용 회원전체목록 조회 처리용
 	@RequestMapping(value="ulist.do" , method= { RequestMethod.GET , RequestMethod.POST })

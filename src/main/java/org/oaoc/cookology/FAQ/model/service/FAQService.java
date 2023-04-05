@@ -12,6 +12,6 @@ public interface FAQService {
     int updateFAQ(FAQ faq);
     FAQ selectFAQ(int faq_seq_id);
 
-    ArrayList<FAQ> selectList();
+    ArrayList<FAQ> selectFAQList();
 
 }

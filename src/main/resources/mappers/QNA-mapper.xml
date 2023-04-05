@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="qnaMapper">
+<mapper namespace="QNAMapper">
 
     <resultMap type="QNA" id="selectNewQNAList">
         <id property="qna_seq_id" column="qna_seq_id"/>
@@ -31,10 +31,13 @@
         where issolved = 'N'
     </select>
 
-    <select id="selectMyQNAList" resultMap="selectMyQNAListMap">
-        select * form QNA
-        where user_email = #{ user_email }
+    <select id="selectMyQNAList" parameterType="String" resultMap="selectMyQNAListMap">
 
-    </select>
+        SELECT *
+              FROM QNA
+              WHERE USER_EMAIL = #{ USER_EMAIL }
+              ORDER BY Q_CREATE_AT DESC
+
+     </select>
 
 </mapper>
