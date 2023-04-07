@@ -11,7 +11,7 @@ public class QNA {
     private String q_content;
     private String q_create_at;
     private String a_content;
-    private java.sql.Timestamp a_create_at;
+    private Timestamp a_create_at;
     private String issolved;
 
     public QNA() {

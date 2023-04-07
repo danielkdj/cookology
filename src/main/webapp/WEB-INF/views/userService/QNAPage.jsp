@@ -59,7 +59,7 @@
             <c:param name="user_email" value="${ loginUser.user_email }" />
         </c:url>
         <a href="${ qna }"><h1>질문하기(QNA)</h1></a>&nbsp; &nbsp;
-        <a href="noticePage.do"><h1>공지사항</h1></a>
+        <a href="blist.do"><h1>공지사항</h1></a>
     </div>
 
     <!-- Bootstrap org.oaoc.cookology.FAQ - START -->
@@ -73,12 +73,14 @@
                     class="sr-only">Close</span></button>
             자주하는 질문 모아놨어요. 이곳에서 해결하지 못하면<strong>*질문하기를 이용해주세요*</strong>나머진 알아서해 ㅡㅡ
         </div>
+        <c:if test="${ loginUser.is_admin != 'Y' }">
         <c:url var="QuestionPage" value="QuestionPage.do">
             <c:param name="user_email" value="${ loginUser.user_email }" />
         </c:url>
         <button class="event-button" onclick="javascript:location.href='${ QuestionPage }';">
             <i class="fas fa-question-circle"></i> 질문하기
         </button>
+        </c:if>
         <br/>
            <div class="panel-group" id="accordion">
             <div class="faqHeader">Q&A</div>
@@ -105,7 +107,7 @@
                                            <c:param name="qna_seq_id" value="${ L.qna_seq_id }" />
                                        </c:url>
                                        <button style="float: right" class="event-button" onclick="javascript:location.href='${ update }';">
-                                           <i class="fas fa-question-circle"></i>FAQ수정하기
+                                           <i class="fas fa-question-circle"></i>QNA수정하기
                                        </button>
                                    </c:if>
                            </div>
