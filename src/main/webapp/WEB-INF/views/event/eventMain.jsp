@@ -204,25 +204,6 @@
         }
         /*input form end*/
 
-    /*    button css*/
-    /*    .event-button {*/
-    /*        background-color: rgba(255, 131, 87, 1);*/
-    /*        color: white;*/
-    /*        border: none;*/
-    /*        padding: 10px 20px;*/
-    /*        border-radius: 5px;*/
-    /*        font-size: 16px;*/
-    /*        cursor: pointer;*/
-    /*        transition: background-color 0.3s;*/
-    /*    }*/
-
-    /*    .event-button:hover {*/
-    /*    background-color : rgba(255, 131, 255, 1);*/
-    /*    }*/
-    /*    .event-button i {*/
-    /*        margin-right: 5px;*/
-    /*    }*/
-
         #timeseriesChart {
             max-width: 70%;
         }
@@ -437,8 +418,8 @@
 <button class="event-button" onclick="location.href='${pageContext.servletContext.contextPath}/attendance.do'">
     <i class="fas fa-puzzle-piece"></i> 미니 게임
 </button>
-<button class="event-button" onclick="location.href='${pageContext.servletContext.contextPath}/attendance.do'">
-    <i class="fas fa-question-circle"></i> ???
+<button class="event-button" onclick="location.href='${pageContext.servletContext.contextPath}/eventCalendar.do'">
+    <i class="fas fa-calendar-alt"></i> 행사 일정
 </button>
 
 <!-- Footer Start -->
