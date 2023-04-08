@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="/WEB-INF/views/common/error.jsp"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set value="bbb" var="user" />
 <html>
 <head>
     <title>Title</title>
@@ -15,36 +16,87 @@
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/web-component@6.1.5/index.global.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.5/index.global.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.5/locales-all.global.min.js'></script>
-
+    <script
+            src="https://code.jquery.com/jquery-3.6.4.js"
+            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
     <script>
+        <%--    calendar --%>
+        const today_date = FormatDate(Date.now());
+        const attendanceMonthly = [];
+
+
+        function FormatDate(date) {
+            let date1 = new Date(date);
+            let year = date1.getFullYear();
+            let month = ('0' + (date1.getMonth() + 1)).slice(-2);
+            let day = ('0' + date1.getDate()).slice(-2);
+            const dateformat = year + '-' + month + '-' + day;
+            return dateformat ;
+        }
+
+        function conDates() {
+            $.ajax({
+                url: "continuousAttendance.do",
+                type: "POST",
+                data: {user_email: "${user}"},
+                dataType: "json",
+                success: function(response) {
+                    console.log("[requestPostBodyJson] : [response] : " + response);
+                    let conday = response.con.toString();
+                    $('#continuedAtt').html('최대 연속 출석 횟수 : ' + conday);
+                },
+                error: function(xhr) {
+                    console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+                }
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
 
             function hasDate() {
-                let found = attendanceMonthly.find(e => e.start === '2023-03-31');
+                let found = attendanceMonthly.find(e => e.start === today_date);
                 // console.log(found);
-                if(found === undefined) {
+                if (found === undefined) {
                     return true;
                 } else { //출석 존재
                     return false;
                 }
             }
 
+            function getAttendance() {
+                $.ajax({
+                    url: "getAttendance.do",
+                    type: "POST",
+                    data: {user_email: "${user}"},
+                    dataType: "json",
+                    success: function(response) {
+                        console.log("[requestPostBodyJson] : [response] : " + response);
+                        let jsonData = response;
+                        for (let i = 0; i < jsonData.list.length; i++) {
+                            let item = jsonData.list[i];
+                            let dateString = item.today.toString();
+                            let attendanceItem = {
+                                title: '출석',
+                                start: dateString,
+                                overlap: false,
+                                color: '#fc6c3f'
+                            };
+                            attendanceMonthly.push(attendanceItem);
+                            calendar.addEvent(attendanceItem);
+                        }
+                        console.log(attendanceMonthly);
+                        calendar.render();
+                    },
+                    error: function(xhr) {
+                        console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+                    },
+                });
+            }
+
             let calendarEl = document.getElementById('event-calendar');
-            let attendanceMonthly = [
-                {
-                    title: '출석',
-                    start: '2023-03-01',
-                    overlap: false,
-                    color: '#fc6c3f'
-                },
-                {
-                    title: '출석',
-                    start: '2023-03-03',
-                    overlap: false,
-                    color: '#fc6c3f'
-                }
-            ];
-            // attendanceMonthly.push()
+            getAttendance();
+            conDates();
             let calendar = new FullCalendar.Calendar(calendarEl, {
                 headerToolbar: {
                     left: 'addEventButton',
@@ -56,27 +108,41 @@
                     addEventButton: {
                         text:"출석하기",
                         click : () => {
-                            const date = new Date('2023-03-31');
-                            if (!isNaN(date.valueOf())&&hasDate()) {// valid?
+                            if (!(today_date===undefined)&&hasDate()) {// valid?
                                 const today = {
                                     title: '출석',
-                                    start: '2023-03-31',
+                                    start: today_date,
                                     color: '#fc6c3f'
                                 }
-                                calendar.addEvent(today);
-                                attendanceMonthly.push(today);
-                                console.log(attendanceMonthly);
-                                alert('출석 성공');
+                                $.ajax({
+                                    url: "attendance_today.do",
+                                    type: "post",
+                                    dataType: "json",
+                                    data: {
+                                        user_email: "${user}",
+                                        today: today_date
+                                    },
+                                    success: function (data){
+                                        console.log("success : " + data);
+
+                                        calendar.addEvent(today);
+                                        attendanceMonthly.push(today);
+                                        console.log(attendanceMonthly);
+                                        conDates();
+                                        alert('출석 성공');
+                                    },
+                                    error: function (jqXHR,textStatus,errorThrown){
+                                        console.log(errorThrown);
+                                        alert("출석 실패 다시 시도해주세요");
+                                    }
+                                });
                             } else {
-                                alert('출석 실패');
+                                alert('이미 출석했습니다.');
                             }
                         }
                     }
                 },
-                // initialDate: '2023-01-12',
-                // navLinks: true, // can click day/week names to navigate views
-                businessHours: true, // display business hours
-                // editable: true,
+                businessHours: true,
                 selectable: true,
                 events: attendanceMonthly
 
@@ -187,27 +253,14 @@
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/header.jsp"/>
-<div id="event-calendar">
-    <%--        <full-calendar shadow options='{--%>
-    <%--            "headerToolbar": {--%>
-    <%--            "left": "",--%>
-    <%--            "center": "title",--%>
-    <%--            "right": ""--%>
-    <%--            }--%>
-    <%--        }' />--%>
-</div>
-<%--<button onclick="">출석하기</button>--%>
+<div id="event-calendar"></div>
 <br>
-<%--<div class="q-card q-card-color-1">--%>
-<%--&lt;%&ndash;    <div class="content" id="quote"></div>&ndash;%&gt;--%>
-<%--</div>--%>
-
+<div id="continuedAtt"></div>
 <div  id="div-quote">
     <blockquote class="q-card q-card-color-1">
         <div class="content" id="quote"></div>
     </blockquote>
 </div>
-
 
 
 

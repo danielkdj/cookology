@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="eventmapper">
+
+    <resultMap type="Attendance" id="attendance">
+        <result property="user_email" column="user_email" />
+        <result property="today" column="today" />
+    </resultMap>
+
+    <select id="selectAttendance" resultMap="attendance">
+         select * from attendance where user_email = #{user_email}
+    </select>
+
+    <select id="selectContinuousAttendance" resultType="int">
+        <![CDATA[
+        SELECT CONSECUTIVE_DAYS
+        FROM (
+                 SELECT USER_EMAIL, CONSECUTIVE_DAYS,
+                        RANK() OVER (PARTITION BY USER_EMAIL ORDER BY CONSECUTIVE_DAYS DESC) AS max_consecutive_days_rank
+                 FROM (
+                          SELECT USER_EMAIL, COUNT(*) AS CONSECUTIVE_DAYS
+                          FROM (
+                                   SELECT USER_EMAIL, TODAY,
+                                          ROW_NUMBER() OVER (PARTITION BY USER_EMAIL ORDER BY TODAY) AS rn,
+                                           TODAY - ROW_NUMBER() OVER (PARTITION BY USER_EMAIL ORDER BY TODAY) AS grp
+                                   FROM ATTENDANCE
+                               )
+                          GROUP BY USER_EMAIL, TODAY - rn
+                      )
+             )
+        WHERE max_consecutive_days_rank = 1 and USER_EMAIL = #{user_email}
+        ]]>
+    </select>
+    <insert id="insertAttendance" parameterType="Attendance">
+        insert into attendance(user_email,today) values (#{user_email},#{today})
+    </insert>
+
+    <insert id="insertEventCalendar" parameterType="EventCalendar">
+        insert into EVENTCALEDAR
+        values
+        (
+            #{eventcalendar_uuid},#{start},#{end},#{title},#{url},
+            #{backgroundcolor},#{description},#{content}
+        )
+    </insert>
+</mapper>
