@@ -100,11 +100,17 @@
                        <div id="collapse${index.count}" class="panel-collapse collapse">
                            <div class="panel-body">
                                    ${ L.a_content }<small>${ L.a_create_at }</small>
+                                       <c:if test="${ loginUser.is_admin == 'Y' }">
+                                       <c:url var="update" value="QNAAdminPage.do">
+                                           <c:param name="qna_seq_id" value="${ L.qna_seq_id }" />
+                                       </c:url>
+                                       <button style="float: right" class="event-button" onclick="javascript:location.href='${ update }';">
+                                           <i class="fas fa-question-circle"></i>FAQ수정하기
+                                       </button>
+                                   </c:if>
                            </div>
                        </div>
                    </div>
-
-                       <buttom type="submit" value="수정하기" style="width:100px; height:50px;"></buttom>
 
                </c:forEach>
         </div>

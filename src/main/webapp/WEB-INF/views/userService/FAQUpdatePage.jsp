@@ -23,7 +23,26 @@
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 
     </head>
+<style>
+    .event-button {
+        background-color: rgba(255, 131, 87, 1);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
 
+    .event-button:hover {
+        background-color : rgba(255, 131, 255, 1);
+    }
+    .event-button i {
+        margin-right: 5px;
+    }
+
+</style>
 <body>
 <!-- Header Start -->
 <c:import url="/WEB-INF/views/common/header.jsp" />
@@ -62,12 +81,6 @@
                             </div>
                         </div>
                         <div class="col-12">
-                 <%--           <c:url var="submitupdate" value="FAQadminUpdate.do">
-                                <c:param name="FAQ" value="${ faq }" />
-                            </c:url>
-                            <button class="event-button" onclick="javascript:location.href='${ submitupdate }';">
-                                <i class="fas fa-question-circle"></i>수정하기
-                            </button>--%>
                             <button class="event-button" type="submit" value="수정되었습니다.">
                                 <i class="fas fa-question-circle"></i>수정하기
                             </button>

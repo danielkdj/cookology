@@ -126,11 +126,8 @@
     </div>
 
     <br />
-    <%-- 작업--%>
-    <button class="event-button" onclick="javascript:location.href='FAQUpdate.do';">
-      <i class="fas fa-question-circle"></i> FAQ수정하기
-    </button>
-    <div class="panel-group" id="accordion">
+
+       <div class="panel-group" id="accordion">
       <div class="faqHeader">FAQ</div>
       <!-- "list" 변수 설정 -->
 

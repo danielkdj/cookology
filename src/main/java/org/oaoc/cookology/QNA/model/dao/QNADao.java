@@ -20,7 +20,7 @@ public class QNADao {
        return new ArrayList<>(list);
     }
 
-    public int selectQNA(int qna_Seq_Id) {
+    public QNA selectQNA(int qna_Seq_Id) {
         return session.selectOne("QNAMapper.selectQNA",qna_Seq_Id);
     }
 
@@ -45,5 +45,9 @@ public class QNADao {
     public ArrayList<QNA> selectNewQuestionList() {
         List<QNA> list = session.selectList("QNAMapper.selectNewQuestionList");
         return new ArrayList<>(list);
+    }
+
+    public int updateQNA(QNA qna) {
+        return session.update("QNAMapper.updateQNA",qna);
     }
 }
