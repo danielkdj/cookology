@@ -29,13 +29,13 @@
 
 /* ***** Import CSS ***** */
 
-@import '/cookology/resources/css/bootstrap/bootstrap.min.css';
-@import '/cookology/resources/css/others/animate.css';
-@import '/cookology/resources/css/others/magnific-popup.css';
-@import '/cookology/resources/css/others/meanmenu.min.css';
-@import '/cookology/resources/css/others/owl.carousel.min.css';
-@import '/cookology/resources/css/others/font-awesome.min.css';
-@import '/cookology/resources/css/others/pe-icon-7-stroke.css';
+@import "bootstrap.min.css";
+@import "others/animate.css";
+@import "others/magnific-popup.css";
+@import "others/meanmenu.min.css";
+@import "others/owl.carousel.min.css";
+@import "others/font-awesome.min.css";
+@import "others/pe-icon-7-stroke.css";
 
 /* --------------------
 :: 1.0 Base CSS
@@ -603,7 +603,7 @@ top_header_area {
     height: 100%;
     top: 0;
     left: 0;
-    cursor: url(/cookology/resources/img/core-img/back.png), auto !important;
+    cursor: url(/resources/img/core-img/back.png), auto !important;
     z-index: 9;
 }
 
@@ -614,7 +614,7 @@ top_header_area {
     height: 100%;
     top: 0;
     right: 0;
-    cursor: url(/cookology/resources/img/core-img/next.png), auto !important;
+    cursor: url(/resources/img/core-img/next.png), auto !important;
 }
 
 
@@ -845,7 +845,7 @@ top_header_area {
     height: 100%;
     top: 0;
     left: 0;
-    cursor: url(/cookology/resources/img/core-img/back.png), auto !important;
+    cursor: url(/resources/img/core-img/back.png), auto !important;
     z-index: 9;
 }
 
@@ -856,7 +856,7 @@ top_header_area {
     height: 100%;
     top: 0;
     right: 0;
-    cursor: url(/cookology/resources/img/core-img/next.png), auto !important;
+    cursor: url(/resources/img/core-img/next.png), auto !important;
 }
 
 
@@ -1481,7 +1481,7 @@ top_header_area {
 .bg-pattern {
     background-attachment: fixed;
     background-position: center center;
-    background-image: url(img/bg-img/bg-pattern.jpg);
+    background-image: url(/resources/img/bg-img/bg-pattern.jpg);
     position: relative;
     background-size: cover;
     z-index: 1;
@@ -1539,3 +1539,4 @@ top_header_area {
 	color: #fff;
 	cursor: pointer;
 }
+

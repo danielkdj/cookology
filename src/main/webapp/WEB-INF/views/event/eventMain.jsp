@@ -16,7 +16,9 @@
 
     <!-- Favicon -->
     <link rel="icon" href="${ pageContext.servletContext.contextPath }/resources/img/core-img/Cookology_logo.png"/>
+    <%--button--%>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous"/> <%--referrerpolicy="no-referrer--%>
+    <link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/event/event-button.css"/>
     <!-- Core Stylesheet -->
     <link href="${ pageContext.servletContext.contextPath }/resources/css/style.css" rel="stylesheet"/>
     <link href="${ pageContext.servletContext.contextPath }/resources/css/responsive/reponsive.css" rel="stylesheet"/>
@@ -140,11 +142,11 @@
             position: absolute;
             white-space: nowrap;
             will-change: transform;
-            animation: marquee 30s linear infinite;
+            animation: marquee 10s linear infinite;
         }
         @keyframes marquee {
             from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
+            to { transform: translateX(-150%); }
         }
         @media (hover: hover) and (min-width: 700px){
             .animated-title .bill-content {
@@ -202,25 +204,6 @@
         }
         /*input form end*/
 
-    /*    button css*/
-        .event-button {
-            background-color: rgba(255, 131, 87, 1);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .event-button:hover {
-        background-color : rgba(255, 131, 255, 1);
-        }
-        .event-button i {
-            margin-right: 5px;
-        }
-
         #timeseriesChart {
             max-width: 70%;
         }
@@ -239,7 +222,7 @@
 <div class="billboard-container">
     <div class="animated-title billboard">
         <div class="bill-track">
-            <div class="bill-content">[USER01] : 한글테스트 [USER01] : TEST-MSG [USER01] : TEST-MSG [USER01] : TEST-MSG</div>
+            <div class="bill-content">[USER01] : TEST-MSG 데스와</div>
         </div>
     </div>
 </div>
@@ -429,14 +412,14 @@
     }, 1000);
 </script>
 <br>
-<button class="event-button">
+<button class="event-button" onclick="location.href='${pageContext.servletContext.contextPath}/attendance.do'">
     <i class="fas fa-calendar-alt"></i> 출석부
 </button>
-<button class="event-button">
+<button class="event-button" onclick="location.href='${pageContext.servletContext.contextPath}/attendance.do'">
     <i class="fas fa-puzzle-piece"></i> 미니 게임
 </button>
-<button class="event-button">
-    <i class="fas fa-question-circle"></i> ???
+<button class="event-button" onclick="location.href='${pageContext.servletContext.contextPath}/eventCalendar.do'">
+    <i class="fas fa-calendar-alt"></i> 행사 일정
 </button>
 
 <!-- Footer Start -->

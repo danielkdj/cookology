@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ordersMapper">
+
+
+<!-- 
+<resultMap id="orderResultMap" type="Order">
+  <id property="order_id" column="order_id" />
+  <result property="user_email" column="user_email" />
+  <result property="product_seq_id" column="product_seq_id" />
+  <result property="order_success" column="order_success" />
+  <result property="count" column="count" />
+  <result property="create_at" column="create_at" />
+  <result property="product_name" column="product_name" />
+  <result property="price" column="price" />
+</resultMap>
+
+
+
+<select id="selectOrderList" resultMap="orderResultMap">
+  SELECT o.order_id, o.user_email, o.product_seq_id, o.order_success, o.count, o.create_at,
+    p.product_name, p.price
+  FROM ORDERS o JOIN PRODUCT p ON o.product_seq_id = p.product_seq_id
+  ORDER BY o.create_at DESC
+</select>
+
+ -->
+
+
+
+
+
+<resultMap id="resultMerchant" type="Orders">
+  <id property="orders_seq_id" column="orders_seq_id" />
+  <result property="business_number" column="business_number" />
+  <result property="product_name" column="product_name" />
+  <result property="price" column="price" />
+  <result property="amount" column="amount" />
+  <result property="user_email" column="user_email" />
+  <result property="user_name" column="user_name" />
+  <result property="user_phone" column="user_phone" />
+  <result property="user_address" column="user_address" />
+  <result property="user_post_code" column="user_post_code" />
+  <result property="cancellation" column="cancellation" />
+  <result property="orders_success" column="orders_success" /> 
+  <result property="amount_day" column="amount_day" />
+  <result property="amount_month" column="amount_month" />
+  <result property="create_at" column="create_at" />
+</resultMap>
+
+
+
+<!-- 상품 리스트 전체 목록 -->
+	<select id="selectAll" resultMap="resultMerchant">
+	select * from orders
+	order by orders_seq_id desc </select>
+
+
+
+
+
+
+
+
+
+
+
+	<select id="selectOrder" parameterType="string">
+		SELECT product_name 상품이름 , client_name 판매자상호명 ,  price 가격 count 주문 수량 , amount 총 가격
+		FROM orders join product using (product_seq_id)
+		product join client using (business_number);
+		WHERE user_email = #{ user_email }
+	</select>
+	
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product_descriptionMapper">
+
+
+
+			<resultMap id="resultProduct" type="Product">
+			<result column="product_seq_id" property="product_seq_id"/>
+			<result column="PRODUCT_DESCRIPTION_NO" property="PRODUCT_DESCRIPTION_NO"/>
+			<result column="ORIGINAL_IMG" property="ORIGINAL_IMG"/>
+			<result column="RENAME_IMG" property="RENAME_IMG"/>
+			<result column="DESCRIPTION" property="DESCRIPTION"/>	
+			</resultMap>
+
+<!-- 
+	<delete id="deleteProduct" parameterType="_int">
+		delete from product
+		where product_seq_id = #{ product_seq_id }
+	</delete> 
+ -->
+
+
+<insert id="insertProduct" parameterType="Product">
+    insert into product ( PRODUCT_DESCRIPTION_NO, ORIGINAL_IMG, RENAME_IMG, 
+                          DESCRIPTION)
+    values ( 
+     (select nvl(max(PRODUCT_DESCRIPTION_NO), 0) + 1 from product)
+            #{ORIGINAL_IMG}, 
+            #{product_name}, 
+            #{ORIGINAL_IMG,jdbcType=VARCHAR}, 
+            #{RENAME_IMG,jdbcType=VARCHAR}, 
+            #{DESCRIPTION})
+</insert>
+
+
+
+
+<!-- <insert id="insertProductDescription" parameterType="ProductDescription">
+insert into product_description (product_seq_id, original_img, rename_img, description)
+values ((select max(product_seq_id) + 1 from product),
+		#{ original_img, jdbcType=VARCHAR },
+		#{ rename_img, jdbcType=VARCHAR },
+		#{ description })
+</insert> -->
+
+
+
+</mapper>

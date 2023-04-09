@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" errorPage="error.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.io.IOException" %>
 <%@ page import="okhttp3.*" %>
 <%@ page import="org.json.JSONObject" %>
+<%@ page import="java.util.Objects" %>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -26,7 +26,7 @@
                 .build();
         try (Response rp = client.newCall(rq).execute()) {
             if (rp.isSuccessful()) {
-                String responseBody = rp.body().string();
+                String responseBody = Objects.requireNonNull(rp.body()).string();
                 JSONObject weatherJson = new JSONObject(responseBody);
                 cityName = weatherJson.getString("name");
                 weatherMain = weatherJson.getJSONArray("weather").getJSONObject(0).getString("main");
@@ -177,18 +177,12 @@
         <div class="row">
             <div class="col-12">
                 <nav class="navbar navbar-expand-lg">
-                    <button class="navbar-toggler" type="button"
-                            data-toggle="collapse" data-target="#yummyfood-nav"
-                            aria-controls="yummyfood-nav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <i class="fa fa-bars" aria-hidden="true"></i>Menu
-                    </button>
                     <!-- Menu Area Start -->
                     <div class="collapse navbar-collapse justify-content-center"
                          id="yummyfood-nav">
                         <ul class="navbar-nav" id="yummy-nav">
                             <li class="nav-item"><a class="nav-link"
-                                                    href="/cookology/WEB-INF/views/common/recipes.html">레시피</a></li>
+                                                    href="/WEB-INF/views/common/recipes.html">레시피</a></li>
                             <li class="nav-item"><a class="nav-link"
                                                     href="${ pageContext.servletContext.contextPath}/eventPage.do">밀키트</a></li>
                             <li class="nav-item"><a class="nav-link"
@@ -200,11 +194,8 @@
                         </ul>
                     </div>
                 </nav>
-
             </div>
-
         </div>
-    </div>
     </div>
 </header>
 

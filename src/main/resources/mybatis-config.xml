@@ -13,17 +13,24 @@
 		<typeAlias type="org.oaoc.cookology.users.model.vo.Users" alias="Users" />
 		<typeAlias type="org.oaoc.cookology.common.SearchDate" alias="SearchDate" />
 		<typeAlias type="org.oaoc.cookology.cart.model.vo.Cart" alias="Cart" />
-		<!--<typeAlias type="org.oaoc.cookology.order.model.vo.Order" alias="Order" />-->
+		<typeAlias type="org.oaoc.cookology.orders.model.vo.Orders" alias="Orders" />
+		<typeAlias type="org.oaoc.cookology.product.model.vo.Product" alias="Product" />
+		<typeAlias type="org.oaoc.cookology.productDescription.model.vo.ProductDescription" alias="ProductDescription" />
 		<typeAlias type="org.oaoc.cookology.FAQ.model.vo.FAQ" alias="FAQ" />
 		<typeAlias type="org.oaoc.cookology.QNA.model.vo.QNA" alias="QNA" />
+		<typeAlias type="org.oaoc.cookology.event.model.vo.Attendance" alias="Attendance" />
+		<typeAlias type="org.oaoc.cookology.event.model.vo.EventCalendar" alias="EventCalendar" />
 	</typeAliases>
 	
 	<!-- mapper : 실행할 쿼리문만 별도로 작성하는 파일을 말함 -->
 	<mappers>
 		<mapper resource="mappers/users-mapper.xml" />
 		<mapper resource="mappers/cart-mapper.xml" />
-		<!--<mapper resource="mappers/order-mapper.xml" />-->
+		<mapper resource="mappers/orders-mapper.xml" />
+		<mapper resource="mappers/product-mapper.xml" />
+		<mapper resource="mappers/product_description-mapper.xml" />
 		<mapper resource="mappers/FAQ-mapper.xml" />
 		<mapper resource="mappers/QNA-mapper.xml" />
+		<mapper resource="mappers/event-mapper.xml"/>
 	</mappers>
 </configuration>
