@@ -2,7 +2,7 @@ package org.oaoc.cookology.notice.model.service;
 
 import java.util.ArrayList;
 
-import org.oaoc.cookology.common.Page;
+import org.oaoc.cookology.common.Paging;
 import org.oaoc.cookology.common.SearchDate;
 import org.oaoc.cookology.notice.model.dao.NoticeDao;
 import org.oaoc.cookology.notice.model.vo.Notice;
@@ -45,20 +45,6 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.deleteNotice(noticeno);
 	}
 
-	@Override
-	public ArrayList<Notice> selectSearchTitle(String keyword) {
-		return noticeDao.selectSearchTitle(keyword);
-	}
-
-	@Override
-	public ArrayList<Notice> selectSearchWriter(String keyword) {
-		return noticeDao.selectSearchWriter(keyword);
-	}
-
-	@Override
-	public ArrayList<Notice> selectSearchDate(SearchDate date) {
-		return noticeDao.selectSearchDate(date);
-	}
 
 	@Override
 	public Notice selectLast() {
@@ -66,7 +52,7 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public ArrayList<Notice> selectPaging(Page paging) {
+	public ArrayList<Notice> selectPaging(Paging paging) {
 		return noticeDao.selectPaging(paging);
 	}
 
@@ -81,9 +67,28 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public ArrayList<Notice> selectList(Page paging) {
+	public ArrayList<Notice> selectList(Paging paging) {
 		return noticeDao.selectList(paging);
 	}
+
+	@Override
+	public int selectSearchTitleCount(String keyword) {
+		return noticeDao.selectSearchTitleCount(keyword);
+	}
+
+	@Override
+	public ArrayList<Notice> selectSearchTitle(Paging paging) {
+		return noticeDao.selectSearchTitle(paging);
+	}
+
+	@Override
+	public int selectSearchContentCount(String keyword) {
+		return noticeDao.selectSearchContentCount(keyword);
+	}
+
+	@Override
+	public ArrayList<Notice> selectSearchContent(Paging paging) {
+		return noticeDao.selectSearchContent(paging);	}
 
 
 }

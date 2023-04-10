@@ -7,14 +7,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<c:set var="startPage" value="${ requestScope.paging.startPage }" />
+<c:set var="endPage" value="${ requestScope.paging.endPage }" />
+<c:set var="maxPage" value="${ requestScope.paging.maxPage }" />
+<c:set var="currentPage" value="${ requestScope.paging.currentPage }" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="utf-8"/>
     <title>Cookology FAQ | PrepBootstrap</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/resources/js/jquery/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/resources/js/jquery-3.6.3.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/cookology/resources/css/FAQService/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css"
@@ -26,7 +30,7 @@
 
     <script>
 
-        $(document).ready(function () {
+        $(function () {
             $('.panel-heading a').on('click', function () {
                 var currentPanel = $(this).attr('href');
                 var currentPanelState = $(currentPanel).hasClass('in');
@@ -46,13 +50,13 @@
             var search = document.getElementById("searchBar").value;
             var searchType = "";
             if (document.getElementById("noticeAllRadio").checked) {
-                searchType = "All";
+                searchType = "nlist";
             } else if (document.getElementById("noticeContentRadio").checked) {
-                searchType = "Content";
+                searchType = "nsearchContent";
             } else if (document.getElementById("noticeTitleRadio").checked) {
-                searchType = "Title";
+                searchType = "nsearchTitle";
             }
-            location.href = "nsearch"+searchType+".do?keyword=" + search; method="post";
+            location.href = searchType+".do?keyword=" + search+ "&page=1";
         }
 
 
@@ -76,7 +80,7 @@
             <c:param name="user_email" value="${ loginUser.user_email }"/>
         </c:url>
         <a href="${ qna }"><h1>질문하기(QNA)</h1></a>&nbsp; &nbsp;
-        <a href="blist.do"><h1>공지사항</h1></a>
+        <a href="nlist.do?page=1"><h1>공지사항</h1></a>
     </div>
 
     <!-- Bootstrap org.oaoc.cookology.FAQ - START -->
@@ -258,9 +262,12 @@
     <!-- Bootstrap org.oaoc.cookology.FAQ - END -->
 
 </div>
-<c:import url="/WEB-INF/views/common/paging.jsp"></c:import>
-
-
+<c:if test="${ empty url }">
+    <c:import url="/WEB-INF/views/common/paging.jsp"></c:import>
+</c:if>
+<c:if test="${ !empty url }">
+    <c:import url="/WEB-INF/views/common/searchPaging.jsp"></c:import>
+</c:if>
 <!-- Footer Start -->
 <c:import url="/WEB-INF/views/common/footer.jsp"></c:import>
 <!-- Footer End -->
