@@ -82,28 +82,28 @@ COMMENT ON COLUMN LIKE_PRODUCT.create_at IS '생성일시(좋아요 누른 시�
 
 COMMENT ON COLUMN LIKE_PRODUCT.modified_at IS '수정일시(좋아요 내역변경)';
 
-CREATE TABLE NOTIFITION
+CREATE TABLE notification
 (
-  notifition_seq_id  NUMBER       NOT NULL,
+    notification_seq_id  NUMBER       NOT NULL,
   admin_id           VARCHAR(255) NOT NULL,
-  notifition_title   VARCHAR(200) NOT NULL,
-  notifition_content NCLOB        NOT NULL,
+  notification_title   VARCHAR(200) NOT NULL,
+  notification_content NCLOB        NOT NULL,
   created_at         TIMESTAMP    NOT NULL,
   modified_at        TIMESTAMP    NOT NULL,
   user_email         VARCHAR(255) NOT NULL,
-  CONSTRAINT PK_NOTIFITION PRIMARY KEY (notifition_seq_id)
+  CONSTRAINT PK_notification PRIMARY KEY (notification_seq_id)
 );
 
 CREATE SEQUENCE SEQ_NOTIFITION
 START WITH 1
 INCREMENT BY 1;
 
-CREATE OR REPLACE TRIGGER SEQ_TRG_NOTIFITION
-BEFORE INSERT ON NOTIFITION
+CREATE OR REPLACE TRIGGER SEQ_TRG_notification
+BEFORE INSERT ON notification
 REFERENCING NEW AS NEW FOR EACH ROW
 BEGIN
   SELECT SEQ_NOTIFITION.NEXTVAL
-  INTO: NEW.notifition_seq_id
+  INTO: NEW.notification_seq_id
   FROM DUAL;
 END;
 /

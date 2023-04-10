@@ -110,8 +110,11 @@
     <c:url var="qna" value="QNAPage.do">
       <c:param name="user_email" value="${ loginUser.user_email }" />
     </c:url>
+    <%--    <c:url var="qna" value="QNAPage.do">--%>
+    <%--      <c:param name="user_email" value="${ loginUser.user_email }" />--%>
+    <%--    </c:url>--%>
     <a href="${ qna }"><h1>질문하기(QNA)</h1></a>&nbsp; &nbsp;
-    <a href="noticePage.do"><h1>공지사항</h1></a>
+    <a href="blist.do"><h1>공지사항</h1></a>
   </div>
 
   <!-- Bootstrap org.oaoc.cookology.FAQ - START -->
@@ -127,7 +130,7 @@
 
     <br />
 
-       <div class="panel-group" id="accordion">
+    <div class="panel-group" id="accordion">
       <div class="faqHeader">FAQ</div>
       <!-- "list" 변수 설정 -->
 
@@ -181,12 +184,12 @@
               <div class="panel-body">
 
                   ${ L.frequentlyAsked }
-                    <c:url var="update" value="moveFAQUpdate.do">
-                      <c:param name="faq_seq_id" value="${ L.faq_seq_id }" />
-                    </c:url>
-                    <button style="float: right" class="event-button" onclick="javascript:location.href='${ update }';">
-                <i class="fas fa-question-circle"></i>FAQ수정하기
-              </button>
+                <c:url var="update" value="moveFAQUpdate.do">
+                  <c:param name="faq_seq_id" value="${ L.faq_seq_id }" />
+                </c:url>
+                <button style="float: right" class="event-button" onclick="javascript:location.href='${ update }';">
+                  <i class="fas fa-question-circle"></i>FAQ수정하기
+                </button>
               </div>
             </div>
 

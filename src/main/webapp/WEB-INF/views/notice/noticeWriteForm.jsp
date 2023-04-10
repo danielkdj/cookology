@@ -1,11 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: ICT02-30
-  Date: 2023-03-27
-  Time: 오후 2:23
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -48,16 +42,14 @@
 <c:import url="/WEB-INF/views/common/header.jsp" />
 <!-- Header End -->
 
-<form action="QNAadminUpdate.do">
-  <input type="hidden" name="qna_seq_id" value="${ qna.qna_seq_id }" />
-    <input type="hidden" name="q_title" value="${ qna.q_title }" />
-    <input type="hidden" name="q_create_at" value="${ qna.q_create_at }" />
-     <div class="inquiry-section section_padding_100">
+<form action="ninsert.do">
+  <input type="hidden" name="noticewrite" value="${ loginMember.users_email }">
+  <div class="inquiry-section section_padding_100">
     <div class="container">
       <div class="row">
         <div class="col-12">
           <div class="section-heading text-center">
-            <h2>FAQ 수정하기</h2>
+            <h2>FAQ 작성하기</h2>
           </div>
         </div>
       </div>
@@ -68,24 +60,24 @@
               <div class="col-12">
                 <div class="form-group">
                   <label >번호 *</label>
-                  <input type="text" class="form-control" name="user_email" value="${ qna.user_email }" readonly />
+                  <input type="text" class="form-control" name="noticeno" value="${ noticeno }" readonly>
                 </div>
               </div>
               <div class="col-12">
                 <div class="form-group">
-                  <label>질문 :${ qna.q_title }</label>
-                  <input type="text" class="form-control" name="q_content" value="${ qna.q_content }" readonly />
+                  <label>질문 *</label>
+                  <input type="text" class="form-control" name="noticetitle" required>
                 </div>
               </div>
               <div class="col-12">
                 <div class="form-group">
                   <label>답변 *</label>
-                  <textarea class="form-control" name="a_content" rows="5"  required></textarea>
+                  <textarea class="form-control" name="noticecontent" rows="5"  required></textarea>
                 </div>
               </div>
               <div class="col-12">
-                <button class="event-button" type="submit" value="수정되었습니다.">
-                  <i class="fas fa-question-circle"></i>수정하기
+                <button class="event-button" type="submit" value="공지완료.">
+                  <i class="fas fa-question-circle"></i>공지하기
                 </button>
               </div>
             </div>

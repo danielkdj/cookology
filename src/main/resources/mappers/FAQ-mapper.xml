@@ -13,11 +13,20 @@
     <select id="selectFAQList" resultMap="selectFAQList">
         select * from FAQ
     </select>
-    <update id="updateFAQ">
+
+    <update id="updateFAQ" parameterType="FAQ">
         update FAQ
         set frequentlyAsked = #{ frequentlyAsked },
             questions = #{questions}
         where faq_seq_id =#{ faq_seq_id }
     </update>
+
+    <select id="selectFAQ" parameterType="int" resultType="FAQ">
+    select *
+    from FAQ
+    where FAQ_SEQ_ID = #{ FAQ_SEQ_ID }
+
+
+    </select>
 
 </mapper>

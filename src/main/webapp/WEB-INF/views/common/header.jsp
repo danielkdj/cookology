@@ -37,6 +37,29 @@
     %>
 
     <title>Cookology - Home</title>
+    Based on the given CSS styles and HTML, I will modify the CSS to match the style you provided:
+
+    html
+    Copy code
+    <!-- ****** SearchBar Start ****** -->
+    <style>
+        #btn-brand {
+            background-color: #FC6C3F;
+            border-color: #FC6C3F;
+            color: #FFFFFF;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        #btn-brand:hover {
+            background-color: #E95627;
+            border-color: #E95627;
+            color: #FFFFFF;
+        }
+    </style>
+
+    <!-- ****** LoginBox Start ****** -->
     <style type="text/css">
         #loginBox {
             position: absolute;
@@ -45,20 +68,42 @@
             z-index: 20;
             font-size: 13px;
             text-decoration: none;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            padding: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
         }
 
         #loginBox a {
-            color: black;
+            color: #333;
+            text-decoration: none;
+            padding: 2px 4px;
+            border-radius: 2px;
         }
 
         #loginBox a:visited {
-            color: black;
+            color: #333;
+        }
+
+        #loginBox a:hover {
+            color: #ffffff;
+            background-color: #333;
+            text-decoration: none;
         }
 
         .logout-btn {
             padding: 1px;
+            background-color: #f44336;
+            color: #ffffff;
+            border-radius: 2px;
+            text-decoration: none;
         }
-    </style>
+
+        .logout-btn:hover {
+            background-color: #d32f2f;
+            text-decoration: none;
+        }
+        </style>
     <!-- Favicon -->
     <link rel="icon"
           href="/cookology/resources/img/core-img/Cookology_logo.png" />
@@ -99,11 +144,10 @@
 
                     <!-- Login Area Display Start -->
                     <!-- 로그인 안 했을 때 : Session 객체 안에 loginMember 가 없다면 -->
-                    <c:if test="${ empty sessionScope.loginMember }">
+                    <c:if test="${ empty sessionScope.loginUser }">
                         <div class="login_register_area d-flex">
                             <div class="login">
-                                <a
-                                        href="${ pageContext.servletContext.contextPath}/loginPage.do">로그인</a>
+                                <a href="${ pageContext.servletContext.contextPath}/loginPage.do">로그인</a>
                             </div>
                             <div class="register">
                                 <a
@@ -121,15 +165,13 @@
 
             <!-- 로그인 했을 때 : 일반회원인 경우 -->
             <c:if
-                    test="${!empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
+                    test="${!empty sessionScope.loginUser and loginUser.is_admin ne 'Y' }">
                 <div id="loginBox" class="lineA">
-                        ${ loginMember.username }님 &nbsp; <a>쪽지</a> &nbsp; &nbsp; <a>메일</a>
-                    &nbsp; &nbsp;
+                        ${ loginUser.user_email }님   <a>쪽지</a>     <a>메일</a>
+
                     <!-- 마이페이지 클릭시 연결대상과 전달값 지정 -->
-                    <c:url var="callMyInfo" value="/myinfo.do">
-                        <c:param name="userid" value="${loginMember.userid }" />
-                    </c:url>
-                    <a href="${ callMyInfo }">My Page</a> &nbsp;
+
+                    <a href="FAQPage.do">My Page</a>
                     <button class="logout-btn"
                             onclick="javascript:location.href='logout.do';">
                         <span>로그아웃</span>
@@ -138,16 +180,14 @@
             </c:if>
             <!-- 로그인 했을 때 : 관리자인 경우 -->
             <c:if
-                    test="${ !empty sessionScope.loginMember and loginMember.admin eq 'Y' }">
+                    test="${ !empty sessionScope.loginUser and loginUser.is_admin eq 'Y' }">
                 <div id="loginBox" class="lineA">
-                        ${ loginMember.username } 님 &nbsp; <a
+                        ${ loginMember.user_email } 님 &nbsp; <a
                         href="${ pageContext.servletContext.contextPath}/admin.do">관리
                     페이지로 이동</a> &nbsp;
                     <!-- 마이페이지 Service 제공 클릭시 연결대상과 전달값 지정 -->
-                    <c:url var="callMyIjfo" value="/myinfo.do">
-                        <c:param name="userid" value="${ loginMember.userid }" />
-                    </c:url>
-                    <a href="${ callMyInfo }">My Page</a> &nbsp;
+
+                    <a href="FAQPage.do">My Page</a> &nbsp;
                     <button class="logout-btn"
                             onclick="javascript:location.href='logout.do';">
                         <span>로그아웃</span>

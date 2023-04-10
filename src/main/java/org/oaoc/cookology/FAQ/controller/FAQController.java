@@ -38,12 +38,12 @@ public class FAQController {
 
 
 
-    @RequestMapping("moveFAQUpdate.do")
+    @RequestMapping(value="moveFAQUpdate.do", method = {RequestMethod.POST, RequestMethod.GET})
     public String FAQUpdateMethod(
             @RequestParam("faq_seq_id") int faq_seq_id, Model model){
         FAQ faq = FAQService.selectFAQ(faq_seq_id);
         if(faq != null){
-        model.addAttribute("faq", faq);
+            model.addAttribute("faq", faq);
             return "userService/FAQUpdatePage";
         }else {
             return "common/error";
@@ -57,17 +57,13 @@ public class FAQController {
 
         if (updateSet > 0) {
             logger.info("FAQ 수정 성공");
-             return "redirect:FAQPage.do";
+            return "redirect:FAQPage.do";
 
         } else {
             model.addAttribute("message", faq.getFaq_seq_id() + "번 글의 수정이 실패");
             return "common/error";
         }
     }
-    /*@RequestMapping("admincheck.do")
-    public String admincheckMethod(@RequestParam("faq_seq_id") String ){
 
-
-    }*/
 
 }
