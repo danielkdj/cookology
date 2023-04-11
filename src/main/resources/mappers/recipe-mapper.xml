@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+		"-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RecipeMapper">
+
+	<!-- select 한 결과집합 ResultSet 에서 한 행씩 꺼내서 
+	각 컬럼값들을 vo 객체의 각 필드에 저장 처리하는 작업
+	: 결과 매핑
+	리스트나 맵에 여러 객체를 저장 처리도 포함됨 -->
+	<resultMap type="Recipe" id="resultRecipe">
+		<id property="recipe_seq_id" column="recipe_seq_id" />
+		<result property="recipe_id" column="recipe_id" />
+		<result property="category_id" column="category_id" />
+		<result property="thumb_url" column="thumb_url" />
+		<result property="recipe_title" column="recipe_title" />
+		<result property="recipe_description" column="recipe_description" />
+		<result property="recipe_content" column="recipe_content" />
+		<result property="recipe_ingredient" column="recipe_ingredient" />
+		<result property="views" column="views" />
+		<result property="recipe_time" column="recipe_time" />
+		<result property="recipe_level" column="recipe_level" />
+		<result property="serving_dish" column="serving_dish" />
+		<result property="admin_inspection" column="admin_inspection" />
+		<result property="created_at" column="created_at" />
+		<result property="modified_at" column="modified_at" />
+	</resultMap>
+
+	<!--&lt;!&ndash; 레시피 seq_id로 레시피 정보 조회용 &ndash;&gt;
+	<select id="selectOne" parameterType="string" resultMap="resultRecipeTitle">
+		select * from recipe
+		where recipe_title = #{recipe_title}
+	</select>-->
+
+	<!-- 레시피 조회(최신순) -->
+	<select id="recipeSelectList" resultMap="resultRecipe">
+		select * from recipe
+		ORDER BY recipe_seq_id DESC
+	</select>
+
+	<!-- 레시피 조회(조회수순) -->
+	<select id="recipeSelectViews" resultMap="resultRecipe">
+		select * from recipe
+		ORDER BY views DESC
+	</select>
+
+	<!-- 레시피 조회(RowNum 조회수 5개씩) -->
+	<select id="recipeSelectViewRownum" resultMap="resultRecipe">
+		SELECT ROWNUM AS rnum, recipe_seq_id, category_id, thumb_url, recipe_title,
+			   recipe_description, recipe_content, recipe_ingredient, views,
+			   recipe_time, recipe_level, serving_dish, admin_inspection,
+			   created_at, modified_at
+		FROM recipe
+		ORDER BY views DESC
+			FETCH FIRST 5 ROWS ONLY
+	</select>
+
+	<!-- 레시피 조회(RowNum 최신글 5개씩) -->
+	<select id="recipeSelectListRownum" resultMap="resultRecipe">
+		SELECT ROWNUM AS rnum, recipe_seq_id, category_id, thumb_url, recipe_title,
+			   recipe_description, recipe_content, recipe_ingredient, views,
+			   recipe_time, recipe_level, serving_dish, admin_inspection,
+			   created_at, modified_at
+		FROM recipe
+		ORDER BY recipe_seq_id DESC
+			FETCH FIRST 5 ROWS ONLY
+	</select>
+
+	<!-- 레시피 출력(레시피 고유번호 조회) -->
+	<select id="recipeSelectSeqId" parameterType="string" resultMap="resultRecipe">
+		select * from recipe
+		where recipe_seq_id = #{recipe_seq_id}
+	</select>
+
+	<!-- 레시피 출력(레시피 제목 조회) -->
+	<select id="recipeSelectTitle" parameterType="string" resultMap="resultRecipe">
+		select * from recipe
+		where recipe_title = #{recipe_title}
+	</select>
+
+	<!-- 레시피 출력(레시피 설명 조회) -->
+	<select id="recipeSelectDescription" parameterType="string" resultMap="resultRecipe">
+		select * from recipe
+		where recipe_description = #{recipe_description}
+	</select>
+
+	<!-- 검색창 입력값 키워드 검색용(로그인한 유저 알러지정보, 헤더에 있는 현재날씨, 온도를 매개변수로 받아옴 -->
+	<select id="selectSearchKeywordRecipeList" parameterType="string" resultMap="resultRecipe">
+		select * from recipe
+		where recipe_title like '%' || #{ keyword } || '%'
+		   or recipe_description like '%' || #{ keyword } || '%'
+		   or recipe_content like '%' || #{ keyword } || '%'
+		   or recipe_ingredient like '%' || #{ keyword } || '%'
+	</select>
+</mapper>
+
+
+
+
+
