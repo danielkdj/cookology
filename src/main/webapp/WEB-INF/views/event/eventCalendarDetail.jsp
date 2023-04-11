@@ -209,7 +209,7 @@
         </tr>
         <tr>
             <script type="text/javascript"
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1228e92de83ae956c2778e75d8f9a2b4"></script>
+                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey="></script>
             <div id="map" style="width:100%;height:350px;"></div>
             <script>
                 setTimeout(() => {
