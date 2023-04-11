@@ -1,6 +1,6 @@
 package org.oaoc.cookology.common;
 
-public class Paging {
+public class Page {
 	// 한 페이지에 출력할 시작행과 끝행을 저장하는 객체
 	private int startRow;
 	private int endRow;
@@ -11,7 +11,7 @@ public class Paging {
 	private int startPage; //페이지그룹의 시작값
 	private int endPage;  //페이지그룹의 끝값
 
-	public Paging(int listCount, int currentPage, int limit) {
+	public Page(int listCount, int currentPage, int limit) {
 		this.listCount = listCount;
 		this.currentPage = currentPage;
 		this.limit = limit;

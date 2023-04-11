@@ -3,7 +3,6 @@ package org.oaoc.cookology.event.model.service;
 
 import org.oaoc.cookology.event.model.vo.Attendance;
 import org.oaoc.cookology.event.model.vo.EventCalendar;
-
 import java.util.ArrayList;
 
 public interface EventService {

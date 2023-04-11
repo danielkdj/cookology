@@ -13,6 +13,7 @@ create table EVENTCALEDAR
 )
     /
 
+
 create table VISTIOR_LOGS
 (
     PAGE      VARCHAR2(100),
@@ -28,5 +29,4 @@ create table ATTENDANCE
     TODAY      DATE
 )
     /
-
 

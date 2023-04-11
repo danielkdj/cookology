@@ -34,7 +34,7 @@ public class FAQServiceImpl implements FAQService{
     }
 
     @Override
-    public ArrayList<FAQ> selectList() {
-        return faqDao.selectList();
+    public ArrayList<FAQ> selectFAQList() {
+        return faqDao.selectFAQList();
     }
 }
