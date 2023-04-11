@@ -29,6 +29,21 @@ public class EventServiceImpl implements  EventService{
         return eventDao.insertEventCalendar(eventCalendar);
     }
 
+    @Override
+    public ArrayList<EventCalendar> selectEventCalendar() {
+        return eventDao.selectEventCalendar();
+    }
+
+    @Override
+    public EventCalendar selectDetailEventCalendar(String eventcalendar_uuid) {
+        return eventDao.selectDetailEventCalendar(eventcalendar_uuid);
+    }
+
+    @Override
+    public int deleteEventCalendar(String eventcalendar_uuid) {
+        return eventDao.deleteEventCalendar(eventcalendar_uuid);
+    }
+
     public int selectContinuousAttendance(String user_email) {
         return eventDao.selectContinuousAttendance(user_email);
     }

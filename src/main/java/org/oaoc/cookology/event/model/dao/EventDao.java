@@ -34,4 +34,17 @@ public class EventDao {
     public int insertEventCalendar(EventCalendar eventCalendar) {
         return this.sqlSessionTemplate.insert("eventmapper.insertEventCalendar", eventCalendar);
     }
+
+    public ArrayList<EventCalendar> selectEventCalendar() {
+        List<Attendance> list = sqlSessionTemplate.selectList("eventmapper.EventCalendarSummary");
+        return (ArrayList)list;
+    }
+
+    public EventCalendar selectDetailEventCalendar(String eventcalendar_uuid) {
+        return sqlSessionTemplate.selectOne("eventmapper.selectDetailEventCalendar", eventcalendar_uuid);
+    }
+
+    public int deleteEventCalendar(String eventcalendar_uuid) {
+        return sqlSessionTemplate.delete("eventmapper.deleteEventCalendar", eventcalendar_uuid);
+    }
 }

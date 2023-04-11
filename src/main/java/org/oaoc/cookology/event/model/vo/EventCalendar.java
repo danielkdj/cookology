@@ -13,6 +13,8 @@ public class EventCalendar implements Serializable {
     private String backgroundcolor;
     private String description;
     private String content;
+    private String longitude;
+    private String latitude;
 
     public String getEventcalendar_uuid() {
         return eventcalendar_uuid;
@@ -77,24 +79,38 @@ public class EventCalendar implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    @Override
+    public String toString() {
+        return "EventCalendar{" +
+                "eventcalendar_uuid='" + eventcalendar_uuid + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                ", backgroundcolor='" + backgroundcolor + '\'' +
+                ", description='" + description + '\'' +
+                ", content='" + content + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                '}';
+    }
 }
 
 
-/*
-* create table EVENTCALEDAR
-(
-    EVENTCALENDAR_UUID VARCHAR2(255) not null
-        constraint EVENTCALEDAR_PK
-        primary key,
-    "start"            DATE,
-    END                DATE,
-    TITLE              VARCHAR2(255),
-    URL                NUMBER,
-    BACKGROUNDCOLOR    VARCHAR2(30),
-    DESCRIPTION        VARCHAR2(300),
-    CONTENT            NCLOB
-)
-    /
-
-*
-* */

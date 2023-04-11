@@ -22,6 +22,10 @@
             integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
             crossorigin="anonymous"></script>
 
+    <%--button--%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/event/event-button.css"/>
+
     <style>
         html, body {
             margin: 0;
@@ -139,59 +143,86 @@
         }
     </style>
 
+    <link rel="icon" href="/cookology/resources/img/core-img/Cookology_logo.png" />
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
+            let eventList = [];
+            function getEventCalendar() {
+                $.ajax({
+                    url: "getEventCalendar.do",
+                    type: "POST",
+                    <%--data: {user_email: "${user}"},--%>
+                    dataType: "json",
+                    success: function(response) {
+                        // console.log("[requestPostBodyJson] : [response] : " + response);
+                        let jsonData = response;
+                        for (let i = 0; i < jsonData.list.length; i++) {
+                            let item = jsonData.list[i];
+                            let eventItem = {
+                                id: item.eventcalendar_uuid,
+                                title: item.title,
+                                start: item.start.toString(),
+                                end: item.end.toString(),
+                                overlap: false,
+                                color: item.backgroundcolor,
+                                description: item.description
+                            };
+                            eventList.push(eventItem);
+                            calendar.addEvent(eventItem);
+                        }
+                        console.log(eventList);
+                        calendar.render();
+                    },
+                    error: function(xhr) {
+                        console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+                    },
+                });
+            }
+            getEventCalendar();
+            let calendarEl = document.getElementById('calendar');
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
+            let calendar = new FullCalendar.Calendar(calendarEl, {
                 headerToolbar: {
                 },
                 locale: 'kr',
-                // initialView: 'dayGridMonth',
                 eventDidMount: function(info) {
-                    var tooltip = new Tooltip(info.el, {
+                    let tooltip = new Tooltip(info.el, {
                         title: info.event.extendedProps.description,
                         placement: 'top',
                         trigger: 'hover',
                         container: 'body'
                     });
                 },
-
-                events: [
-                    {
-                        id: 'data',
-                        title: 'All Day Event resrt',
-                        description: 'description for All Day Event',
-                        start: '2023-04-03T16:00:00',
-                        end: '2023-04-04T24:00:00'
-                    },
-                    {
-                        title: 'Long Event',
-                        description: 'description for Long Event',
-                        start: '2023-04-07',
-                        end: '2023-04-10'
-                    },
-                    {
-                        title: 'Lunch',
-                        description: 'description for Lunch',
-                        start: '2023-03-12T12:00:00'
-                    },
-                    {
-                        title: 'Meeting',
-                        description: 'description for Meeting',
-                        start: '2023-03-12T14:30:00'
-                    },
-                    {
-                        title: 'Birthday Party',
-                        description: 'description for Birthday Party',
-                        start: '2023-03-13T07:00:00'
-                    },
-                    {
-                        title: 'Click for Google',
-                        description: 'description for Click for Google',
-                        url: 'http://google.com/',
-                        start: '2023-04-28'
+                eventClick: function(info) {
+                    let eventObj = info.event;
+                    goEventDetail();
+                    function goEventDetail() {
+                        const windowOption = "toolbar=no, width=500, height=800, left=100, top=100, directories=no, status=no,scrollorbars=no,resizable=no";
+                        let url = "${pageContext.servletContext.contextPath}/eventDetail.do?uuid=" + eventObj.id;
+                        window.open(url, "newWindow", windowOption);
+                        <%--const windowOption = "toolbar=no, width=500, height=800, left=100, top=100, directories=no, status=no,scrollorbars=no,resizable=no";--%>
+                        <%--let url = "${pageContext.servletContext.contextPath}/eventDetail.do";--%>
+                        <%--// newWindow = window.open("", "newWindow", windowOption);--%>
+                        <%--$.ajax({--%>
+                        <%--    url:window.open(url, "newWindow", windowOption),--%>
+                        <%--    type : "get",--%>
+                        <%--    data: {uuid : eventObj.id},--%>
+                        <%--    async: false,--%>
+                        <%--    success:(result) => {--%>
+                        <%--        console.log(eventObj.id);--%>
+                        <%--        // window.open(url, "newWindow", windowOption);--%>
+                        <%--        &lt;%&ndash;newWindow.location.href = "${pageContext.servletContext.contextPath}/eventDetail.do";&ndash;%&gt;--%>
+                        <%--    },--%>
+                        <%--    error: function(request, status, errorData){--%>
+                        <%--        console.log("error code : " + request.status--%>
+                        <%--            + "\nMessage : " + request.responseText--%>
+                        <%--            + "\nError : " + errorData);--%>
+                        <%--    }--%>
+                        <%--});--%>
                     }
+                },
+                events: [
                 ],
             });
             calendar.render();
@@ -199,15 +230,19 @@
     </script>
 </head>
 <body>
+<%--<c:import url="/WEB-INF/views/common/header.jsp"></c:import>--%>
     <div id="calendar"></div>
 
-    <button onclick="goAddEvent()">이벤트 추가하러 가기</button>
+    <button class="event-button" onclick="goAddEvent()" >
+        <i class="fas fa-plus-circle"></i> 이벤트 추가
+    </button>
     <script>
         function goAddEvent() {
             let windowOption = 'width=500, height=800, left=100, top=100,resizable=false';
             window.open("${pageContext.servletContext.contextPath}/adminAddEvent.do", "newWindow", windowOption);
         }
     </script>
+<%--    <c:import url="/WEB-INF/views/common/footer.jsp"></c:import>--%>
 </body>
 </html>
 

@@ -3,7 +3,6 @@ package org.oaoc.cookology.event.model.service;
 
 import org.oaoc.cookology.event.model.vo.Attendance;
 import org.oaoc.cookology.event.model.vo.EventCalendar;
-
 import java.util.ArrayList;
 
 public interface EventService {
@@ -17,5 +16,8 @@ public interface EventService {
 
     int insertEventCalendar(EventCalendar eventCalendar);
 
+    ArrayList<EventCalendar> selectEventCalendar();
+    EventCalendar selectDetailEventCalendar(String eventcalendar_uuid);
 
+    int deleteEventCalendar(String eventcalendar_uuid);
 }

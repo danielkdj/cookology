@@ -12,3 +12,21 @@ create table EVENTCALEDAR
     CONTENT            NCLOB
 )
     /
+
+
+create table VISTIOR_LOGS
+(
+    PAGE      VARCHAR2(100),
+    IPADDRESS VARCHAR2(50),
+    TIME      DATE
+)
+    /
+
+
+create table ATTENDANCE
+(
+    USER_EMAIL VARCHAR2(255),
+    TODAY      DATE
+)
+    /
+
