@@ -1,41 +1,54 @@
 package org.oaoc.cookology.users.model.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Users implements java.io.Serializable {
-		
+
 	private static final long serialVersionUID = 5920902628854033976L;
 
-// Fields 
-	private String user_email;				// 유저이메일
-	private String user_pwd;				// 유저 패스워드
-	private String user_name;				// 유저이름
-	private int user_phone;					// 유저 연락처
-	private Date create_at;					// 생성일시 
-	private Date modifyed_at;				// 수정일시
-	private String login_ok;				// 계정 활성화여부	
-	private String admin_ok;				// 관리자 여부	
-	private String user_allergy;			// 사용자알러지정보
+	private String user_profile_url;        //user 프로필사진
+	private String user_email;                //user 이메일(ID)
+	private String user_password;            //user 비밀번호
+	private String user_name;                //user 이름
+	private String user_nickname;            //user 닉네임
+	private String user_phone;                //user 전화번호
+	private String user_address1;            //user 기본주소
+	private String user_address2;            //user 상세주소
+	private String user_post_code;            //user 우편번호
+	private String user_allergy;            //user 알러지정보
+	private Date create_at;                    //가입일시
+	private Date modified_at;                //수정일시
+	private String login_ok;        //계정활성화여부
+	private String is_admin;                //관리자 여부
 
-// Constructor 
 	public Users() {
-		super();
 	}
-	public Users(String user_email, String user_pwd, String user_name, int user_phone, Date create_at, Date modifyed_at,
-			String login_ok, String admin_ok, String user_allergy) {
-		super();
+
+	public Users(String user_profile_url, String user_email, String user_password, String user_name, String user_nickname, String user_phone, String user_address1, String user_address2, String user_post_code, String user_allergy, Date create_at, Date modified_at, String login_ok, String is_admin) {
+		this.user_profile_url = user_profile_url;
 		this.user_email = user_email;
-		this.user_pwd = user_pwd;
+		this.user_password = user_password;
 		this.user_name = user_name;
+		this.user_nickname = user_nickname;
 		this.user_phone = user_phone;
-		this.create_at = create_at;
-		this.modifyed_at = modifyed_at;
-		this.login_ok = login_ok;
-		this.admin_ok = admin_ok;
+		this.user_address1 = user_address1;
+		this.user_address2 = user_address2;
+		this.user_post_code = user_post_code;
 		this.user_allergy = user_allergy;
+		this.create_at = create_at;
+		this.modified_at = modified_at;
+		this.login_ok = login_ok;
+		this.is_admin = is_admin;
 	}
-// Method
-	
+
+	public String getUser_profile_url() {
+		return user_profile_url;
+	}
+
+	public void setUser_profile_url(String user_profile_url) {
+		this.user_profile_url = user_profile_url;
+	}
+
 	public String getUser_email() {
 		return user_email;
 	}
@@ -43,63 +56,124 @@ public class Users implements java.io.Serializable {
 	public void setUser_email(String user_email) {
 		this.user_email = user_email;
 	}
-	public String getUser_pwd() {
-		return user_pwd;
+
+	public String getUser_password() {
+		return user_password;
 	}
-	public void setUser_pwd(String user_pwd) {
-		this.user_pwd = user_pwd;
+
+	public void setUser_password(String user_password) {
+		this.user_password = user_password;
 	}
+
 	public String getUser_name() {
 		return user_name;
 	}
+
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
-	public int getUser_phone() {
+
+	public String getUser_nickname() {
+		return user_nickname;
+	}
+
+	public void setUser_nickname(String user_nickname) {
+		this.user_nickname = user_nickname;
+	}
+
+	public String getUser_phone() {
 		return user_phone;
 	}
-	
-	public void setUser_phone(int user_phone) {
+
+	public void setUser_phone(String user_phone) {
 		this.user_phone = user_phone;
 	}
-	public Date getCreate_at() {
-		return create_at;
+
+	public String getUser_address1() {
+		return user_address1;
 	}
-	public void setCreate_at(Date create_at) {
-		this.create_at = create_at;
+
+	public void setUser_address1(String user_address1) {
+		this.user_address1 = user_address1;
 	}
-	public Date getModifyed_at() {
-		return modifyed_at;
+
+	public String getUser_address2() {
+		return user_address2;
 	}
-	public void setModifyed_at(Date modifyed_at) {
-		this.modifyed_at = modifyed_at;
+
+	public void setUser_address2(String user_address2) {
+		this.user_address2 = user_address2;
 	}
-	public String getLogin_ok() {
-		return login_ok;
+
+	public String getUser_post_code() {
+		return user_post_code;
 	}
-	public void setLogin_ok(String login_ok) {
-		this.login_ok = login_ok;
+
+	public void setUser_post_code(String user_post_code) {
+		this.user_post_code = user_post_code;
 	}
-	public String getadmin_ok() {
-		return admin_ok;
-	}
-	public void setAdmin_ok(String admin_ok) {
-		this.admin_ok = admin_ok;
-	}
+
 	public String getUser_allergy() {
 		return user_allergy;
 	}
+
 	public void setUser_allergy(String user_allergy) {
 		this.user_allergy = user_allergy;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+
+	public Date getCreate_at() {
+		return create_at;
 	}
-	
+
+	public void setCreate_at(Date create_at) {
+		this.create_at = create_at;
+	}
+
+	public Date getModified_at() {
+		return modified_at;
+	}
+
+	public void setModified_at(Date modified_at) {
+		this.modified_at = modified_at;
+	}
+
+	public String getLogin_ok() {
+		return login_ok;
+	}
+
+	public void setLogin_ok(String login_ok) {
+		this.login_ok = login_ok;
+	}
+
+	public String getIs_admin() {
+		return is_admin;
+	}
+
+	public void setIs_admin(String is_admin) {
+		this.is_admin = is_admin;
+	}
+
 	@Override
 	public String toString() {
-		return "Member [user_email=" + user_email + "user_pwd=" + user_pwd + ", user_name=" + user_name
-				+ ", user_phone=" + user_phone + ", create_at=" + create_at + ", modifyed_at=" + modifyed_at
-				+ ", account_activation=" + login_ok + ", admin_ok=" + admin_ok + ", user_allergy=" + user_allergy + "]";
-	}	
+		return "Users{" +
+				"user_profile_url='" + user_profile_url + '\'' +
+				", user_email='" + user_email + '\'' +
+				", user_password='" + user_password + '\'' +
+				", user_name='" + user_name + '\'' +
+				", user_nickname='" + user_nickname + '\'' +
+				", user_phone='" + user_phone + '\'' +
+				", user_address1='" + user_address1 + '\'' +
+				", user_address2='" + user_address2 + '\'' +
+				", user_post_code='" + user_post_code + '\'' +
+				", user_allergy='" + user_allergy + '\'' +
+				", create_at=" + create_at +
+				", modified_at=" + modified_at +
+				", login_ok='" + login_ok + '\'' +
+				", is_admin='" + is_admin + '\'' +
+				'}';
+	}
 }
+
+
+
+

@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!-- 세션 세팅 -->
 <!DOCTYPE html>
 <html lang="ko">
@@ -8,11 +8,10 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- Favicon -->
-<link rel="icon" href="/cookology/resources/img/core-img/favicon.ico" />
+<link rel="icon" href="/cookology/resources/img/core-img/Cookology_logo.png" />
 <!-- Core Stylesheet -->
 <link href="/cookology/resources/css/style.css" rel="stylesheet" />
-<link href="/cookology/resources/css/responsive/reponsive.css"
-	rel="stylesheet" />
+<link href="/cookology/resources/css/responsive/reponsive.css" rel="stylesheet" />
 <style type="text/css">
 .account_value {
 	color: black;
@@ -79,21 +78,20 @@
 
 			<!-- 일반회원 탭 -->
 			<section class="tab-content tab-content--show" id="hPointMember">
-				<form action="ulogin.do" method="post">
+				<form action="userslogin.do" method="post">
 					<div class="input-area">
 						<div class="input-box">
-							<input type="text" name="userid" class="input__text" id="h_id"
-								title="아이디" placeholder="아이디" value="" />
+							<input type="text" name="user_email" class="input__text" id="h_id"
+								title="아이디" placeholder="아이디" />
 						</div>
 
 						<div class="input-box">
-							<input type="password" name="userpwd" class="input__text"
+							<input type="password" name="user_password" class="input__text"
 								id="h_pw" title="비밀번호" placeholder="비밀번호" />
 						</div>
 					</div>
 					<div class="member-btn btn">
-						<input type="submit" class="btn-init green" id="h_loginBtn"
-							value="로그인"> </input>
+						<input type="submit" class="btn-init green" id="l_loginBtn" value="로그인" />
 					</div>
 				</form>
 				<!-- ID/PW 찾기는 아직 안배웠음. -->
@@ -102,8 +100,7 @@
 						class="account_value">아이디 찾기</a></li>
 					<li><a href="/login/memberAccount/pwFind"
 						class="account_value">비밀번호 찾기</a></li>
-					<li><a
-						href="${ pageContext.servletContext.contextPath}/enrollPage.do"
+					<li><a href="${ pageContext.servletContext.contextPath}/enrollPage.do"
 						class="account_value">회원가입</a></li>
 				</ul>
 
@@ -214,7 +211,37 @@
 			<br>
 
 			<!-- Footer Start -->
-			<c:import url="/WEB-INF/views/common/footer.jsp"></c:import>
+
+			<footer class="footer_area">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<div class="footer-content">
+								<!-- Logo Area Start -->
+								<div class="footer-logo-area text-center">
+									<a href="${ pageContext.servletContext.contextPath}/main.do"
+										class="yummy-logo"> Cookology</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<!-- Copywrite Text -->
+							<div class="copy_right_text text-center">
+								<p>
+									Copyright @2023 All rights reserved | This template is made
+									with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+										href="https://colorlib.com" target="_blank">1A1C</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+
 			<!-- Footer End -->
 
 			<!-- Jquery-2.2.4 js -->
@@ -227,5 +254,8 @@
 			<script src="/cookology/resources/js/others/plugins.js"></script>
 			<!-- Active JS -->
 			<script src="/cookology/resources/js/active.js"></script>
+		</div>
+	</div>
+
 </body>
 </html>

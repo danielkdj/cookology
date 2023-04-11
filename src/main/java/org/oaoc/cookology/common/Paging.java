@@ -18,22 +18,13 @@ public class Paging {
 	}
 
 	public void calculator() {
-		// 페이지 수 계산
-		// 주의 : 목록이 11개이면 페이지 수는 2페이지가 됨
-		// 나머지 목록 1개도 한 페이지가 필요함
 		maxPage = (int) ((double) listCount / limit + 0.95);
-		// 현재 페이지가 포함된 페이지 그룹의 시작값과 끝값 계산
-		// => 뷰 페이지 아래쪽에 표시할 페이지 숫자를 10개 한다면
-		// 현재 페이지가 95라면 91과 100 을 계산해 냄
 		startPage = ((currentPage - 1) / 10) * 10 + 1;
 		endPage = startPage + 10 - 1;
 
 		if (maxPage < endPage) {
 			endPage = maxPage;
 		}
-
-		// 쿼리문에 전달할 현재 페이지에 출력할 목록의 시작행과
-		// 끝행을 계산
 		startRow = (currentPage - 1) * limit + 1;
 		endRow = startRow + limit - 1;		
 	}

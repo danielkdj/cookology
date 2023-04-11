@@ -113,10 +113,6 @@
         $("#pattern-switcher").addClass("pattern-remove");
     });
 
-    // :: 9.0 wow Active Code
-    if ($.fn.init) {
-        new WOW().init();
-    }
 
     // :: 10.0 matchHeight Active JS
     if ($.fn.matchHeight) {

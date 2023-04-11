@@ -13,8 +13,8 @@
 		id="realDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="c##student" />
-		<property name="password" value="student" />
+		<property name="username" value="c##cookology" />
+		<property name="password" value="cookology" />
 	</bean>
 	
 	<!-- 전달값이 적용되어 실행되는 query 문과 resultSet 결과값을 

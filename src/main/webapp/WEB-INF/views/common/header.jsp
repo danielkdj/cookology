@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" errorPage="error.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.io.IOException" %>
 <%@ page import="okhttp3.*" %>
 <%@ page import="org.json.JSONObject" %>
+<%@ page import="java.util.Objects" %>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -26,7 +26,7 @@
                 .build();
         try (Response rp = client.newCall(rq).execute()) {
             if (rp.isSuccessful()) {
-                String responseBody = rp.body().string();
+                String responseBody = Objects.requireNonNull(rp.body()).string();
                 JSONObject weatherJson = new JSONObject(responseBody);
                 cityName = weatherJson.getString("name");
                 weatherMain = weatherJson.getJSONArray("weather").getJSONObject(0).getString("main");
@@ -38,6 +38,7 @@
 
     <title>Cookology - Home</title>
     <style type="text/css">
+
         #loginBox {
             position: absolute;
             left: 1100px;
@@ -58,6 +59,7 @@
         .logout-btn {
             padding: 1px;
         }
+
     </style>
     <!-- Favicon -->
     <link rel="icon"
@@ -99,16 +101,16 @@
 
                     <!-- Login Area Display Start -->
                     <!-- 로그인 안 했을 때 : Session 객체 안에 loginMember 가 없다면 -->
-                    <c:if test="${ empty sessionScope.loginMember }">
+                    <c:if test="${ empty sessionScope.loginUsers }">
                         <div class="login_register_area d-flex">
                             <div class="login">
-                                <a
-                                        href="${ pageContext.servletContext.contextPath}/loginPage.do">로그인</a>
+                                <a href="${pageContext.servletContext.contextPath}/loginPage.do">로그인</a>
                             </div>
+
                             <div class="register">
-                                <a
-                                        href="${ pageContext.servletContext.contextPath}/enrollPage.do">회원가입</a>
+                                <a href="${ pageContext.servletContext.contextPath}/usersSignUpPage.do">회원가입</a>
                             </div>
+
                             <div class="userService">
                                 <a href="FAQPage.do">고객지원</a>
                             </div>
@@ -120,22 +122,20 @@
             </div>
 
             <!-- 로그인 했을 때 : 일반회원인 경우 -->
-            <c:if
-                    test="${!empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
-                <div id="loginBox" class="lineA">
-                        ${ loginMember.username }님 &nbsp; <a>쪽지</a> &nbsp; &nbsp; <a>메일</a>
-                    &nbsp; &nbsp;
+            <c:if test="${!empty sessionScope.loginUsers and loginUsers.is_admin ne 'Y' }">
+                <div id="loginBox" class="lineA"> ${ loginUsers.user_email }님 &nbsp; <a>쪽지</a> &nbsp; &nbsp; <a>메일</a>
+
                     <!-- 마이페이지 클릭시 연결대상과 전달값 지정 -->
-                    <c:url var="callMyInfo" value="/myinfo.do">
-                        <c:param name="userid" value="${loginMember.userid }" />
+                    <c:url var="userMypage_Info" value="uMypage.do">
+                        <c:param name="user_email" value="${loginUsers.user_email }" />
                     </c:url>
-                    <a href="${ callMyInfo }">My Page</a> &nbsp;
-                    <button class="logout-btn"
-                            onclick="javascript:location.href='logout.do';">
+                    <a href="${userMypage_Info}">My Page</a> &nbsp;
+                    <button class="logout-btn" onclick="javascript:location.href='userslogout.do';">
                         <span>로그아웃</span>
                     </button>
                 </div>
             </c:if>
+
             <!-- 로그인 했을 때 : 관리자인 경우 -->
             <c:if
                     test="${ !empty sessionScope.loginMember and loginMember.admin eq 'Y' }">
@@ -177,18 +177,12 @@
         <div class="row">
             <div class="col-12">
                 <nav class="navbar navbar-expand-lg">
-                    <button class="navbar-toggler" type="button"
-                            data-toggle="collapse" data-target="#yummyfood-nav"
-                            aria-controls="yummyfood-nav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <i class="fa fa-bars" aria-hidden="true"></i>Menu
-                    </button>
                     <!-- Menu Area Start -->
                     <div class="collapse navbar-collapse justify-content-center"
                          id="yummyfood-nav">
                         <ul class="navbar-nav" id="yummy-nav">
                             <li class="nav-item"><a class="nav-link"
-                                                    href="/cookology/WEB-INF/views/common/recipes.html">레시피</a></li>
+                                                    href="/WEB-INF/views/common/recipes.html">레시피</a></li>
                             <li class="nav-item"><a class="nav-link"
                                                     href="${ pageContext.servletContext.contextPath}/eventPage.do">밀키트</a></li>
                             <li class="nav-item"><a class="nav-link"
@@ -200,11 +194,8 @@
                         </ul>
                     </div>
                 </nav>
-
             </div>
-
         </div>
-    </div>
     </div>
 </header>
 

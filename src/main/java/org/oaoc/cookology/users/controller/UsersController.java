@@ -1,337 +1,383 @@
 package org.oaoc.cookology.users.controller;
 
-import org.oaoc.cookology.client.model.service.ClientService;
-import org.oaoc.cookology.client.model.vo.Client;
-import org.oaoc.cookology.common.SearchDate;
-import org.oaoc.cookology.common.Searchs;
+import org.oaoc.cookology.orders.model.vo.Orders;
+import org.oaoc.cookology.recipe.model.vo.Recipe;
 import org.oaoc.cookology.users.model.service.UsersService;
 import org.oaoc.cookology.users.model.vo.Users;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Random;
 
 @Controller
 public class UsersController {
-	
-// Fields 
+	private static final Logger logger = LoggerFactory.getLogger(UsersController.class);
+
 	@Autowired
 	private UsersService usersService;
+
 	@Autowired
-	private ClientService clientService;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
-	
-// Method 
-	//로그인 페이지 내보내기용 메소드
-	@RequestMapping(value="loginPage.do", method={ RequestMethod.GET, RequestMethod.POST })
-	public String moveLoginPage() {
-		return "users/loginPage";
-	}  
-	
-	//회원가입 페이지 내보내기용
-	@RequestMapping("enrollPage.do")
-	public String moveEnrollPage() {
-		return "users/enrollPage";
+	private JavaMailSender mailSender;
+
+//======================================================================================================================
+
+	//1. 회원가입
+	//회원가입 페이지로 이동하기(완료)
+	@RequestMapping("usersSignUpPage.do")
+	public String moveUsersSignUpPage() {
+		return "users/usersSignUpPage";
 	}
-	
-	//회원정보 수정페이지 내보내기용
-	@RequestMapping("moveup.do")
-	public String moveUpdatePage(
-			@RequestParam("userid") String userid, 
-			Model model) {
-		Users users = usersService.selectUsers(userid);
-		
-		if(users != null) {
-			model.addAttribute("users", users);
-			return "users/updatePage";
-		}else {
-			model.addAttribute("message", 
-					userid + " : 회원 조회 실패!");
-			return "common/error";
-		}
-	}
-	
-	
-	// 일반회원 로그인 처리용 메소드 : command 객체 사용
-	//input 태그의 name 과 vo 객체의 필드명이 같으면 됨
-	@RequestMapping(value="ulogin.do", method=RequestMethod.POST)
-	public String usersLoginMethod(Users users, 
-			HttpSession session, SessionStatus status, 
-			Model model) {
-	
-		//암호화 처리된 패스워드 일치 조회는 select 해 온 값으로 비교함
-		//전달온 회원 아이디로 먼저 정보조회함
-		Users loginusers = usersService.selectUsers(
-										users.getUser_email());
-		
-		//암호화된 패스워드와 전송온 글자타입 패스워드를 비교함
-		//matches(글자타입패스워드, 암호화된패스워드)
-		if(loginusers != null && 
-				this.bcryptPasswordEncoder.matches(
-						users.getUser_pwd(), 
-						loginusers.getUser_pwd())) {
-			session.setAttribute("loginusers", loginusers);
-			status.setComplete();  //로그인 요청 성공, 200 전송함
-			return "common/main";	
-		}else {
-			model.addAttribute("message", 
-					"로그인 실패 : 아이디나 암호 확인하세요.<br>"
-					+ "또는 로그인 제한된 회원인지 관리자에게 문의하세요.");
-			return "common/error";	
-		}
-			
-	}
-	
-	// 가맹점주 로그인 처리용 메소드 : command 객체 사용
-	//input 태그의 name 과 vo 객체의 필드명이 같으면 됨
-	@RequestMapping(value="clogin.do", method=RequestMethod.POST)
-	public String clientLoginMethod(Client client, 
-			HttpSession session, SessionStatus status, 
-			Model model) {
-	
-		//암호화 처리된 패스워드 일치 조회는 select 해 온 값으로 비교함
-		//전달온 회원 아이디로 먼저 정보조회함
-		Client loginclient = clientService.selectClient(
-				client.getBusiness_number());
-		
-		//암호화된 패스워드와 전송온 글자타입 패스워드를 비교함
-		//matches(글자타입패스워드, 암호화된패스워드)
-		if(loginclient != null && 
-				this.bcryptPasswordEncoder.matches(
-						client.getClient_password(), 
-						loginclient.getClient_password())) {
-			session.setAttribute("loginclient", loginclient);
-			status.setComplete();  //로그인 요청 성공, 200 전송함
-			return "common/main";	
-		}else {
-			model.addAttribute("message", 
-					"로그인 실패 : 아이디나 암호 확인하세요.<br>"
-					+ "또는 로그인 제한된 회원인지 관리자에게 문의하세요.");
-			return "common/error";	
-		}
-			
-	}
-	
-	@RequestMapping("logout.do")
-	public String logoutMethod(HttpServletRequest request, 
-			Model model) {	
-		
-		HttpSession session = request.getSession(false);
-	
-		if(session != null) {
-			session.invalidate();
-			return "common/main";
-		}else { 
-			model.addAttribute("message", 
-					"로그인 세션이 존재하지 않습니다");
-			return "common/error";
-		}
-	}
-	
-	//ajax 통신으로 아이디 중복확인 요청 처리용 메소드
-	@RequestMapping(value="idchk.do", method= { RequestMethod.GET , RequestMethod.POST })
-	public void dupCheckIdMethod(
-			@RequestParam("user_email") String user_email, 
-			HttpServletResponse response) throws IOException {
+
+
+	//ajax 통신 아이디 중복확인 요청처리용(완료)
+	@RequestMapping(value="uIdCheck.do", method ={RequestMethod.POST, RequestMethod.GET})
+	public void selectDupCheckId(@RequestParam("user_email")String user_email, HttpServletResponse response) throws IOException {
+		logger.info("user_email" + user_email);
 		int idCount = usersService.selectDupCheckId(user_email);
-		
-		String returnStr = null;
-		if(idCount == 0) {
-			returnStr = "ok";
-		}else {
-			returnStr = "duple";
+
+		String result = null;
+		if(idCount == 0){
+			result = "ok";
+		}else{
+			result = "duple";
 		}
-		
-		//response 를 이용해서 클라이언트와 출력스트림을 연결하고 값 보냄
+
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
-		out.append(returnStr);
+		out.append(result);
 		out.flush();
 		out.close();
 	}
-	
-	//회원가입 요청 처리용 메소드
-	@RequestMapping(value="enroll.do", method= { RequestMethod.GET , RequestMethod.POST })
-	public String usersInsertMethod(
-			Users users, Model model) {
-			
-		//패스워드 암호화 처리
-		users.setUser_pwd(
-				bcryptPasswordEncoder.encode(
-						users.getUser_pwd()));
-	
-		if(usersService.insertUsers(users) > 0) {
-			//회원 가입 성공
+
+
+	//회원가입 요청처리용(완료)
+	@RequestMapping(value = "usersSignUp.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public String insertUsers(Users users, Model model){
+		logger.info("Users" + users);
+
+		users.setUser_password(bCryptPasswordEncoder.encode(users.getUser_password()));
+		logger.info("after encode", users.getUser_password());
+		logger.info("length" + users.getUser_password().length());
+
+		if (usersService.insertUsers(users) > 0) {
 			return "common/main";
-		}else {
-			//회원 가입 실패
-			model.addAttribute("message", "회원 가입 실패!");
+		} else {
+			model.addAttribute("회원가입에 실패했습니다.");
 			return "common/error";
 		}
 	}
-	
-	//마이페이지 클릭시 내 정보 보기 요청 처리용 메소드
-	//리턴 타입은 String, ModelAndView 를 사용할 수 있음
-	@RequestMapping(value="myinfo.do" , method= { RequestMethod.GET , RequestMethod.POST })
-	public ModelAndView usersDetailMethod(
-			@RequestParam("user_email") String user_email,
-			ModelAndView mv) {
-		//서비스로 아이디 전달하고, 해당 회원정보 받기
+
+//======================================================================================================================
+
+	//2. 로그인, 로그아웃
+	//로그인 페이지 내보내기용 메소드(완료)
+	@RequestMapping(value = "loginPage.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public String moveULoginPage() {
+		return "users/loginPage";
+	}
+
+
+	//로그인 처리용(완료)
+	@RequestMapping(value = "userslogin.do", method ={RequestMethod.POST, RequestMethod.GET})
+	public String selectUsersLogin(Users users, HttpSession session, SessionStatus status, Model model) {
+		logger.info("users" + users);
+
+		Users loginUsers = usersService.selectUsersLogin(users);
+
+		if (loginUsers != null && this.bCryptPasswordEncoder.matches(users.getUser_password(), loginUsers.getUser_password())) {
+			session.setAttribute("loginUsers", loginUsers);
+			status.setComplete();
+			return "common/main";
+		} else {
+			model.addAttribute("아이디 또는 비밀번호 재확인 후 로그인해 주시기 바랍니다" +
+					"\n로그인 제한여부에 대해서는 관리자에게 문의 부탁드립니다.");
+			return "common/error";
+		}
+	}
+
+
+	//로그아웃 처리용(완료)
+	@RequestMapping("userslogout.do")
+	public String userslogout(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession(false);
+		logger.info("session" + session);
+
+		if (session != null) {
+			session.invalidate();
+			return "common/main";
+		} else {
+			return "redirect:/loggout";
+		}
+	}
+
+//======================================================================================================================
+
+	//3. 마이페이지
+	//마이페이지 이동처리용(완료)
+	@RequestMapping(value = "uMypage.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView moveUMyPage(@RequestParam("user_email") String user_email, ModelAndView modelAndView) {
+		logger.info("user_email", user_email);
 		Users users = usersService.selectUsers(user_email);
-		
-		if(users != null) {
-			mv.addObject("users", users);
-			//Model 또는 ModelAndView 에 저장하는 것은
-			//request.setAttribute("users", users); 과 같음
-			mv.setViewName("users/myinfoPage");
-		}else {
-			mv.addObject("message", user_email + " : 회원 정보 조회 실패!");
-			mv.setViewName("common/error");
+
+		if (user_email != null) {
+			modelAndView.addObject("users", users);
+			modelAndView.setViewName("users/usersMypage_InfoForm");
+		} else {
+			modelAndView.addObject(user_email + "해당 이메일을 가진 회원정보를 찾을 수 없습니다.");
+			modelAndView.setViewName("common/error");
 		}
-		return mv;
+		return modelAndView;
 	}
-	
-	//회원 탈퇴(삭제) 요청 처리용
-	@RequestMapping(value="mdel.do" , method= { RequestMethod.GET , RequestMethod.POST })
-	public String usersDeleteMethod(
-			@RequestParam("user_email") String user_email, 
-			Model model) {
-		
-		if(usersService.deleteUsers(user_email) > 0) {
-			//회원 탈퇴 성공시, 자동 로그아웃 처리해야 함
-			//컨트롤러 메소드에서 다른 [컨트롤러] 메소드 호출할 수 있음
-			return "redirect:logout.do";
-		}else {
-			model.addAttribute("message", user_email + " : 회원 삭제 실패!");
+
+
+	//마이페이지 개인정보 수정하기(아이디, 비밀번호 찾기 후 바로 수정)
+	@RequestMapping(value = "usersMypage_InfoForm.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView moveMyPage(@RequestParam("User_password") String user_password, Users users, Model model) {
+		logger.info("users", users);
+
+		user_password = users.getUser_password().trim();
+		if (user_password != null && user_password.length() > 0) {
+			if (!this.bCryptPasswordEncoder.matches(user_password, users.getUser_password())) {
+				users.setUser_password(this.bCryptPasswordEncoder.encode((user_password)));
+			} else {
+				users.setUser_password(user_password);
+			}
+
+			if (usersService.updateUsers(users) > 0) {
+				return new ModelAndView("redirect:/users/usersMyPage_Info.do?user_email=" + users.getUser_email());
+			} else {
+				model.addAttribute(users.getUser_email() + "해당 이메일은 회원정보 수정이 불가능합니다.");
+				return new ModelAndView("users/error");
+			}
+		}
+		return null;
+	}
+
+	//My레시피 이동처리용
+	@RequestMapping(value = "uMyRecipe.do")
+	public String moveUsersMypage_MyRecipe(){
+		return "users/usersMypage_MyRecipe";
+	}
+
+	//My레시피 검색용(수정필요) = 안함
+	@RequestMapping(value = "usersMypage_MyRecipe.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public String usersRecipeSerch(Users users, Model model) {
+		ArrayList<Recipe> list = usersService.selectSearchMyRecipe(users);
+
+		if (list != null && list.size() > 0) {
+			model.addAttribute("list", list);
+			return "users/userMypage_MyRecipe";
+		} else {
+			model.addAttribute("사용자의 레시피를 조회할 수 없습니다.");
+			return "users/usersMyPage_InfoForm";
+		}
+	}
+
+
+	//My주문내역 이동처리용(수정필요) = 안함
+	@RequestMapping(value = "uMyOrder.do")
+	public String moveUserMypage_MyOrder_MyRecipe(){
+		return "users/usersMypage_MyRecipe";
+	}
+
+
+	//주문내역 검색용(수정필요) = 안함
+	@RequestMapping(value = "userMypage_MyOrder.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public String selectSearchMyOrder(@RequestParam("user_email") String user_email, Model model) {
+		ArrayList<Orders> list = usersService.selectSearchMyOrder(user_email);
+
+		if (list != null && list.size() > 0) {
+			model.addAttribute("list", list);
+			return "users/userMypage_MyOrder";
+		} else {
+			model.addAttribute(user_email + "을 사용자의 주문내역를 조회할 수 없습니다.");
+			return "users/usersMyPage_InfoForm";
+		}
+	}
+
+
+	//회원탈퇴 이동처리용(완료)
+	@RequestMapping(value = "uDeleteForm.do")
+	public String moveUsersMypage_DeleteForm(){
+		return "users/usersMypage_DeleteForm";
+	}
+
+	//회원 탈퇴용
+	@RequestMapping(value="usersMypage_DeleteForm.do", method ={RequestMethod.POST, RequestMethod.GET})
+	public String deleteUsers(@RequestParam("users_email")String users_email,
+							  @RequestParam("users_password")String user_password, Model model, Users users){
+		logger.info("users_email", users_email);
+
+		if(usersService.deleteUsers(users_email) > 0){
+			Users user = usersService.selectUsers(users_email);
+			if(user != null && this.bCryptPasswordEncoder.matches(users.getUser_password(), user.getUser_password())){
+				return "redirect:logout.do";
+			}else{
+				model.addAttribute(users_email +  "을 ID를 가진 회원의 정보삭제를 실패하였습니다.");
+				return "common/error";
+			}
+		}
+		model.addAttribute(users_email +  "을 ID를 가진 회원의 정보삭제를 실패하였습니다.");
+		return "common/error";
+	}
+
+//======================================================================================================================
+
+	//4. 아이디, 비밀번호 찾기
+	//users 페이지로 이동(완료)
+	@RequestMapping(value="ufindUsers.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public String moveFindUsers(){
+		return "users/usersFind_ID";
+	}
+
+	//users ID 찾기(완료)
+	@RequestMapping(value="userFind_ID.do",method={RequestMethod.POST, RequestMethod.GET})
+	public String findUsersId(Users users, Model model) throws IOException{
+		String users_email = usersService.selectfindUsersId(users);
+
+		if(users != null){
+			model.addAttribute("user_email", users_email);
+			return "users/usersFind_ID";
+		}else{
+			model.addAttribute("회원의 ID를 찾을 수 없습니다.");
 			return "common/error";
 		}
 	}
-	
-	//회원정보 수정 처리용 : 수정 성공시 myinfoPage.jsp 로 이동함
-	@RequestMapping(value="mupdate.do", method= { RequestMethod.GET , RequestMethod.POST })
-	public String usersUpdateMethod(Users users,
-			Model model, 
-			@RequestParam("origin_userpwd") String originUserpwd) {
-				
-		//새로운 암호가 전송이 왔다면, 패스워드 암호화 처리함
-		String userpwd = users.getUser_pwd().trim();
-		if(userpwd != null && userpwd.length() > 0) {
-			//암호화된 기존의 패스워드와 새로운 패스워드를 
-			//비교해서 다른 값이면
-			if(!this.bcryptPasswordEncoder.matches(
-					userpwd, originUserpwd)) {
-				//users 에 새로운 패스워드를 암호화해서 기록함
-				users.setUser_pwd(
-					this.bcryptPasswordEncoder.encode(userpwd));
-			}			
-		}else {
-			//새로운 패스워드 값이 없다면, users 에 원래 패스워드 기록
-			users.setUser_pwd(originUserpwd);
-		}
-				
-		if(usersService.updateUsers(users) > 0) {
-			//수정이 성공했다면, 컨트롤러의 메소드를 직접 호출함
-			//필요시, 값을 전달할 수도 있음 : 쿼리스트링 사용함
-			//?이름=값&이름=값
-			return "redirect:myinfo.do?userid=" 
-							+ users.getUser_email();
-		}else {
-			model.addAttribute("message", 
-				users.getUser_email() + " : 회원 정보 수정 실패!");
-			return "common/error";
-		}
+
+
+	//users PWD 이동용
+	@RequestMapping(value = "userFind_PWD.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public String moveFindUsersPwd(){
+		return "users/usersFind_PWD";
 	}
-	
-	//회원관리용 회원전체목록 조회 처리용
-	@RequestMapping(value="ulist.do" , method= { RequestMethod.GET , RequestMethod.POST })
-	public String usersListViewMethod(Model model) {
+
+	//users 비밀번호 찾기 인증번호 받기 =이메일 인증
+	@RequestMapping(value = "mailCheck1.do", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public String mailCheckGET(@RequestParam("users_email") String users_email) throws Exception {
+		logger.info("이메일 데이터 전송 확인");
+		logger.info("인증번호 : " + users_email);
+
+		Random random = new Random();
+		int checkNum = random.nextInt(888888) + 111111;
+		logger.info("인증번호 : " + checkNum);
+
+		String setFrom = "itsyksj@naver.com";
+		String toMail = users_email;
+		String title = "회원가입 인증 이메일 입니다.";
+		String content = "cookology에서 보내는 인증메일입니다." + "<br><br>" +
+				"본인의 인증번호는 " + checkNum + "입니다." + "<br>" +
+				"해당 인증번호를 인증번호 확인란에 기입하여 주시기 바랍니다.";
+
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+			helper.setFrom(setFrom);
+			helper.setTo(toMail);
+			helper.setSubject(title);
+			helper.setText(content, true);
+			mailSender.send(message);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String num = Integer.toString(checkNum);
+		return num;
+	}
+
+
+
+
+//======================================================================================================================
+
+	//5. 관리자용
+	//모든 회원정보 조회용
+	@RequestMapping(value = "userslist.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public String selectList(Model model){
 		ArrayList<Users> list = usersService.selectList();
-		
-		if(list != null && list.size() > 0) {
-			model.addAttribute("list", list);
-			return "users/usersListView";
-		}else {
-			model.addAttribute("message", 
-					"회원 정보가 존재하지 않습니다.");
-			return "common/error";
-		}
-	}
-	
-	//관리자 기능 : 회원 로그인 제한/가능 처리용 메소드
-	@RequestMapping(value="loginok.do" , method= { RequestMethod.GET , RequestMethod.POST })
-	public String changeLoginOKMethod(Users users, 
-			Model model) {
 
-		if(usersService.updateLoginok(users) > 0) {
-			return "redirect:ulist.do";
-		}else {
-			model.addAttribute("message", 
-					"로그인 제한/허용 처리 오류 발생!");
-			return "common/error";
-		}
-	}
-	
-	//회원 검색 처리용
-	@RequestMapping(value="usearch.do", method= { RequestMethod.GET , RequestMethod.POST })
-	public String usersSearchMethod(
-			HttpServletRequest request, Model model) {
-		//전송온 값 꺼내기
-		String action = request.getParameter("action");
-		String keyword = null, beginDate = null, endDate = null;
-		
-		if(action.equals("enroll")) {
-			beginDate = request.getParameter("begin");
-			endDate = request.getParameter("end");
-		}else {
-			keyword = request.getParameter("keyword");
-		}
-		
-		//서비스 메소드가 리턴하는 값을 받을 리스트 준비
-		ArrayList<Users> list = null;
-		Searchs searchs = new Searchs();
-		
-		switch(action) {
-		case "id":		searchs.setKeyword(keyword);
-					list = usersService.selectSearchUser_email(searchs);
-					break;
-		case "enroll":	list = usersService.selectSearchEnrollDate(
-							new SearchDate(Date.valueOf(beginDate), 
-										  Date.valueOf(endDate)));
-					break;
-		case "login":	searchs.setKeyword(keyword);
-					list = usersService.selectSearchLoginOK(searchs);
-					break;
-		}  //switch
-		
 		if(list != null && list.size() > 0) {
-			model.addAttribute("list", list);
-			return "users/usersListView";
-		}else {
-			model.addAttribute("message", 
-					action + " 검색에 대한 결과가 존재하지 않습니다.");
+			model.addAttribute("모든 회원정보 조회", list);
+			return "users/userListView";
+		}else{
+			model.addAttribute("회원의 정보가 존재하지 않습니다.");
+			return "users/userListView";
+		}
+	}
+
+
+	//회원 로그인 권한 제어용
+	@RequestMapping("loginOk.do")
+	public String updateLoginOK(Users users, Model model){
+		logger.info("users" + users);
+
+		if(usersService.updateLoginOK(users) > 0){
+			return "redirect:userslist.do";
+		}else{
+			model.addAttribute("로그인 권한 제어기능 부분에서 문제가 발생했습니다.");
 			return "common/error";
 		}
 	}
+
+
+	//관리자 권한제어용
+	@RequestMapping("adminOk.do")
+	public String updateAdminOK(Users users, Model model){
+		logger.info("관리자 권한 조회중 : " + users.getUser_email() + users.getIs_admin());
+
+		if(usersService.updateAdminOK(users) > 0){
+			return "redirect:userslist.do";
+		}else{
+			model.addAttribute("관리자 권한 제어기능 부분에서 문제가 발생했습니다.");
+			return "common/error";
+		}
+	}
+
+
+	//ID 회원조회용
+//    @RequestMapping(value="selectSearchUser_email.do", method = RequestMethod.POST)
+//    public String selectSearchUser_email(@RequestParam("keyword")String keyword, Model model){
+//        ArrayList<Users> list = usersService.selectSearchUser_email(keyword);
+//        if(list != null && list.size() > 0){
+//            model.addAttribute("list", list);
+//            return "users/usersListView";
+//        }else{
+//            model.addAttribute( keyword + "라는 ID를 가진 회원은 존재하지 않습니다.");
+//            return "users/usersListView";
+//        }
+//    }
+
+
+	//가입날짜 회원조회용
+	//로그인 가능여부 회원조회용
+	//관리자 권한여부로 회원조회용
+
+//    @RequestMapping(value="usersSearch.do", method=RequestMethod.POST)
+//    public String usersSearch(HttpServletRequest request, Model model) {
+//        String action = request.getParameter("action");
+//        String keyword = null;  beginDate = null, endDate = null;
+//    }
+
 }
-
-
-
-
-
-
-
-
