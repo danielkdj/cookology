@@ -10,6 +10,29 @@
 
 <html>
 <head>
+    <script
+            src="https://code.jquery.com/jquery-3.6.4.js"
+            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        function addVisitor(page) {
+            $.ajax({
+                url: "visitorLogs.do",
+                type: "get",
+                dataType: "json",
+                data: {
+                    page: page
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            const page = "${param.page}";
+            addVisitor(page);
+        });
+    </script>
 </head>
 <body>
 

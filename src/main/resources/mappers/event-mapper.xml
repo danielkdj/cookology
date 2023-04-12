@@ -9,10 +9,37 @@
         <result property="today" column="today" />
     </resultMap>
 
+    <parameterMap id="insertLog" type="VisitorLogs">
+        <parameter property="ipaddress"/>
+        <parameter property="page"/>
+    </parameterMap>
+    <resultMap type="EventCalendar" id="EventCalendarSummary">
+        <id property="eventcalendar_uuid" column="eventcalendar_uuid" />
+        <result property="title" column="title" />
+        <result property="start" column="start" />
+        <result property="end" column="end" />
+        <result property="backgroundcolor" column="backgroundcolor" />
+        <result property="description" column="description" />
+    </resultMap>
+
+<!--    <resultMap type="EventCalendar" id="EventCalendarDetail">-->
+<!--        <result property="user_email" column="user_email" />-->
+<!--        <result property="today" column="today" />-->
+<!--    </resultMap>-->
+
     <select id="selectAttendance" resultMap="attendance">
          select * from attendance where user_email = #{user_email}
     </select>
 
+    <select id="EventCalendarSummary" resultMap="EventCalendarSummary">
+        select * from eventcalendar
+    </select>
+
+    <select id="selectDetailEventCalendar" resultType="EventCalendar">
+        select *
+        from eventcalendar
+        where eventcalendar_uuid = #{eventcalendar_uuid}
+    </select>
     <select id="selectContinuousAttendance" resultType="int">
         <![CDATA[
         SELECT CONSECUTIVE_DAYS
@@ -38,11 +65,70 @@
     </insert>
 
     <insert id="insertEventCalendar" parameterType="EventCalendar">
-        insert into EVENTCALEDAR
+        insert into EventCalendar
         values
         (
             #{eventcalendar_uuid},#{start},#{end},#{title},#{url},
-            #{backgroundcolor},#{description},#{content}
+            #{backgroundcolor},#{description},#{content},#{longitude},#{latitude}
         )
     </insert>
+
+    <delete id="deleteEventCalendar">
+        delete from eventcalendar where eventcalendar_uuid=#{eventcalendar_uuid}
+    </delete>
+
+    <insert id="insertVisitorLog" parameterMap="insertLog">
+        insert into VISITOR_LOGS(page,ipaddress,time)
+        values
+        (
+            #{page},#{ipaddress},sysdate
+        )
+    </insert>
+
+    <select id="selectTodayTimeList" resultType="java.util.Date">
+        <![CDATA[
+            WITH hours AS
+            (
+                SELECT TRUNC(SYSDATE, 'DD') + (LEVEL - 1) / 24 AS hour
+                FROM DUAL
+                CONNECT BY LEVEL <= 24
+            )
+            SELECT hour
+            FROM hours
+            WHERE hour <= SYSDATE
+            ORDER BY hour
+        ]]>
+    </select>
+
+<!--    <select id="selectVisitorLogs" resultType="VisitorLogsCount">-->
+<!--        <![CDATA[-->
+<!--        select *-->
+<!--        from (-->
+<!--        SELECT PAGE, COUNT(*) AS count, TRUNC(TIME, 'HH24') AS hour-->
+<!--              FROM VISITOR_LOGS-->
+<!--              GROUP BY PAGE, TRUNC(TIME, 'HH24')-->
+<!--              ORDER BY PAGE, hour-->
+<!--              )-->
+<!--        where hour >= (select to_char(sysdate,'yyyy-mm-dd') from dual)-->
+<!--        ]]>-->
+<!--    </select>    -->
+
+    <select id="selectVisitorLogs" resultType="VisitorLogsCount">
+        <![CDATA[
+        SELECT p.PAGE,
+               h.hour,
+               COUNT(v.TIME) AS count
+        FROM (
+            SELECT TRUNC(SYSDATE, 'DD') + (LEVEL - 1) / 24 AS hour
+            FROM DUAL
+            CONNECT BY LEVEL <= 24
+            ) h
+            CROSS JOIN (SELECT DISTINCT PAGE FROM VISITOR_LOGS) p
+            LEFT JOIN VISITOR_LOGS v ON
+            TRUNC(v.TIME, 'HH24') = h.hour AND v.PAGE = p.PAGE
+        WHERE h.hour <= sysdate
+        GROUP BY p.PAGE, h.hour
+        ORDER BY p.PAGE, h.hour
+        ]]>
+    </select>
 </mapper>

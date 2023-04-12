@@ -17,7 +17,9 @@
 <!--		<typeAlias type="org.oaoc.cookology.FAQ.model.vo.FAQ" alias="FAQ" />-->
 <!--		<typeAlias type="org.oaoc.cookology.QNA.model.vo.QNA" alias="QNA" />-->
 <!--		<typeAlias type="org.oaoc.cookology.event.model.vo.Attendance" alias="Attendance" />-->
-
+<!--		<typeAlias type="org.oaoc.cookology.event.model.vo.EventCalendar" alias="EventCalendar" />-->
+<!--		<typeAlias type="org.oaoc.cookology.event.model.vo.VisitorLogs" alias="VisitorLogs" />-->
+<!--		<typeAlias type="org.oaoc.cookology.event.model.vo.VisitorLogsCount" alias="VisitorLogsCount" />-->
 	</typeAliases>
 	
 	<!-- mapper : 실행할 쿼리문만 별도로 작성하는 파일을 말함 -->

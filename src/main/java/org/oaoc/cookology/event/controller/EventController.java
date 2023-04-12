@@ -6,6 +6,8 @@ import org.json.simple.JSONObject;
 import org.oaoc.cookology.event.model.service.EventService;
 import org.oaoc.cookology.event.model.vo.Attendance;
 import org.oaoc.cookology.event.model.vo.EventCalendar;
+import org.oaoc.cookology.event.model.vo.VisitorLogs;
+import org.oaoc.cookology.event.model.vo.VisitorLogsCount;
 import org.oaoc.cookology.users.model.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +22,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -232,5 +238,62 @@ public class EventController {
         }
     }
 
+    @RequestMapping(value = {"visitorLogs.do"}, method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public void visitorLogs(@RequestParam Map<String, Object> data, HttpServletRequest request) {
+        String ipAddress = request.getHeader("X-FORWARDED-FOR");
+        if (ipAddress == null) {
+            ipAddress = request.getRemoteAddr();
+        }
+        VisitorLogs visitorLogs = new VisitorLogs();
+        visitorLogs.setIpaddress(ipAddress);
+        visitorLogs.setPage((String) data.get("page"));
+//        visitorLogs.setTime(Date.valueOf(LocalDate.now()));
+        logger.info(visitorLogs.toString());
+        eventService.insertVisitorLogs(visitorLogs);
+    }
+
+    @RequestMapping(value = "getTodayTimeList.do", method = {RequestMethod.POST})
+    @ResponseBody
+    public String getTodayTime() {
+        List<java.util.Date> list = eventService.selectTodayTimeList();
+        logger.info("time_list");
+        JSONObject sendJson = new JSONObject();
+
+        // Create a SimpleDateFormat instance for formatting dates
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+        // Iterate through the date list and format each date to the desired format
+        List<String> formattedDates = new ArrayList<>();
+        for (java.util.Date date : list) {
+            formattedDates.add(outputFormat.format(date));
+        }
+
+        sendJson.put("list", formattedDates);
+        logger.info(sendJson.toJSONString());
+        return sendJson.toJSONString();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = {"getVisitorLogsCount.do"}, method = RequestMethod.POST)
+    public String getVisitorLogsCount() {
+        List<VisitorLogsCount> list = eventService.selectVisitorLogs();
+        JSONObject sendJson = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        for (VisitorLogsCount visitorLogsCount : list) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("page", visitorLogsCount.getPage().toString());
+            jsonObject.put("count", String.valueOf(visitorLogsCount.getCount()));
+            jsonArray.add(jsonObject);
+        }
+        sendJson.put("list",jsonArray);
+//        logger.info(list.toString());
+        return sendJson.toJSONString();
+    }
+
+    @RequestMapping({"eventPopUp.do"})
+    public String eventMainPopUp() {
+        return "event/eventMainPopUp";
+    }
 
 }

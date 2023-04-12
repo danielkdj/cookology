@@ -17,7 +17,9 @@
     <!-- Favicon -->
     <link rel="icon" href="${ pageContext.servletContext.contextPath }/resources/img/core-img/Cookology_logo.png"/>
     <%--button--%>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous"/> <%--referrerpolicy="no-referrer--%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          crossorigin="anonymous"/>
+    <%--referrerpolicy="no-referrer--%>
     <link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/event/event-button.css"/>
     <!-- Core Stylesheet -->
     <link href="${ pageContext.servletContext.contextPath }/resources/css/style.css" rel="stylesheet"/>
@@ -30,7 +32,10 @@
     <link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/billboard/billboard.css">
     <!-- Or load different theme style -->
     <link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/billboard/insight.min.css">
-
+    <script
+            src="https://code.jquery.com/jquery-3.6.4.js"
+            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
 
 
     <style>
@@ -40,9 +45,11 @@
             padding: 10px;
             display: inline-block;
         }
+
         .rankTable:nth-child(2) {
             margin-left: 20px;
         }
+
         body {
             font-family: 'Lato', Arial, sans-serif;
             color: #989c9b;
@@ -73,9 +80,10 @@
             width: 50%;
             background: #fff;
             display: inline;
-            margin-left:auto;
-            margin-right:auto;
+            margin-left: auto;
+            margin-right: auto;
         }
+
         th {
             /*background-color: #326295;*/
             background-color: #fc6c3f;
@@ -107,32 +115,35 @@
         td.rank {
             text-transform: capitalize;
         }
+
         /*table end*/
 
         /*bill board*/
         @font-face {
             font-family: 'bill';
             src: url("${pageContext.servletContext.contextPath}/resources/fonts/PFStardust.ttf") format('truetype');
-            <%--src: url("${pageContext.servletContext.contextPath}/resources/fonts/LEDBOARD.TTF") format('truetype');--%>
+        <%--src: url("${pageContext.servletContext.contextPath}/resources/fonts/LEDBOARD.TTF") format('truetype');--%>
             font-weight: normal;
             font-style: normal;
         }
+
         .animated-title {
-            font-size:60px;
+            font-size: 60px;
             /*font-family:'Raleway',Sans-serif;*/
             font-family: 'bill';
             /*display: table-cell;*/
             color: #FFFFFF;
-            font-weight:300;
+            font-weight: 300;
             position: relative;
             width: 100%;
-            max-width:100%;
+            max-width: 100%;
             height: auto;
-            padding:100px 0;
+            padding: 100px 0;
             overflow-x: hidden;
             overflow-y: hidden;
 
         }
+
         .billboard-container {
             display: flex;
             justify-content: center;
@@ -144,11 +155,17 @@
             will-change: transform;
             animation: marquee 10s linear infinite;
         }
+
         @keyframes marquee {
-            from { transform: translateX(0); }
-            to { transform: translateX(-150%); }
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-150%);
+            }
         }
-        @media (hover: hover) and (min-width: 700px){
+
+        @media (hover: hover) and (min-width: 700px) {
             .animated-title .bill-content {
                 -webkit-transform: translateY(calc(100% - 8rem));
                 transform: translateY(calc(100% - 8rem));
@@ -171,6 +188,7 @@
         .bill-content {
             margin-top: 30px;
         }
+
         /*bill board end*/
 
         /*input form */
@@ -202,21 +220,22 @@
             /*background-color: #2ea879;*/
             background-color: #ff8357;
         }
+
         /*input form end*/
 
-        #timeseriesChart {
-            max-width: 70%;
-        }
+
     </style>
 </head>
 
 <body>
 
 <!-- Header Start -->
-<c:import url="/WEB-INF/views/common/header.jsp"/>
+<%--<c:import url="/WEB-INF/views/common/header.jsp"/>--%>
 <!-- Header End -->
 
-
+<c:import url="/WEB-INF/views/event/visitorCounter.jsp">
+    <c:param name="page" value="event"/>
+</c:import>
 <%--billboard--%>
 
 <div class="billboard-container">
@@ -272,7 +291,7 @@
             </table>
         </div>
     </div>
-<%--    RECIE RANK--%>
+    <%--    RECIE RANK--%>
     <div class="rankTable">
         <header>
             <h1>RECIPE-VIEW-TOP5</h1>
@@ -317,7 +336,7 @@
         </div>
     </div>
     <%--    RECIE RANK2--%>
-    <div class="rankTable" >
+    <div class="rankTable">
         <header>
             <h1>RECIPE-GOOD-TOP5</h1>
         </header>
@@ -377,39 +396,148 @@
 
 <br>
 <div style="display:flex;justify-content: center;">
-    <div id="timeseriesChart" style=""></div>
+    <div id="timeseriesChart" style="max-width: 70%;width: 100%"></div>
 </div>
+
+
 <script>
     // for ESM environment, need to import modules as:
     // import bb, {line} from "billboard.js";
-    const chart = bb.generate({
-        data: {
-            x: "x",
-            columns: [
-                ["x", "2013-01-01", "2013-01-02", "2013-01-03", "2013-01-04", "2013-01-05", "2013-01-06"],
-                ["data1", 30, 200, 100, 400, 150, 250],
-                ["data2", 130, 340, 200, 500, 250, 350]
-            ],
-            type: "line", // for ESM specify as: line()
-        },
-        axis: {
-            x: {
-                type: "timeseries",
-                tick: {
-                    format: "%Y-%m-%d"
-                }
-            }
-        },
-        bindto: "#timeseriesChart"
-    });
+    // const chart = bb.generate({
+    //     data: {
+    //         x: "x",
+    //         columns: [
+    //             ["x",
+    //                 "2020-01-01", "2020-01-01T02:00:00.000Z", "2020-01-01T03:00:00.000Z", "2020-01-01T04:00:00", "2020-01-01T05:00:00",
+    //                 "2020-01-01T06:00:00", "2020-01-01T07:00:00", "2020-01-01T08:00:00", "2020-01-01T09:00:00", "2020-01-01T10:00:00",
+    //                 "2020-01-01T11:00:00", "2020-01-01T12:00:00", "2020-01-01T13:00:00", "2020-01-01T14:00:00", "2020-01-01T15:00:00",
+    //
+    //             ],
+    //             ["data1", 30, 200, 100, 400, 150, 250],
+    //             // ["data2", 130, 340, 200, 500, 250, 350]
+    //         ],
+    //         type: "line", // for ESM specify as: line()
+    //     },
+    //     axis: {
+    //         x: {
+    //             type: "timeseries",
+    //             tick: {
+    //                 format: "%H:%M",
+    //             }
+    //         }
+    //     },
+    //     bindto: "#timeseriesChart"
+    // });
 
-    setTimeout(function() {
+    setTimeout(function () {
         chart.load({
             columns: [
-                ["data3", 400, 500, 450, 700, 600, 500]
+                // ["data3", 400, 500, 450, 700, 600, 500]
             ]
         });
-    }, 1000);
+    }, 100);
+
+
+</script>
+
+<script>
+    let xVal = ["x"];
+    let eventData = ["event"];
+    let mainData = ["main"];
+    let recipeData = ["recipe"];
+    $(document).ready(function () {
+
+        $.ajax({
+            url: "getVisitorLogsCount.do",
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                console.log("success : ", data);
+                const parsedData = data.list;
+
+                let main = [];
+                let recipe = [];
+                let event = [];
+                parsedData.forEach(function (item) {
+                    if (item.page === 'main') {
+                        main.push(item);
+                    } else if (item.page === 'recipe') {
+                        recipe.push(item);
+                    }else if (item.page === 'event') {
+                        event.push(item);
+                    }
+                });
+
+                main.forEach(function (item) {
+                    if (typeof item === 'object' && item.hasOwnProperty('count')) {
+                        mainData.push(parseInt(item.count));
+                    }
+                });
+                recipe.forEach(function (item) {
+                    if (typeof item === 'object' && item.hasOwnProperty('count')) {
+                        recipeData.push(parseInt(item.count));
+                    }
+                });
+                event.forEach(function (item) {
+                    if (typeof item === 'object' && item.hasOwnProperty('count')) {
+                        eventData.push(parseInt(item.count));
+                    }
+                });
+                // console.log("Main data:", mainData);
+                // console.log("Recipe data:", eventData);
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+
+
+        $.ajax({
+            url: "getTodayTimeList.do",
+            type: "POST",
+            dataType: "json",
+            success: function (response) {
+                // console.log("[requestPostBodyJson] : [response] : " + response);
+                console.log("[requestPostBodyJson] : [response] : " + response.list);
+                // let offset = date.getTimezoneOffset() * 60000;
+                for (let i = 0; i < response.list.length; i++) {
+                    const date = new Date(response.list[i]);
+                    xVal.push(new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().slice(0,-5));
+                }
+                console.log(xVal);
+                const chart = bb.generate({
+                    data: {
+                        x: "x",
+                        columns: [
+                            xVal,
+                            eventData, mainData, recipeData
+                        ],
+                        type: "line", // for ESM specify as: line()
+                    },
+                    axis: {
+                        x: {
+                            type: "timeseries",
+                            tick: {
+                                format: "%H:%M",
+                            }
+                        }
+                    },
+                    bindto: "#timeseriesChart"
+                });
+                setTimeout(function () {
+                    chart.load({
+                        // columns: [
+                        //     ["data3", 400, 500, 450]
+                        // ]
+                    });
+                }, 1000);
+            },
+            error: function (xhr) {
+                console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+            },
+        });
+    });
 </script>
 <br>
 <button class="event-button" onclick="location.href='${pageContext.servletContext.contextPath}/attendance.do'">
@@ -422,8 +550,9 @@
     <i class="fas fa-calendar-alt"></i> 행사 일정
 </button>
 
+
 <!-- Footer Start -->
-<c:import url="/WEB-INF/views/common/footer.jsp"/>
+<%--<c:import url="/WEB-INF/views/common/footer.jsp"/>--%>
 <!-- Footer End -->
 </body>
 </html>
