@@ -29,8 +29,8 @@ public class FAQDao {
         return session.selectOne("FAQMapper.selectFAQ", faq_Seq_Id);
     }
 
-    public ArrayList<FAQ> selectList() {
-        List<FAQ> list = session.selectList("FAQMapper.selectList");
+    public ArrayList<FAQ> selectFAQList() {
+        List<FAQ> list = session.selectList("FAQMapper.selectFAQList");
         return (ArrayList<FAQ>)list;
     }
 }

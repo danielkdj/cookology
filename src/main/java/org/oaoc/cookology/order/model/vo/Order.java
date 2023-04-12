@@ -12,7 +12,7 @@ public class Order implements java.io.Serializable {
 		private int number;									// 상품 갯수
 		private int amount;									// 총금액
 		private String order_success;						// 주문성공여부
-		private java.sql.Timestamp create_at;				// 생성일시
+		private Timestamp create_at;				// 생성일시
 
 		public Order() {
 			super();
@@ -53,7 +53,7 @@ public class Order implements java.io.Serializable {
 		public String getOrder_success() {
 			return order_success;
 		}
-		public java.sql.Timestamp getCreate_at() {
+		public Timestamp getCreate_at() {
 			return create_at;
 		}
 		public void setOrder_id(int order_id) {
@@ -77,7 +77,7 @@ public class Order implements java.io.Serializable {
 		public void setOrder_success(String order_success) {
 			this.order_success = order_success;
 		}
-		public void setCreate_at(java.sql.Timestamp create_at) {
+		public void setCreate_at(Timestamp create_at) {
 			this.create_at = create_at;
 		}
 		@Override

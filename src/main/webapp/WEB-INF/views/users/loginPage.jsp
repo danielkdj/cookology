@@ -82,18 +82,18 @@
 				<form action="ulogin.do" method="post">
 					<div class="input-area">
 						<div class="input-box">
-							<input type="text" name="userid" class="input__text" id="h_id"
+							<input type="text" name="user_email" class="input__text" id="h_id"
 								title="아이디" placeholder="아이디" value="" />
 						</div>
 
 						<div class="input-box">
-							<input type="password" name="userpwd" class="input__text"
+							<input type="password" name="user_password" class="input__text"
 								id="h_pw" title="비밀번호" placeholder="비밀번호" />
 						</div>
 					</div>
 					<div class="member-btn btn">
 						<input type="submit" class="btn-init green" id="h_loginBtn"
-							value="로그인"> </input>
+							value="로그인" />
 					</div>
 				</form>
 				<!-- ID/PW 찾기는 아직 안배웠음. -->
@@ -111,6 +111,18 @@
 
 				<div id="naver_id_login" class="social_login"></div>
 				<script type="text/javascript">
+
+
+
+
+
+
+
+
+
+
+
+
 					var naver_id_login = new naver_id_login(
 							"zxo99cxSQR3QsdgZtNXu",
 							"http://127.0.0.1:5500/naverCallback.html");
@@ -193,7 +205,7 @@
 						</div>
 					</div>
 					<div class="member-btn btn">
-						<input type="submit" class="btn-init green" id="h_loginBtn"
+						<input type="submit" class="btn-init green"
 							value="로그인"> </input>
 					</div>
 				</form>
