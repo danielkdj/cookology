@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="eventmapper">
+
+    <resultMap type="Attendance" id="attendance">
+        <result property="user_email" column="user_email" />
+        <result property="today" column="today" />
+    </resultMap>
+
+    <parameterMap id="insertLog" type="VisitorLogs">
+        <parameter property="ipaddress"/>
+        <parameter property="page"/>
+    </parameterMap>
+    <resultMap type="EventCalendar" id="EventCalendarSummary">
+        <id property="eventcalendar_uuid" column="eventcalendar_uuid" />
+        <result property="title" column="title" />
+        <result property="start" column="start" />
+        <result property="end" column="end" />
+        <result property="backgroundcolor" column="backgroundcolor" />
+        <result property="description" column="description" />
+    </resultMap>
+
+<!--    <resultMap type="EventCalendar" id="EventCalendarDetail">-->
+<!--        <result property="user_email" column="user_email" />-->
+<!--        <result property="today" column="today" />-->
+<!--    </resultMap>-->
+
+    <select id="selectAttendance" resultMap="attendance">
+         select * from attendance where user_email = #{user_email}
+    </select>
+
+    <select id="EventCalendarSummary" resultMap="EventCalendarSummary">
+        select * from eventcalendar
+    </select>
+
+    <select id="selectDetailEventCalendar" resultType="EventCalendar">
+        select *
+        from eventcalendar
+        where eventcalendar_uuid = #{eventcalendar_uuid}
+    </select>
+    <select id="selectContinuousAttendance" resultType="int">
+        <![CDATA[
+        SELECT CONSECUTIVE_DAYS
+        FROM (
+                 SELECT USER_EMAIL, CONSECUTIVE_DAYS,
+                        RANK() OVER (PARTITION BY USER_EMAIL ORDER BY CONSECUTIVE_DAYS DESC) AS max_consecutive_days_rank
+                 FROM (
+                          SELECT USER_EMAIL, COUNT(*) AS CONSECUTIVE_DAYS
+                          FROM (
+                                   SELECT USER_EMAIL, TODAY,
+                                          ROW_NUMBER() OVER (PARTITION BY USER_EMAIL ORDER BY TODAY) AS rn,
+                                           TODAY - ROW_NUMBER() OVER (PARTITION BY USER_EMAIL ORDER BY TODAY) AS grp
+                                   FROM ATTENDANCE
+                               )
+                          GROUP BY USER_EMAIL, TODAY - rn
+                      )
+             )
+        WHERE max_consecutive_days_rank = 1 and USER_EMAIL = #{user_email}
+        ]]>
+    </select>
+    <insert id="insertAttendance" parameterType="Attendance">
+        insert into attendance(user_email,today) values (#{user_email},#{today})
+    </insert>
+
+    <insert id="insertEventCalendar" parameterType="EventCalendar">
+        insert into EventCalendar
+        values
+        (
+            #{eventcalendar_uuid},#{start},#{end},#{title},#{url},
+            #{backgroundcolor},#{description},#{content},#{longitude},#{latitude}
+        )
+    </insert>
+
+    <delete id="deleteEventCalendar">
+        delete from eventcalendar where eventcalendar_uuid=#{eventcalendar_uuid}
+    </delete>
+
+    <insert id="insertVisitorLog" parameterMap="insertLog">
+        insert into VISITOR_LOGS(page,ipaddress,time)
+        values
+        (
+            #{page},#{ipaddress},sysdate
+        )
+    </insert>
+
+    <select id="selectTodayTimeList" resultType="java.util.Date">
+        <![CDATA[
+            WITH hours AS
+            (
+                SELECT TRUNC(SYSDATE, 'DD') + (LEVEL - 1) / 24 AS hour
+                FROM DUAL
+                CONNECT BY LEVEL <= 24
+            )
+            SELECT hour
+            FROM hours
+            WHERE hour <= SYSDATE
+            ORDER BY hour
+        ]]>
+    </select>
+
+<!--    <select id="selectVisitorLogs" resultType="VisitorLogsCount">-->
+<!--        <![CDATA[-->
+<!--        select *-->
+<!--        from (-->
+<!--        SELECT PAGE, COUNT(*) AS count, TRUNC(TIME, 'HH24') AS hour-->
+<!--              FROM VISITOR_LOGS-->
+<!--              GROUP BY PAGE, TRUNC(TIME, 'HH24')-->
+<!--              ORDER BY PAGE, hour-->
+<!--              )-->
+<!--        where hour >= (select to_char(sysdate,'yyyy-mm-dd') from dual)-->
+<!--        ]]>-->
+<!--    </select>    -->
+
+    <select id="selectVisitorLogs" resultType="VisitorLogsCount">
+        <![CDATA[
+        SELECT p.PAGE,
+               h.hour,
+               COUNT(v.TIME) AS count
+        FROM (
+            SELECT TRUNC(SYSDATE, 'DD') + (LEVEL - 1) / 24 AS hour
+            FROM DUAL
+            CONNECT BY LEVEL <= 24
+            ) h
+            CROSS JOIN (SELECT DISTINCT PAGE FROM VISITOR_LOGS) p
+            LEFT JOIN VISITOR_LOGS v ON
+            TRUNC(v.TIME, 'HH24') = h.hour AND v.PAGE = p.PAGE
+        WHERE h.hour <= sysdate
+        GROUP BY p.PAGE, h.hour
+        ORDER BY p.PAGE, h.hour
+        ]]>
+    </select>
+</mapper>

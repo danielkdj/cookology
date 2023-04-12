@@ -231,7 +231,9 @@
 </head>
 <body>
 <%--<c:import url="/WEB-INF/views/common/header.jsp"></c:import>--%>
-    <div id="calendar"></div>
+
+
+<div id="calendar"></div>
 
     <button class="event-button" onclick="goAddEvent()" >
         <i class="fas fa-plus-circle"></i> 이벤트 추가

@@ -64,12 +64,12 @@
 	 -->
 	
 	<!-- Application Loggers -->
-	<logger name="org.ict.first">
+	<logger name="org.oaoc.cookology">
 		<level value="info" />
 	</logger>
 	
 	<!-- interceptor 패키지 logger 등록함 -->
-	<logger name="org.ict.first.common.intercepter.LoggerInterceptor">
+	<logger name="org.oaoc.cookology.common.intercepter.LoggerInterceptor">
 		<level value="debug" />
 	</logger>
 	

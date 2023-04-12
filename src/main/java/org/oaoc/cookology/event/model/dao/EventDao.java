@@ -3,6 +3,8 @@ package org.oaoc.cookology.event.model.dao;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.oaoc.cookology.event.model.vo.Attendance;
 import org.oaoc.cookology.event.model.vo.EventCalendar;
+import org.oaoc.cookology.event.model.vo.VisitorLogs;
+import org.oaoc.cookology.event.model.vo.VisitorLogsCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -46,5 +48,20 @@ public class EventDao {
 
     public int deleteEventCalendar(String eventcalendar_uuid) {
         return sqlSessionTemplate.delete("eventmapper.deleteEventCalendar", eventcalendar_uuid);
+    }
+
+    public int insertVisitorLogs(VisitorLogs visitorLogs) {
+        return sqlSessionTemplate.insert("eventmapper.insertVisitorLog",visitorLogs);
+    }
+
+    public List<java.util.Date> selectTodayTimeList() {
+        List<java.util.Date> list = sqlSessionTemplate.selectList("eventmapper.selectTodayTimeList");
+        return list;
+
+    }
+
+    public List<VisitorLogsCount> selectVisitorLogs() {
+        List<VisitorLogsCount> list = sqlSessionTemplate.selectList("eventmapper.selectVisitorLogs");
+        return list;
     }
 }
