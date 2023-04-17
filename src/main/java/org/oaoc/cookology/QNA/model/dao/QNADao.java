@@ -2,7 +2,7 @@ package org.oaoc.cookology.QNA.model.dao;
 
 import org.oaoc.cookology.QNA.model.vo.QNA;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.oaoc.cookology.common.Page;
+import org.oaoc.cookology.common.Paging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ public class QNADao {
     @Autowired
     private SqlSessionTemplate session;
 
-    public ArrayList<QNA> selectList(Page page) {
+    public ArrayList<QNA> selectList(Paging page) {
        List<QNA> list = session.selectList("QNAMapper.selectList", page);
        return new ArrayList<>(list);
     }

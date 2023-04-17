@@ -12,8 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.oaoc.cookology.common.FileNameChange;
-import org.oaoc.cookology.common.Page;
-import org.oaoc.cookology.common.SearchDate;
+import org.oaoc.cookology.common.Paging;
 import org.oaoc.cookology.notice.model.service.NoticeService;
 import org.oaoc.cookology.notice.model.vo.Notice;
 import org.oaoc.cookology.users.model.vo.Users;
@@ -82,32 +81,30 @@ public class NoticeController {
 	}
 	
 	//공지사항 전체 목록보기 요청 처리용
-	@RequestMapping("nlist.do")
-	public String noticeListMethod(Model model) {
-		ArrayList<Notice> list = noticeService.selectAll();
-		
-		if(list != null && list.size() > 0) {
-			model.addAttribute("list", list);
-			return "notice/noticeListView";
-		}else {
-			model.addAttribute("message", 
-					"등록된 공지사항 정보가 없습니다.");
-			return "common/error";
-		}
-	}
+
 	
 	//공지글 제목 검색용
 	@RequestMapping(value="nsearchTitle.do", method={RequestMethod.POST, RequestMethod.GET})
 	public String noticeSearchTitleMethod(
 			@RequestParam("keyword") String keyword,
+			@RequestParam("page") int page,
 			Model model) {
-		
+
+		int limit = 10;
+		int listCount = noticeService.selectSearchTitleCount(keyword);
+
+		Paging paging = new Paging(listCount, page, limit,keyword);
+		paging.calculator();
+
+		logger.info("paging"+ paging);
 		ArrayList<Notice> list = 
-				noticeService.selectSearchTitle(keyword);
+				noticeService.selectSearchTitle(paging);
 
 		if(list != null && list.size() > 0) {
 			model.addAttribute("list", list);
-			return "redirect:blist.do";
+			model.addAttribute("url", "nsearchTitle.do");
+			model.addAttribute("paging", paging);
+			return "notice/noticePage";
 		}else {
 			model.addAttribute("message",
 				keyword + "로 검색된 공지글 정보가 없습니다.");
@@ -116,34 +113,30 @@ public class NoticeController {
 	}
 	
 	//공지글 작성자 검색용
-	@RequestMapping(value="nsearchWriter.do", method={RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value="nsearchContent.do", method={RequestMethod.POST, RequestMethod.GET})
 	public String noticeSearchWriterMethod(
-			@RequestParam("keyword") String keyword, 
-			Model model) {
-		
-		ArrayList<Notice> list = 
-				noticeService.selectSearchWriter(keyword);
-		
-		if(list != null && list.size() > 0) {
-			model.addAttribute("list", list);
-			return "redirect:blist.do";
-		}else {
-			model.addAttribute("message", 
-				keyword + "로 검색된 공지글 정보가 없습니다.");
-			return "common/error";
-		}
-	}
-	@RequestMapping(value="nsearchAll.do", method={RequestMethod.POST, RequestMethod.GET})
-	public String noticeSearchAllMethod(
 			@RequestParam("keyword") String keyword,
+			@RequestParam("page") int page,
 			Model model) {
+
+		int limit = 10;
+
+		int listCount = noticeService.selectSearchContentCount(keyword);
+
+		Paging paging = new Paging(listCount, page, limit,keyword);
+		paging.calculator();
+
+		logger.info("paging"+ paging);
 
 		ArrayList<Notice> list =
-				noticeService.selectSearchList(keyword);
+				noticeService.selectSearchContent(paging);
 
 		if(list != null && list.size() > 0) {
 			model.addAttribute("list", list);
-			return "redirect:blist.do";
+			model.addAttribute("url", "nsearchContent.do");
+			model.addAttribute("paging", paging);
+
+			return "notice/noticePage";
 		}else {
 			model.addAttribute("message",
 					keyword + "로 검색된 공지글 정보가 없습니다.");
@@ -152,6 +145,7 @@ public class NoticeController {
 	}
 
 
+/*
 	//공지글 등록날짜 검색용
 	@RequestMapping(value="nsearchDate.do", method=RequestMethod.POST)
 	public String noticeSearchDateMethod(
@@ -168,7 +162,7 @@ public class NoticeController {
 				"해당 날짜로 등록된 공지글 정보가 없습니다.");
 			return "common/error";
 		}
-	}
+	}*/
 	
 	//공지글 상세보기 요청 처리용
 	@RequestMapping("ndetail.do")
@@ -199,7 +193,7 @@ public class NoticeController {
 			return "common/error";
 		}
 	}
-	
+	/*
 	//첨부파일 다운로드 요청 처리용
 	@RequestMapping("nfdown.do")
 	public ModelAndView fileDownMethod(
@@ -223,7 +217,7 @@ public class NoticeController {
 		
 		return mv;
 	}
-	
+	*/
 	//공지글 수정페이지로 이동 요청 처리용
 	@RequestMapping("nmoveup.do")
 	public String moveUpdatePage(
@@ -411,10 +405,10 @@ public class NoticeController {
 	}
 	//__________________________________________________
 	//게시글 페이지 단위로 목록보기 요청 처리용
-	@RequestMapping("blist.do")
-	public ModelAndView boardListMethod(
+	@RequestMapping("nlist.do")
+	public String boardListMethod(
 			@RequestParam(name="page", required=false) String page,
-			ModelAndView mv) {
+			Model model) {
 
 		int currentPage = 1;
 		if(page != null) {
@@ -426,23 +420,24 @@ public class NoticeController {
 		int limit = 10;  //한 페이지에 출력할 목록 갯수
 		//총 페이지 수 계산을 위해 게시글 총 갯수 조회해 옴
 		int listCount = noticeService.selectListCount();
-		Page paging = new Page(listCount, currentPage, limit);
+		Paging paging = new Paging(listCount, currentPage, limit);
 		paging.calculator();
+
+
 
 		ArrayList<Notice> list = noticeService.selectList(paging);
 
-		if(list != null && list.size() > 0) {
-			mv.addObject("list", list);
-			mv.addObject("paging", paging);
 
-			mv.setViewName("notice/noticePage");
+		if(list != null && list.size() > 0) {
+			model.addAttribute("list", list);
+			model.addAttribute("paging", paging);
+
+			return "notice/noticePage";
 		}else {
-			mv.addObject("message",
-					currentPage + " 페이지 목록 조회 실패!");
-			mv.setViewName("common/error");
+			model.addAttribute("message", "공지글 목록 조회 실패!");
+			return "common/error";
 		}
 
-		return mv;
 	}
 
 

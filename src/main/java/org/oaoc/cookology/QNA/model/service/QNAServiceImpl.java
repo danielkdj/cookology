@@ -2,7 +2,7 @@ package org.oaoc.cookology.QNA.model.service;
 
 import org.oaoc.cookology.QNA.model.dao.QNADao;
 import org.oaoc.cookology.QNA.model.vo.QNA;
-import org.oaoc.cookology.common.Page;
+import org.oaoc.cookology.common.Paging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ public class QNAServiceImpl implements QNAService{
     QNADao qnaDao;
 
     @Override
-    public ArrayList<QNA> selectList(Page page) {
+    public ArrayList<QNA> selectList(Paging page) {
         return qnaDao.selectList(page);
     }
 

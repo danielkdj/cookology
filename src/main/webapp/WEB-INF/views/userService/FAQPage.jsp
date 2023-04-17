@@ -47,21 +47,9 @@
 
   </style>
   <script>
-
     $(document).ready(function() {
-      $('.panel-heading a').on('click', function() {
-        var currentPanel = $(this).attr('href');
-        var currentPanelState = $(currentPanel).hasClass('in');
-
-        if (currentPanelState) {
-          $('.panel-collapse').collapse('hide');
-          return;
-        }
-
-        $('.panel-collapse').collapse('hide');
-        setTimeout(function() {
-          $(currentPanel).collapse('show');
-        }, 150);
+      $('#btn-brand1').click(function() {
+        $('#allergyAccordion').collapse('toggle');
       });
     });
   </script>
@@ -114,7 +102,7 @@
     <%--      <c:param name="user_email" value="${ loginUser.user_email }" />--%>
     <%--    </c:url>--%>
     <a href="${ qna }"><h1>질문하기(QNA)</h1></a>&nbsp; &nbsp;
-    <a href="blist.do"><h1>공지사항</h1></a>
+    <a href="nlist.do?page=1"><h1>공지사항</h1></a>
   </div>
 
   <!-- Bootstrap org.oaoc.cookology.FAQ - START -->

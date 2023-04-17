@@ -1,12 +1,12 @@
 package org.oaoc.cookology.QNA.model.service;
 
 import org.oaoc.cookology.QNA.model.vo.QNA;
-import org.oaoc.cookology.common.Page;
+import org.oaoc.cookology.common.Paging;
 
 import java.util.ArrayList;
 
 public interface QNAService {
-    ArrayList<QNA> selectList(Page page);
+    ArrayList<QNA> selectList(Paging page);
     QNA selectQNA(int qna_seq_id);
     int updateQNA(QNA qna);
     int insertQNA(QNA qna);

@@ -3,7 +3,7 @@ package org.oaoc.cookology.notice.model.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.oaoc.cookology.common.Page;
+import org.oaoc.cookology.common.Paging;
 import org.oaoc.cookology.common.SearchDate;
 import org.oaoc.cookology.notice.model.vo.Notice;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -42,8 +42,8 @@ public class NoticeDao {
 		return session.delete("noticeMapper.deleteNotice", noticeno);
 	}
 	
-	public ArrayList<Notice> selectSearchTitle(String keyword) {
-		List<Notice> list = session.selectList("noticeMapper.selectSearchTitle", keyword);
+	public ArrayList<Notice> selectSearchTitle(Paging paging) {
+		List<Notice> list = session.selectList("noticeMapper.selectSearchTitle", paging);
 		return (ArrayList<Notice>)list;
 	}
 	
@@ -62,7 +62,7 @@ public class NoticeDao {
 	}
 
 
-	public ArrayList<Notice> selectPaging(Page paging) {
+	public ArrayList<Notice> selectPaging(Paging paging) {
 
 		List<Notice> list = session.selectList("noticeMapper.selectPaging", paging);
 		return (ArrayList<Notice>)list;
@@ -72,7 +72,7 @@ public class NoticeDao {
 		return session.selectOne("noticeMapper.selectListCount");
 	}
 
-	public ArrayList<Notice> selectList(Page paging) {
+	public ArrayList<Notice> selectList(Paging paging) {
 		List<Notice> list = session.selectList("noticeMapper.selectList", paging);
 		return (ArrayList<Notice>)list;
 	}
@@ -81,4 +81,17 @@ public class NoticeDao {
 		List<Notice> list = session.selectList("noticeMapper.selectSearchList", keyword);
 		return (ArrayList<Notice>)list;
     }
+
+	public int selectSearchTitleCount(String keyword) {
+		return session.selectOne("noticeMapper.selectSearchTitleCount", keyword);
+	}
+
+	public int selectSearchContentCount(String keyword) {
+		return session.selectOne("noticeMapper.selectSearchContentCount", keyword);
+	}
+
+	public ArrayList<Notice> selectSearchContent(Paging paging) {
+		List<Notice> list = session.selectList("noticeMapper.selectSearchContent", paging);
+		return (ArrayList<Notice>)list;
+	}
 }
