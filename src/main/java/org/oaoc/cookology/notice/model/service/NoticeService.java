@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.oaoc.cookology.common.Paging;
 import org.oaoc.cookology.common.SearchDate;
 import org.oaoc.cookology.notice.model.vo.Notice;
-import org.springframework.security.core.parameters.P;
 
 public interface NoticeService {
 	ArrayList<Notice> selectNewTop5();
@@ -14,9 +13,7 @@ public interface NoticeService {
 	int insertNotice(Notice notice);
 	int updateNotice(Notice notice);
 	int deleteNotice(int noticeno);
-	ArrayList<Notice> selectSearchTitle(String keyword);
-	ArrayList<Notice> selectSearchWriter(String keyword);
-	ArrayList<Notice> selectSearchDate(SearchDate date);
+
 	Notice selectLast();
 	ArrayList<Notice> selectPaging(Paging paging);
 	ArrayList<Notice> selectSearchList(String keyword);
@@ -24,4 +21,12 @@ public interface NoticeService {
 
 
 	ArrayList<Notice> selectList(Paging paging);
+
+	int selectSearchTitleCount(String keyword);
+
+	ArrayList<Notice> selectSearchTitle(Paging paging);
+
+	int selectSearchContentCount(String keyword);
+
+	ArrayList<Notice> selectSearchContent(Paging paging);
 }

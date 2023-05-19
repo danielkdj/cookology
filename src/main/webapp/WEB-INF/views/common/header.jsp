@@ -66,7 +66,7 @@
           href="/cookology/resources/img/core-img/Cookology_logo.png" />
     <!-- Core Stylesheet -->
     <link href="/cookology/resources/css/style.css" rel="stylesheet" />
-    <link href="/cookology/resources/css/responsive/reponsive.css"
+    <link href="/cookology/resources/css/responsive.css"
           rel="stylesheet" />
     <script type="text/javascript"
             src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
@@ -122,36 +122,32 @@
             </div>
 
             <!-- 로그인 했을 때 : 일반회원인 경우 -->
-            <c:if test="${!empty sessionScope.loginUsers and loginUsers.is_admin ne 'Y' }">
+            <c:if test="${!empty sessionScope.loginUsers and loginUsers.is_admin eq 'N' }">
                 <div id="loginBox" class="lineA"> ${ loginUsers.user_email }님 &nbsp; <a>쪽지</a> &nbsp; &nbsp; <a>메일</a>
 
                     <!-- 마이페이지 클릭시 연결대상과 전달값 지정 -->
-                    <c:url var="userMypage_Info" value="uMypage.do">
+                    <c:url var="userMypage_Info" value="/uMypage_InfoForm.do">
                         <c:param name="user_email" value="${loginUsers.user_email }" />
                     </c:url>
                     <a href="${userMypage_Info}">My Page</a> &nbsp;
                     <button class="logout-btn" onclick="javascript:location.href='userslogout.do';">
                         <span>로그아웃</span>
                     </button>
+                        <a href="FAQPage.do">고객지원</a>
                 </div>
             </c:if>
 
             <!-- 로그인 했을 때 : 관리자인 경우 -->
-            <c:if
-                    test="${ !empty sessionScope.loginMember and loginMember.admin eq 'Y' }">
+            <c:if test="${!empty sessionScope.loginUsers and loginUsers.is_admin eq 'Y' }">
                 <div id="loginBox" class="lineA">
                         ${ loginMember.username } 님 &nbsp; <a
                         href="${ pageContext.servletContext.contextPath}/admin.do">관리
                     페이지로 이동</a> &nbsp;
-                    <!-- 마이페이지 Service 제공 클릭시 연결대상과 전달값 지정 -->
-                    <c:url var="callMyIjfo" value="/myinfo.do">
-                        <c:param name="userid" value="${ loginMember.userid }" />
-                    </c:url>
-                    <a href="${ callMyInfo }">My Page</a> &nbsp;
                     <button class="logout-btn"
-                            onclick="javascript:location.href='logout.do';">
+                            onclick="javascript:location.href='usersLoggout.do';">
                         <span>로그아웃</span>
-                    </button>
+                    </button><a href="FAQPage.do">고객지원</a>
+
                 </div>
 
             </c:if>
@@ -182,15 +178,20 @@
                          id="yummyfood-nav">
                         <ul class="navbar-nav" id="yummy-nav">
                             <li class="nav-item"><a class="nav-link"
-                                                    href="/WEB-INF/views/common/recipes.html">레시피</a></li>
+                                                    href="${ pageContext.servletContext.contextPath}/rpage.do">레시피</a></li>
                             <li class="nav-item"><a class="nav-link"
-                                                    href="${ pageContext.servletContext.contextPath}/eventPage.do">밀키트</a></li>
+                                                    href="${ pageContext.servletContext.contextPath}/productUserList.do">밀키트</a></li>
                             <li class="nav-item"><a class="nav-link"
                                                     href="${ pageContext.servletContext.contextPath}/eventPage.do">이벤트</a></li>
                             <li class="nav-item"><a class="nav-link"
                                                     href="${ pageContext.servletContext.contextPath}/trackingPage.do">배송조회</a></li>
-                            <li class="nav-item"><a class="nav-link"
-                                                    href="${ pageContext.servletContext.contextPath}/cartList.do">장바구니</a></li>
+                            <li class="nav-item">
+                                <c:url var="cart" value="cartList.do">
+                                    <c:param name="user_email" value="${ loginUsers.user_email }" />
+                                </c:url>
+                                <a class="nav-link" href="${ cart }">장바구니</a>&nbsp; &nbsp;
+                            </li>
+
                         </ul>
                     </div>
                 </nav>

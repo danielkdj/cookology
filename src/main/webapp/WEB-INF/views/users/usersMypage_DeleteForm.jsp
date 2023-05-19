@@ -5,103 +5,80 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Cookcology Mypage</title>
+    <title>Cookcology delete</title>
 
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
     <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
     <script type="text/javascript">
 
 
+
+
+
     </script>
 
-
     <style>
-        .my_btn{
-            background-color: gainsboro;
-            color: black;
-            width: 240px;
-            height: 50px;
+        .Box1{
+            width: 500px;
+            margin : 0 auto;
+        }
+
+        .users{
+            width: 480px;
+            height: 40px;
+            font-size: 16px;
+            float: left;
+            margin: 0 auto;
+            padding-left: 10px;
+        }
+
+        .my_btn1{
+            width: 90px;
+            height: 30px;
+            font-size: 13px;
+        }
+
+        .my_btn2{
+            width: 170px;
+            height: 30px;
+            font-size: 13px;
         }
     </style>
-
 </head>
 
 
 
 <body>
+<div class="Box1">
+    <table  align="center" style="cellpadding:5px; border:1px;">
+
+        <h2>탈퇴하기</h2>
+
+        <form action="usersMypage_DeleteForm.do" method="post">
+            <div class="my-box1">
+
+            <h3>회원탈퇴를 진행하려면 본인의 ID/PWD를 입력해주세요</h3>
+            <br><br>
+
+                <h3>Mail(ID)</h3>
+                <input type="text" class="users" name="user_email" id="user_email" placeholder="ID" autofocus>
+                <br><br><br><br>
+
+                <h3>이름</h3>
+                <input type="text" class="users" name="user_name" id="user_name" placeholder="이름" >
+                <br><br><br><br>
+
+                <h3>전화번호</h3>
+                <input type="text" class="users" name="user_phone" id="user_phone" placeholder="전화번호" >
+                <br><br><br><br>
 
 
-
-    <table align="center" cellspacing="17" cellpadding="0" border="1" >
-        <tr><h2>개인정보 수정</h2></tr>
-
-
-        <td width="300">
-            <table align="center" cellspacing="" cellpadding="0" border="0">
-                <th>변경할 사진공간</th>
-                <th>OO님</th>
-                <tr>
-                    <th>프로필 사진</th>
-                    <th><button>사진변경</button><br>
-                        <button>사진삭제</button>
-                    </th>
-                </tr>
-            </table>
-
-
-            <hr>
-
-            <table align="center" cellspacing="8" >
-                <tr>
-                    <th>
-                        <c:url var="userMypage_Info" value="uMypage.do">
-                            <c:param name="user_email" value="${loginUsers.user_email}"/>
-                        </c:url>
-                        <button class="my_btn">
-                            <a href="${userMypage_Info}">개인정보 수정</a>
-                        </button>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        <button class="my_btn" onclick="javascript:location.href='#';"> 레시피 조회</button>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        <button class="my_btn" onclick="javascript:location.href='#';"> 주문정보 조회</button>
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        <button class="my_btn" onclick="javascript:location.href='uDeleteForm.do';"> 탈퇴하기</button>
-                    </th>
-                </tr>
-            </table>
-        </td>
-
-
-        <table  align="center" style="cellpadding:5px; border:1px;">
-            <form action="usersMypage_DeleteForm.do" method="post">
-                    <div class="my-box1">
-
-
-                        <p>회원탈퇴를 하기 위해서는 본인의 ID/PWD를 입력해주세요</p>
-
-
-                            <input type="text" class="user" name="user_name" placeholder="ID" required autofocus><br><br>
-                            <input type="text" class="user" name="user_phone" placeholder="PWD" required><br><br><br>
-
-                            <div class="my-box3">
-                                <button type="submit" onclick="users_Delete_Btb();">탈퇴하기</button>
-                                <button onclick="window.location.href='main.do'">홈페이지로 돌아가기</button>
-                            </div>
-
-                    </div>
-            </form>
-        </table>
+                <button class="my_btn1" type="submit" onclick="users_Delete_Btb();">탈퇴하기</button>
+                <button class="my_btn2"><a href="${pageContext.servletContext.contextPath}/main.do">홈페이지로 돌아가기</a></button>
+            </div>
+        </form>
     </table>
-
+</div>
 
 </body>
 </html>

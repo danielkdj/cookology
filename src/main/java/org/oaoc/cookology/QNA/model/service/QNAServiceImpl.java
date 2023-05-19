@@ -14,8 +14,8 @@ public class QNAServiceImpl implements QNAService{
     QNADao qnaDao;
 
     @Override
-    public ArrayList<QNA> selectList(Paging paging) {
-        return qnaDao.selectList(paging);
+    public ArrayList<QNA> selectList(Paging page) {
+        return qnaDao.selectList(page);
     }
 
     @Override

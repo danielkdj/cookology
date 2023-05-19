@@ -4,12 +4,10 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="usersMapper">
 
-	<resultMap type="Users" id="resultUsers">
+	<resultMap type="Users" id="resultuser">
 		<id property="user_email" column="user_email"/>
-		<result property="user_profile_url" column="user_profile_url"/>
 		<result property="user_password" column="user_password"/>
 		<result property="user_name" column="user_name"/>
-		<result property="user_nickname" column="user_nickname"/>
 		<result property="user_phone" column="user_phone"/>
 		<result property="user_post_code" column="user_post_code"/>
 		<result property="user_address1" column="user_address1"/>
@@ -22,32 +20,26 @@
 	</resultMap>
 
 
-	<!-- =============================================================================================================== -->
-
-	<!-- 1. 회원가입 페이지 -->
-	<!-- 회원가입 시 새로운 값 저장용 -->
+	<!-- 회원가입 입력용 -->
 	<insert id="insertUsers" parameterType="Users">
 		insert into users(
-			user_email, user_password, user_name, user_phone, user_post_code,
-			user_address1, user_address2, user_allergy, create_at, modified_at, login_ok, is_admin)
-		values(#{user_email}, #{user_password}, #{user_name}, #{user_phone}, #{user_post_code},
-			   #{user_address1}, #{user_address2}, #{user_allergy}, sysdate, sysdate, default, default)
+			user_email, user_password, user_name, user_phone, user_post_code, user_address1, user_address2,
+			user_allergy,  create_at, modified_at, login_ok, is_admin)
+		values(#{user_email}, #{user_password}, #{user_name}, #{user_phone}, #{user_post_code}, #{user_address1},
+			   #{user_address2}, #{user_allergy}, sysdate, sysdate, default, default)
 	</insert>
 
-
-	<!-- 아이디 중복검사(ajax 사용) -->
-	<select id="selectDupCheckId" parameterType="string" resultType="_int">
+	<!-- 아이디 중복검사 -->
+	<select id="selectDupCheckID" parameterType="string" resultType="_int">
 		select count(user_email)
 		from users
 		where user_email = #{user_email}
-		  and login_ok = 'Y'
 	</select>
 
-	<!-- =============================================================================================================== -->
 
-	<!--2. 마이페이지-->
+
 	<!-- ID를 통해 회원정보 불러오기-->
-	<select id="selectUsers" parameterType="string" resultMap="resultUsers" >
+	<select id="selectUsers" parameterType="string" resultMap="resultuser" >
 		select *
 		from users
 		where user_email = #{user_email}
@@ -56,128 +48,56 @@
 	<!--마이페이지 개인정보 수정 -->
 	<update id="updateUsers" parameterType="Users">
 		update users
-		set modified_at = sysdate,
+		set user_password = #{user_password},
+			modified_at = sysdate,
 			user_post_code = #{user_post_code},
 			user_address1 = #{user_address1},
-			user_address2 = #{user_address2},
-			user_allergy = #{user_allergy}
+			user_address2 = #{user_address2}
 		where user_email = #{user_email}
 	</update>
 
-	<!--My레시피 조회-->
-	<select id="selectSearchMyRecipe" parameterType="string" resultType="_int">
-		select *
-		from recipe
-		where user_email = #{user_email}
-		  and recipe_title like '%||#{keyword}||%'
-	</select>
 
-	<!--My결제내역 조회-->
-	<select id="selectSearchMyOrder" parameterType="string" resultType="_int">
-		select *
-		from orders
-		where user_email = #{user_email}
-		  and invoice_number like '%||#{keyword}||%'
-	</select>
 
-	<!--회원탈퇴 시 회원삭제-->
+	<!--회원탈퇴 시 회원삭제 = 해야하는 일단은 로그인제한으로 변경해서 처리만 하고 따로 정보제거하도록함-->
 	<delete id="deleteUsers" parameterType="string">
 		delete from users
 		where user_email = #{user_email}
-		  and user_password = #{user_password}
+		  and user_name = #{user_name}
+		  and user_phone = #{user_phone}
 	</delete>
 
-	<!-- =============================================================================================================== -->
+	<!-- 로그인 처리용 -->
+	<select id="selectusersLogin" parameterType="Users" resultMap="resultuser">
+		select user_email, user_password
+		from users
+		where user_email = #{user_email}
+		  and login_ok = 'Y'
+	</select>
 
-	<!--3. 아이디, 비밀번호 조회-->
+
 	<!--아이디 찾기-->
-	<select id="selectfindUsersId" parameterType="Users" resultType="string">
+	<select id="selectFindUsersID" parameterType="Users" resultType="string">
 		select user_email
 		from users
 		where user_name = #{user_name}
 		  and user_phone = #{user_phone}
 	</select>
 
-	<!--비밀번호 조회-->
-	<select id="findUsersPassword" parameterType="Users" resultType="string">
-		select user_password
-		from users
-		where user_name =#{user_name}
-		  and user_phone = #{user_phone}
-		  and user_email = #{user_email}
-	</select>
-
-	<!--비밀번호 재설정된다면 기존 비밀번호 삭제-->
-	<delete id="deleteUsersPassword" parameterType="string">
-		delete
-		from users
-		where user_password = #{original_user_password}
-	</delete>
-
 	<!--회원정보가 있다면 비밀번호 재설정(새로 만들기)-->
-	<update id="updateUsersPassword" parameterType="string">
+	<update id="updateUsersPWD" parameterType="string">
 		update users
 		set user_password = #{new_user_password}
 		where user_email = #{user_email}
 	</update>
 
-	<!-- =============================================================================================================== -->
-
-	<!--4. 로그인, 로그아웃-->
-	<!-- 로그인 처리용 -->
-	<select id="selectUsersLogin" parameterType="Users" resultMap="resultUsers">
-		select *
+	<!--비밀번호 재설정된다면 기존 비밀번호 삭제-->
+	<delete id="selectUsersPWD" parameterType="string">
+		delete
 		from users
-		where user_email = #{user_email}
-		  and login_ok = 'Y'
-	</select>
+		where user_password = #{original_user_password}
+	</delete>
 
-	<!-- =============================================================================================================== -->
-
-	<!--5. 관리자용-->
-	<!--user 1명 정보 조회-->
-	<select id="selectList" resultMap="resultUsers">
-		select *
-		from users
-		where user_email = #{user_email}
-	</select>
-
-	<!--회원 로그인 허용여부 변경-->
-	<update id="updateLoginok" parameterType="string">
-		update users
-		set login_ok = #{login_ok}
-		where user_email = #{user_email}
-	</update>
-
-	<!--회원에서 관리자로 변경-->
-	<update id="updateAdminok" parameterType="string">
-		update users
-		set is_admin = #{is_admin}
-		where user_email = #{user_email}
-	</update>
-
-	<!-- ID로 회원조회 -->
-	<select id="selectSearchUser_email" parameterType="string" resultMap="resultUsers">
+	<select id="selectUsersLogin" resultMap="resultuser">
 		select * from users
-		where user_email like '%' || #{keyword} || '%'
 	</select>
-
-	<!-- 가입날짜로 회원조회 -->
-	<select id="selectSearchEnrollDate" parameterType="SearchDate" resultMap="resultUsers">
-		select * from users
-		where create_at between #{begin} and #{end}
-	</select>
-
-	<!-- 로그인 가능여부로 회원조회 -->
-	<select id="selectSearchLoginOK" parameterType="string" resultMap="resultUsers">
-		select * from users
-		where login_ok = #{searchs}
-	</select>
-
-	<!-- 관리자 여부로 회원조회 -->
-	<select id="selectSearchAdminOK" parameterType="string" resultMap="resultUsers">
-		select * from users
-		where is_admin = #{searchs}
-	</select>
-
 </mapper>

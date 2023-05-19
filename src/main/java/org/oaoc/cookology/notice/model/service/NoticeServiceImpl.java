@@ -45,20 +45,6 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.deleteNotice(noticeno);
 	}
 
-	@Override
-	public ArrayList<Notice> selectSearchTitle(String keyword) {
-		return noticeDao.selectSearchTitle(keyword);
-	}
-
-	@Override
-	public ArrayList<Notice> selectSearchWriter(String keyword) {
-		return noticeDao.selectSearchWriter(keyword);
-	}
-
-	@Override
-	public ArrayList<Notice> selectSearchDate(SearchDate date) {
-		return noticeDao.selectSearchDate(date);
-	}
 
 	@Override
 	public Notice selectLast() {
@@ -84,6 +70,25 @@ public class NoticeServiceImpl implements NoticeService {
 	public ArrayList<Notice> selectList(Paging paging) {
 		return noticeDao.selectList(paging);
 	}
+
+	@Override
+	public int selectSearchTitleCount(String keyword) {
+		return noticeDao.selectSearchTitleCount(keyword);
+	}
+
+	@Override
+	public ArrayList<Notice> selectSearchTitle(Paging paging) {
+		return noticeDao.selectSearchTitle(paging);
+	}
+
+	@Override
+	public int selectSearchContentCount(String keyword) {
+		return noticeDao.selectSearchContentCount(keyword);
+	}
+
+	@Override
+	public ArrayList<Notice> selectSearchContent(Paging paging) {
+		return noticeDao.selectSearchContent(paging);	}
 
 
 }

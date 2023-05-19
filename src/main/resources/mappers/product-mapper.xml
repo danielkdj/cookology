@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="productMapper">
+
+
+
+			<resultMap id="resultProduct" type="Product">
+			<id column="product_seq_id" property="product_seq_id"/>
+			<result column="business_number" property="business_number"/>
+			<result column="thumb_url" property="thumb_url"/>
+			<result column="product_name" property="product_name"/>
+			<result column="product_price" property="product_price"/>
+			<result column="stock" property="stock"/>
+			<result column="claims_num" property="claims_num"/>
+			<result column="create_at" property="create_at"/>
+			<result column="modified_at" property="modified_at"/>		
+			<result column="admin_inspection" property="admin_inspection"/>
+			<result column="tag" property="tag"/>
+			<result column="original_filepath" property="original_filepath"/>
+			<result column="rename_filepath" property="rename_filepath"/>
+			<result column="content" property="content"/>				
+			</resultMap>
+			
+			
+			
+			
+			<resultMap id="resultUserProduct" type="Product">
+			<id column="product_seq_id" property="product_seq_id"/>		
+			<result column="product_name" property="product_name"/>
+			<result column="product_price" property="product_price"/>
+			<result column="rename_filepath" property="rename_filepath"/>		
+			</resultMap>
+	
+	
+
+<!-- 상품 리스트 전체 목록 ok -->
+
+	<select id="selectAll" resultMap="resultProduct">
+		select * from product
+		order by product_seq_id desc 
+	</select>
+
+
+<!-- 유저 상품 리스트 목록 -->
+<select id="selectUserAll" resultMap="resultUserProduct">
+	select * from product
+	order by product_seq_id desc </select>
+
+
+
+<!-- 상품명검색select -->
+ <select id="selectSearchProductName" resultMap="resultProduct" parameterType="string">
+select * from product
+where product_name like '%' || #{ keyword } || '%'
+order by modified_at desc 
+</select> 
+
+
+
+
+<!-- 상품 상세보기 요청 처리용 , 상품 수정 -->
+
+
+ <select id="selectProduct" resultMap="resultProduct" parameterType="_int">
+		select * from product
+		where product_seq_id = #{ product_seq_id }
+</select> 
+
+
+<!-- 상품 d이름 검색-->
+ <select id="selectNameProduct" resultMap="resultProduct" parameterType="string">
+		select * from product
+		where product_name = #{ product_name }
+</select> 
+
+
+
+
+	<update id="updateProduct" parameterType="Product">
+		update product
+		set product_name = #{ product_name }
+			, product_price = #{ product_price }
+			, stock = #{ stock }
+			, tag = #{ tag }
+			<if test="original_filepath != null">
+		    , original_filepath = #{ original_filepath }
+		    , rename_filepath = #{ rename_filepath }
+		    </if>
+		    <if test="original_filepath == null">
+		    , original_filepath = null
+		    , rename_filepath = null
+		    </if>
+		    , modified_at = sysdate
+		    , content = #{ content }	   
+			where product_seq_id = #{ product_seq_id }
+	</update> 
+
+	
+  <delete id="deleteProduct" parameterType="_int">
+    DELETE FROM product
+    WHERE product_seq_id = #{ product_seq_id }
+  </delete>
+
+  
+	<update id="updateMinusNo" parameterType="_int">
+	<![CDATA[
+	 UPDATE product 
+	SET product_seq_id = product_seq_id - 1 
+	WHERE product_seq_id > #{product_seq_id};
+	 ]]>
+	</update>
+
+	
+	
+
+	<insert id="insertProduct" parameterType="Product">
+	insert into product (product_seq_id, business_number, thumb_url, product_name,
+						product_price, stock, claims_num, CREATE_AT, modified_at, admin_inspection, tag,
+						original_filepath, rename_filepath, content)
+	values ( SEQ_PRODUCT.nextval, #{business_number}, #{ thumb_url },
+			#{ product_name }, #{ product_price }, #{ stock }, #{ claims_num }, sysdate, sysdate, DEFAULT,
+			#{ tag }, #{ original_filepath, jdbcType=VARCHAR }, #{ rename_filepath, jdbcType=VARCHAR }, #{ content })
+	</insert>
+
+</mapper>

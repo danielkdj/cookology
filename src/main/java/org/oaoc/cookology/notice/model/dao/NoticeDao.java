@@ -42,8 +42,8 @@ public class NoticeDao {
 		return session.delete("noticeMapper.deleteNotice", noticeno);
 	}
 	
-	public ArrayList<Notice> selectSearchTitle(String keyword) {
-		List<Notice> list = session.selectList("noticeMapper.selectSearchTitle", keyword);
+	public ArrayList<Notice> selectSearchTitle(Paging paging) {
+		List<Notice> list = session.selectList("noticeMapper.selectSearchTitle", paging);
 		return (ArrayList<Notice>)list;
 	}
 	
@@ -81,4 +81,17 @@ public class NoticeDao {
 		List<Notice> list = session.selectList("noticeMapper.selectSearchList", keyword);
 		return (ArrayList<Notice>)list;
     }
+
+	public int selectSearchTitleCount(String keyword) {
+		return session.selectOne("noticeMapper.selectSearchTitleCount", keyword);
+	}
+
+	public int selectSearchContentCount(String keyword) {
+		return session.selectOne("noticeMapper.selectSearchContentCount", keyword);
+	}
+
+	public ArrayList<Notice> selectSearchContent(Paging paging) {
+		List<Notice> list = session.selectList("noticeMapper.selectSearchContent", paging);
+		return (ArrayList<Notice>)list;
+	}
 }

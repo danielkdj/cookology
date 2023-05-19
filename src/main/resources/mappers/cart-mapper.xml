@@ -5,37 +5,48 @@
 <mapper namespace="cartMapper">
 
     <resultMap type="Cart" id="resultCart">
-        <id property="cart_id" column="cart_id" />
+        <id property="cart_seq_id" column="cart_seq_id" />
         <result property="user_email" column="user_email" />
-        <result property="user_name" column="user_name" />
         <result property="product_seq_id" column="product_seq_id" />
-        <result property="product_name" column="product_name" />
-        <result property="product_discount" column="product_discount" />
         <result property="price" column="price" />
-        <result property="number" column="number" />
         <result property="amount" column="amount" />
     </resultMap>
 
-    <!-- 카트 목록 -->
-    <select id="getCartList" parameterType="String" resultType="Cart">
-        SELECT * FROM cart WHERE user_email = #{user_email}
-    </select>
+    <resultMap id="resultCartWithProductInfo" type="Cart" extends="resultCart">
+        <association property="product" javaType="Product">
+            <id column="product_seq_id" property="product_seq_id" />
+            <result column="product_name" property="product_name" />
+            <result column="product_price" property="product_price" />
+            <result column="rename_filepath" property="rename_filepath" />
+        </association>
+    </resultMap>
 
-    <!-- 카트 추가 -->
+    <!-- 장바구니에 상품 추가 (Add product to cart) -->
     <insert id="addToCart" parameterType="Cart">
-        INSERT INTO cart (user_email, user_name, product_seq_id, product_name, product_discount, price, number, amount)
-        VALUES (#{user_email}, #{user_name}, #{product_seq_id}, #{product_name}, #{product_discount}, #{price}, #{number}, #{amount})
+        INSERT INTO CART (CART_SEQ_ID, USER_EMAIL, PRODUCT_SEQ_ID, AMOUNT, PRICE)
+        VALUES (cart_seq_id.NEXTVAL, #{user_email}, #{product_seq_id}, #{amount}, #{price})
     </insert>
 
-    <!-- 카드 수정 -->
-    <update id="updateCartItem" parameterType="Cart">
-        UPDATE cart SET number = #{number} WHERE cart_id = #{cart_id}
+    <!-- 로그인한 사용자의 장바구니 목록 조회 (Retrieve the cart list of the logged-in user) -->
+    <select id="getCartList" resultType="Cart">
+        SELECT * FROM CART WHERE USER_EMAIL = #{user_email}
+    </select>
+
+    <!-- 장바구니 상품 수량 수정 (Update the quantity of a product in the cart) -->
+    <update id="updateCartItem">
+        UPDATE CART SET AMOUNT = #{amount} WHERE CART_SEQ_ID = #{cart_seq_id}
     </update>
 
-
-    <!-- 카트 삭제 -->
-    <delete id="removeCartItem" parameterType="int">
-        DELETE FROM cart WHERE cart_id = #{cart_id}
+    <!-- 장바구니 상품 삭제 (Delete a product from the cart) -->
+    <delete id="removeCartItem">
+        DELETE FROM CART WHERE CART_SEQ_ID = #{cart_seq_id}
     </delete>
+
+    <select id="getCartListWithProductInfo" resultMap="resultCartWithProductInfo">
+        SELECT c.*, p.product_name, p.product_price, p.rename_filepath
+        FROM cart c
+                 INNER JOIN product p ON c.product_seq_id = p.product_seq_id
+        WHERE c.user_email = #{user_email}
+    </select>
 
 </mapper>

@@ -8,10 +8,10 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- Favicon -->
-<link rel="icon" href="/cookology/resources/img/core-img/Cookology_logo.png" />
+<link rel="icon" href="/cookology/resources/img/core-img/favicon.ico" />
 <!-- Core Stylesheet -->
 <link href="/cookology/resources/css/style.css" rel="stylesheet" />
-<link href="/cookology/resources/css/responsive/reponsive.css" rel="stylesheet" />
+<link href="/cookology/resources/css/reponsive.css" rel="stylesheet" />
 <style type="text/css">
 .account_value {
 	color: black;
@@ -78,7 +78,7 @@
 
 			<!-- 일반회원 탭 -->
 			<section class="tab-content tab-content--show" id="hPointMember">
-				<form action="userslogin.do" method="post">
+				<form action="useresLogin.do" method="post">
 					<div class="input-area">
 						<div class="input-box">
 							<input type="text" name="user_email" class="input__text" id="h_id"
@@ -94,14 +94,14 @@
 						<input type="submit" class="btn-init green" id="l_loginBtn" value="로그인" />
 					</div>
 				</form>
-				<!-- ID/PW 찾기는 아직 안배웠음. -->
+
 				<ul class="login_link_box">
-					<li><a href="/login/memberAccount/idFind"
+					<li><a href="ufindUsers_ID.do"
 						class="account_value">아이디 찾기</a></li>
-					<li><a href="/login/memberAccount/pwFind"
-						class="account_value">비밀번호 찾기</a></li>
-					<li><a href="${ pageContext.servletContext.contextPath}/enrollPage.do"
+					<li><a href="${ pageContext.servletContext.contextPath}/usersSignUpPage.do"
 						class="account_value">회원가입</a></li>
+					<li><a href="${ pageContext.servletContext.contextPath}FAQPage.do"
+						   class="account_value">고객지원</a></li>
 				</ul>
 
 
@@ -132,7 +132,7 @@
 								success : function(authObj) {
 									Kakao.API
 											.request({
-												url : "/v2/user/me",
+												url : "/v2/users/me",
 												success : function(result) {
 													$("#result").append(result);
 													id = result.id;
@@ -160,7 +160,7 @@
 															resultdiv);
 												},
 												fail : function(error) {
-													alert("login success, but failed to request user information: "
+													alert("login success, but failed to request users information: "
 															+ JSON
 																	.stringify(error));
 												},
@@ -180,12 +180,12 @@
 				<form action="clogin.do" method="post">
 					<div class="input-area">
 						<div class="input-box">
-							<input type="text" name="userid" class="input__text" id="id"
+							<input type="text" name="business_number" class="input__text" id="id"
 								title="아이디" placeholder="아이디" value="" />
 						</div>
 
 						<div class="input-box">
-							<input type="password" name="userid" class="input__text" id="pw"
+							<input type="password" name="business_number" class="input__text" id="pw"
 								title="비밀번호" placeholder="비밀번호" />
 						</div>
 					</div>
@@ -200,7 +200,7 @@
 					<li><a href="/login/memberAccount/pwFind"
 						class="account_value">비밀번호 찾기</a></li>
 					<li><a
-						href="${ pageContext.servletContext.contextPath}/enrollPage.do"
+						href="${ pageContext.servletContext.contextPath}/usersSignUppage.do"
 						class="account_value">회원가입</a></li>
 				</ul>
 			</section>

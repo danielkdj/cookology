@@ -15,8 +15,8 @@ public class QNADao {
     @Autowired
     private SqlSessionTemplate session;
 
-    public ArrayList<QNA> selectList(Paging paging) {
-       List<QNA> list = session.selectList("QNAMapper.selectList", paging);
+    public ArrayList<QNA> selectList(Paging page) {
+       List<QNA> list = session.selectList("QNAMapper.selectList", page);
        return new ArrayList<>(list);
     }
 

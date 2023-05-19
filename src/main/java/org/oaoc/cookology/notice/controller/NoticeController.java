@@ -13,7 +13,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.oaoc.cookology.common.FileNameChange;
 import org.oaoc.cookology.common.Paging;
-import org.oaoc.cookology.common.SearchDate;
 import org.oaoc.cookology.notice.model.service.NoticeService;
 import org.oaoc.cookology.notice.model.vo.Notice;
 import org.oaoc.cookology.users.model.vo.Users;
@@ -62,10 +61,11 @@ public class NoticeController {
 			
 			job.put("noticeno", notice.getNoticeno());
 			//한글에 대해서는 인코딩해서 json에 담도록 함
+
 			//한글깨짐 방지
-			job.put("noticetitle", URLEncoder.encode(
-					notice.getNoticetitle(), "utf-8"));
+			job.put("noticetitle", URLEncoder.encode(notice.getNoticetitle(), "utf-8"));
 			//날짜는 반드시 toString() 으로 문자열로 바꿔서
+			job.put("noticecontent", URLEncoder.encode(notice.getNoticecontent(), "utf-8"));
 			//json 에 담아야 함
 			job.put("noticedate", notice.getNoticedate().toString());
 			
@@ -82,76 +82,69 @@ public class NoticeController {
 	}
 	
 	//공지사항 전체 목록보기 요청 처리용
-	@RequestMapping("nlist.do")
-	public String noticeListMethod(Model model) {
-		ArrayList<Notice> list = noticeService.selectAll();
-		
-		if(list != null && list.size() > 0) {
-			model.addAttribute("list", list);
-			return "notice/noticeListView";
-		}else {
-			model.addAttribute("message", 
-					"등록된 공지사항 정보가 없습니다.");
-			return "common/error";
-		}
-	}
+
 	
 	//공지글 제목 검색용
 	@RequestMapping(value="nsearchTitle.do", method={RequestMethod.POST, RequestMethod.GET})
 	public String noticeSearchTitleMethod(
 			@RequestParam("keyword") String keyword,
+			@RequestParam("page") int page,
 			Model model) {
-		
+
+		int limit = 10;
+		int listCount = noticeService.selectSearchTitleCount(keyword);
+
+		Paging paging = new Paging(listCount, page, limit, keyword);
+		paging.calculator();
+
+		logger.info("paging"+ paging);
 		ArrayList<Notice> list = 
-				noticeService.selectSearchTitle(keyword);
+				noticeService.selectSearchTitle(paging);
 
 		if(list != null && list.size() > 0) {
 			model.addAttribute("list", list);
-			return "redirect:blist.do";
+			model.addAttribute("url", "nsearchTitle.do");
+			model.addAttribute("paging", paging);
+			return "notice/noticePage";
 		}else {
-			model.addAttribute("message",
-				keyword + "로 검색된 공지글 정보가 없습니다.");
-			return "common/error";
+			model.addAttribute("list", list);
+			return "notice/noticePage";
 		}
 	}
 	
 	//공지글 작성자 검색용
-	@RequestMapping(value="nsearchWriter.do", method={RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value="nsearchContent.do", method={RequestMethod.POST, RequestMethod.GET})
 	public String noticeSearchWriterMethod(
-			@RequestParam("keyword") String keyword, 
-			Model model) {
-		
-		ArrayList<Notice> list = 
-				noticeService.selectSearchWriter(keyword);
-		
-		if(list != null && list.size() > 0) {
-			model.addAttribute("list", list);
-			return "redirect:blist.do";
-		}else {
-			model.addAttribute("message", 
-				keyword + "로 검색된 공지글 정보가 없습니다.");
-			return "common/error";
-		}
-	}
-	@RequestMapping(value="nsearchAll.do", method={RequestMethod.POST, RequestMethod.GET})
-	public String noticeSearchAllMethod(
 			@RequestParam("keyword") String keyword,
+			@RequestParam("page") int page,
 			Model model) {
+
+		int limit = 10;
+
+		int listCount = noticeService.selectSearchContentCount(keyword);
+
+		Paging paging = new Paging(listCount, page, limit,keyword);
+		paging.calculator();
+
+		logger.info("paging"+ paging);
 
 		ArrayList<Notice> list =
-				noticeService.selectSearchList(keyword);
+				noticeService.selectSearchContent(paging);
 
 		if(list != null && list.size() > 0) {
 			model.addAttribute("list", list);
-			return "redirect:blist.do";
+			model.addAttribute("url", "nsearchContent.do");
+			model.addAttribute("paging", paging);
+
+			return "notice/noticePage";
 		}else {
-			model.addAttribute("message",
-					keyword + "로 검색된 공지글 정보가 없습니다.");
-			return "common/error";
+			model.addAttribute("list", list);
+			return "notice/noticePage";
 		}
 	}
 
 
+/*
 	//공지글 등록날짜 검색용
 	@RequestMapping(value="nsearchDate.do", method=RequestMethod.POST)
 	public String noticeSearchDateMethod(
@@ -168,10 +161,10 @@ public class NoticeController {
 				"해당 날짜로 등록된 공지글 정보가 없습니다.");
 			return "common/error";
 		}
-	}
+	}*/
 	
 	//공지글 상세보기 요청 처리용
-	@RequestMapping("ndetail.do")
+/*	@RequestMapping("ndetail.do")
 	public String noticeDetailMethod(
 			@RequestParam("noticeno") int noticeno, 
 			Model model, HttpSession session) {
@@ -198,8 +191,8 @@ public class NoticeController {
 					noticeno + "번 공지글 상세보기 조회 실패!");
 			return "common/error";
 		}
-	}
-	
+	}*/
+	/*
 	//첨부파일 다운로드 요청 처리용
 	@RequestMapping("nfdown.do")
 	public ModelAndView fileDownMethod(
@@ -223,7 +216,7 @@ public class NoticeController {
 		
 		return mv;
 	}
-	
+	*/
 	//공지글 수정페이지로 이동 요청 처리용
 	@RequestMapping("nmoveup.do")
 	public String moveUpdatePage(
@@ -245,72 +238,9 @@ public class NoticeController {
 	//공지글 수정 요청 처리용 (파일 업로드 기능 사용)
 	@RequestMapping(value="nupdate.do", method=RequestMethod.POST)
 	public String noticeUpdateMethod(
-			Notice notice, Model model, HttpServletRequest request,
-			@RequestParam(name="delflag", required=false) String delFlag,
-			@RequestParam(name="upfile", required=false) MultipartFile mfile) {
+			Notice notice, Model model) {
 		
-		//공지사항 첨부파일 저장 폴더 경로 지정
-		String savePath = request.getSession()
-				.getServletContext().getRealPath(
-					"resources/notice_upfiles");
-		
-		//첨부파일이 수정 처리된 경우 ---------------------------
-		//1. 원래 첨부파일이 있는데 '파일삭제'를 선택한 경우
-		if(notice.getOriginal_filepath() != null 
-				&& delFlag != null && delFlag.equals("yes")) {
-			//저장 폴더에 있는 파일을 삭제함
-			new File(savePath + "\\" + notice.getRename_filepath()).delete();
-			//notice 의 파일 정보도 제거함
-			notice.setOriginal_filepath(null);
-			notice.setRename_filepath(null);
-		}
-		
-		//2. 공지글 첨부파일은 1개만 가능한 경우
-		//새로운 첨부파일이 있을때
-		if(!mfile.isEmpty()) {
-			//2-1. 이전 첨부파일이 있을 때
-			if(notice.getOriginal_filepath() != null) {
-				//저장 폴더에 있는 이전 파일을 삭제함
-				new File(savePath + "\\" 
-						+ notice.getRename_filepath()).delete();
-				//notice 의 이전 파일 정보도 제거함
-				notice.setOriginal_filepath(null);
-				notice.setRename_filepath(null);
-			}
-			
-			//2-2. 이전 첨부파일이 없을 때
-			//전송온 파일이름 추출함
-			String fileName = mfile.getOriginalFilename();
-			
-			//다른 공지글의 첨부파일과 파일명이 중복되어서
-			//덮어쓰기 되는것을 막기 위해, 파일명을 변경해서 
-			//폴더에 저장하는 방식을 사용할 수 있음
-			//변경 파일명 : 년월일시분초.확장자
-			if(fileName != null && fileName.length() > 0) {
-				
-				String renameFileName = FileNameChange.change(
-						fileName, "yyyyMMddHHmmss");
-				
-				logger.info("첨부 파일명 확인 : " + fileName 
-								+ ", " + renameFileName);
-								
-				//폴더에 저장 처리
-				try {
-					mfile.transferTo(new File(
-							savePath + "\\" + renameFileName));
-				} catch (Exception e) {					
-					e.printStackTrace();
-					model.addAttribute("message", 
-							"첨부파일 저장 실패!");
-					return "common/error";
-				} 
-				
-				//notice 객체에 첨부파일 정보 기록 저장
-				notice.setOriginal_filepath(fileName);
-				notice.setRename_filepath(renameFileName);
-			} //이름바꾸기
-		}  //새로운 첨부파일이 있을 때		
-		
+
 		if(noticeService.updateNotice(notice) > 0) {
 			//공지글 수정 성공시 목록 보기 페이지로 이동
 			return "redirect:nlist.do";
@@ -340,9 +270,9 @@ public class NoticeController {
 				new File(savePath + "\\" + renameFileName).delete();
 			}
 			
-			return "redirect:blist";
+			return "redirect:nlist.do";
 		}else {
-			model.addAttribute("message", 
+			model.addAttribute("message",
 					noticeno + "번 공지 삭제 실패!");
 			return "common/error";
 		}
@@ -403,7 +333,7 @@ public class NoticeController {
 		
 		if(noticeService.insertNotice(notice) > 0) {
 			//공지글 수정 성공시 목록 보기 페이지로 이동
-			return "redirect:blist.do";
+			return "redirect:nlist.do";
 		}else {
 			model.addAttribute("message", "새 공지 등록 실패!");
 			return "common/error";
@@ -411,10 +341,10 @@ public class NoticeController {
 	}
 	//__________________________________________________
 	//게시글 페이지 단위로 목록보기 요청 처리용
-	@RequestMapping("blist.do")
-	public ModelAndView boardListMethod(
+	@RequestMapping("nlist.do")
+	public String boardListMethod(
 			@RequestParam(name="page", required=false) String page,
-			ModelAndView mv) {
+			Model model) {
 
 		int currentPage = 1;
 		if(page != null) {
@@ -429,23 +359,29 @@ public class NoticeController {
 		Paging paging = new Paging(listCount, currentPage, limit);
 		paging.calculator();
 
+
+
 		ArrayList<Notice> list = noticeService.selectList(paging);
 
-		if(list != null && list.size() > 0) {
-			mv.addObject("list", list);
-			mv.addObject("paging", paging);
 
-			mv.setViewName("notice/noticePage");
+		if(list != null && list.size() > 0) {
+			model.addAttribute("list", list);
+			model.addAttribute("paging", paging);
+
+			return "notice/noticePage";
 		}else {
-			mv.addObject("message",
-					currentPage + " 페이지 목록 조회 실패!");
-			mv.setViewName("common/error");
+			model.addAttribute("message", "공지글 목록 조회 실패!");
+			return "common/error";
 		}
 
-		return mv;
 	}
 
+	@RequestMapping("noticentopView.do")
+	public String noticeTopViewMethod() {
 
+			return "notice/noticeListView";
+
+	}
 
 
 

@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recent Viewed Menu</title>
   <link href="/cookology/resources/css/style.css" rel="stylesheet" />
-  <link href="/cookology/resources/css/responsive/reponsive.css"
+  <link href="/cookology/resources/css/responsive.css"
         rel="stylesheet" />
   <style>
     .floating-square {
@@ -16,10 +16,12 @@
       top: 20%;
       right: 20px;
       width: 200px;
-      background-color: #f1f1f1;
+      background-color: rgba(252, 108, 63, 0.7);
       padding: 15px;
       border: 1px solid #888;
       z-index: 9999;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="productDescriptionMapper">
+
+
+
+<resultMap id="ProductDescription" type="ProductDescription">
+<result column="product_seq_id" property="product_seq_id"/>
+<result column="original_img" property="original_img"/>
+<result column="rename_img" property="rename_img"/>
+<result column="description" property="description"/>
+<result column="product_description_no" property="product_description_no"/>
+</resultMap>
+
+
+
+ <!-- 여기는 디비의 컬럼이고, 밑에 values안에는 자바의 필드이다 그래서 대소문자 주의해야한다 -->
+
+<insert id="insertProductDescription" parameterType="ProductDescription">
+    insert into product_description (product_seq_id, ORIGINAL_IMG, RENAME_IMG, DESCRIPTION, product_description_no)
+    values ( 
+        #{product_seq_id},
+        #{original_img,jdbcType=VARCHAR}, 
+        #{rename_img,jdbcType=VARCHAR}, 
+        #{description},
+        (select count(*) + 1
+		from PRODUCT_DESCRIPTION
+		where product_seq_id = #{product_seq_id})
+    )
+</insert>
+
+
+
+
+
+
+<!-- select *
+	from product_description
+	where product_seq_id = #{ product_seq_id }
+ -->
+<!-- 상품 리스트 전체 목록 -->
+	<select id="selectAll" resultType="ProductDescription" parameterType="_int">
+	select *
+	from product_description
+	where product_seq_id = #{ product_seq_id }
+	</select>
+
+
+
+
+
+<!--   상품 상세보기 요청 처리용 , 상품 수정   -->
+ <select id="selectProductDescription" resultMap="ProductDescription" parameterType="_int">
+		select * from product_description
+		where product_seq_id = #{ product_seq_id }
+</select> 
+
+
+
+
+<delete id="deleteDescription" parameterType="_int"> 
+    DELETE FROM product_description
+    WHERE product_description_no = #{ product_description_no}
+  </delete>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 이미지 한개,텍스트 수정
+<update id="updateDescription" parameterType="ProductDescription">
+<![CDATA[
+update product_description
+set product_description_no = 
+   CASE 
+        WHEN product_description_no > #{ product_description_no } 
+	  THEN  product_description_no - 1
+      END
+    WHERE product_description_no > #{ product_description_no}
+
+    ]]>
+</update>
+ -->
+<!--
+  <update id="updateMinusNo" parameterType="_int">
+  <![CDATA[
+    UPDATE product_description
+    SET product_number = 
+      CASE 
+        WHEN product_description_no > #{ product_description_no } 
+	  THEN  product_description_no - 1
+      END
+    WHERE product_description_no > #{ product_description_no}
+    ]]>
+  </update> 
+
+
+
+
+
+ <delete id="deleteProduct" parameterType="_int">
+    DELETE FROM product_description
+    WHERE product_description_no = #{ product_description_no }
+  </delete>
+
+
+
+
+ -->
+
+
+
+
+
+<!--
+<select id="moveUpdateDescriptionPage" resultType="ProductDescription">
+  SELECT *
+  FROM product_description
+  WHERE product_seq_id = #{product_seq_id}
+  AND product_description_no = #{product_description_no}
+</select>
+ -->
+ 
+
+
+
+
+
+
+<!-- 
+<select id="selectProductsAndDescriptions" resultMap="ProductDescription">
+  SELECT *
+  FROM product_description
+  JOIN product
+  ON product_description.product_seq_id = product.product_seq_id
+  WHERE product_description.product_no = product.product_no
+</select>
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+	<delete id="deleteProduct" parameterType="_int">
+		delete from product
+		where product_seq_id = #{ product_seq_id }
+	</delete> 
+ -->
+
+
+
+<!-- <insert id="insertProduct" parameterType="ProductDescription">
+    insert into product ( ORIGINAL_IMG, RENAME_IMG, DESCRIPTION)
+    values ( 
+     (select product_seq_id.nextval from product)
+            #{ORIGINAL_IMG,jdbcType=VARCHAR}, 
+            #{RENAME_IMG,jdbcType=VARCHAR}, 
+            #{DESCRIPTION})
+</insert> -->
+
+
+
+
+
+
+
+<!-- <insert id="insertProductDescription" parameterType="ProductDescription">
+insert into product_description (product_seq_id, original_img, rename_img, description)
+values ((select max(product_seq_id) + 1 from product),
+		#{ original_img, jdbcType=VARCHAR },
+		#{ rename_img, jdbcType=VARCHAR },
+		#{ description })
+</insert> -->
+
+
+
+</mapper>

@@ -91,7 +91,7 @@
     <!-- Core Stylesheet -->
     <link href="/resources/css/style.css" rel="stylesheet">
     <!-- Responsive CSS -->
-    <link href="/resources/css/responsive/responsive.css" rel="stylesheet">
+    <link href="/resources/css/responsive.css" rel="stylesheet">
 </head>
 </html>
 <!-- header.jsp include -->

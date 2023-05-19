@@ -10,7 +10,7 @@
 <link rel="icon" href="/cookology/resources/img/core-img/favicon.ico" />
 	<!-- Core Stylesheet -->
 <link href="/cookology/resources/css/style.css" rel="stylesheet" />
-<link href="/cookology/resources/css/responsive/reponsive.css"
+<link href="/cookology/resources/css/responsive.css"
 	rel="stylesheet" />
 </head>
 

@@ -13,8 +13,8 @@
   <link rel="stylesheet" href="/cookology/resources/css/tracking/tracking.css" />
 <style>
   body {
-    width: 40vw;
-    margin: 0 auto;
+    width: 30vw;
+
   }
   a:link {
     color: black;
@@ -31,7 +31,6 @@
   a:active {
     color: black;
     text-decoration: none;
-
   }
 
 </style>

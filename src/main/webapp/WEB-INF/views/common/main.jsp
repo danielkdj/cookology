@@ -10,7 +10,7 @@
 <link rel="icon" href="/cookology/resources/img/core-img/Cookology_logo.png" />
 	<!-- Core Stylesheet -->
 <link rel="stylesheet" href="/cookology/resources/css/style.css"/>
-<link rel="stylesheet" href="/cookology/resources/css/responsive/reponsive.css "/>
+<link rel="stylesheet" href="/cookology/resources/css/responsive.css"/>
 <style>
 	.post-favourite:hover .reaction,
 	.post-comments:hover .reaction{
@@ -141,7 +141,7 @@
 					<div class="single_catagory wow fadeInUp" data-wow-delay=".3s">
 						<img src="/cookology/resources/img/catagory-img/1.jpg" alt="" />
 						<div class="catagory-title">
-							<a href="#">
+							<a href="movemerchant.do">
 								<h5>내 주변 맛집 찾기</h5>
 							</a>
 						</div>
@@ -161,7 +161,7 @@
 					<div class="single_catagory wow fadeInUp" data-wow-delay=".9s">
 						<img src="/cookology/resources/img/catagory-img/3.jpg" alt="" />
 						<div class="catagory-title">
-							<a href="#">
+							<a href="productUserList.do">
 								<h5>밀키트 구매하기</h5>
 							</a>
 						</div>
@@ -701,30 +701,8 @@
 
 
 						<!-- Single Widget Area -->
-						<div class="single-widget-area newsletter-widget">
-							<div class="widget-title text-center">
-								<h6>공지사항</h6>
-							</div>
-							<p>최근 공지사항 5개</p>
-							<div class="newsletter-form">
-							</div>
-						</div>
-						<div class="single-widget-area newsletter-widget">
-							<div class="widget-title text-center">
-								<h6>공지사항</h6>
-							</div>
-							<p>최근 공지사항 5개</p>
-							<div class="newsletter-form">
-							</div>
-						</div>
-						<div class="single-widget-area newsletter-widget">
-							<div class="widget-title text-center">
-								<h6>공지사항</h6>
-							</div>
-							<p>최근 공지사항 5개</p>
-							<div class="newsletter-form">
-							</div>
-						</div>
+							<c:import url="/WEB-INF/views/notice/noticeListView.jsp"></c:import>
+
 					</div>
 				</div>
 			</div>

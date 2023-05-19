@@ -11,6 +11,7 @@
 	<!-- 매퍼에서 사용할 vo 클래스에 대한 줄임말 선언 -->
 	<typeAliases>		
 		<typeAlias type="org.oaoc.cookology.users.model.vo.Users" alias="Users" />
+
 		<typeAlias type="org.oaoc.cookology.common.SearchDate" alias="SearchDate" />
 		<typeAlias type="org.oaoc.cookology.cart.model.vo.Cart" alias="Cart" />
 		<typeAlias type="org.oaoc.cookology.orders.model.vo.Orders" alias="Orders" />
@@ -18,8 +19,14 @@
 		<typeAlias type="org.oaoc.cookology.event.model.vo.Attendance" alias="Attendance" />
 		<typeAlias type="org.oaoc.cookology.event.model.vo.Event" alias="Event" />
 		<typeAlias type="org.oaoc.cookology.event.model.vo.EventCalendar" alias="EventCalendar" />
+		<typeAlias type="org.oaoc.cookology.event.model.vo.VisitorLogs" alias="VisitorLogs" />
+		<typeAlias type="org.oaoc.cookology.event.model.vo.VisitorLogsCount" alias="VisitorLogsCount" />
 		<typeAlias type="org.oaoc.cookology.FAQ.model.vo.FAQ" alias="FAQ" />
 		<typeAlias type="org.oaoc.cookology.QNA.model.vo.QNA" alias="QNA" />
+		<typeAlias type="org.oaoc.cookology.notice.model.vo.Notice" alias="Notice" />
+		<typeAlias type="org.oaoc.cookology.product.model.vo.Product" alias="Product" />
+		<typeAlias type="org.oaoc.cookology.productDescription.model.vo.ProductDescription" alias="ProductDescription" />
+		<typeAlias type="org.oaoc.cookology.common.Paging" alias="Paging" />
 	</typeAliases>
 	
 	<!-- mapper : 실행할 쿼리문만 별도로 작성하는 파일을 말함 -->
@@ -29,7 +36,10 @@
 		<mapper resource="mappers/orders-mapper.xml" />
         <mapper resource="mappers/recipe-mapper.xml" />
 		<mapper resource="mappers/event-mapper.xml"/>
+		<mapper resource="mappers/product-mapper.xml" />
+		<mapper resource="mappers/productDescription-mapper.xml" />
 		<mapper resource="mappers/FAQ-mapper.xml"/>
 		<mapper resource="mappers/QNA-mapper.xml"/>
+		<mapper resource="mappers/notice-mapper.xml"/>
 	</mappers>
 </configuration>
